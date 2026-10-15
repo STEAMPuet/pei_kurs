@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Лекція 2. Емоції як ресурс професійної діяльності та самоусвідомлення</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.acc-body ul{margin:0 0 12px; padding-left:20px;} .acc-body li{margin-bottom:4px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.gridf{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+@media(max-width:800px){.grid2{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:230px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front .n{font-family:'Share Tech Mono',monospace; color:#fff; background:var(--magenta); border-radius:6px; padding:1px 9px; font-size:12px; margin-bottom:8px;}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tip::after{content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 8px); transform:translateX(-50%); width:max-content; max-width:min(260px,70vw);
+  background:var(--ink); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35; opacity:0; pointer-events:none; transition:.15s; z-index:20; box-shadow:var(--shadow);}
+.tip:hover::after,.tip:focus::after{opacity:1;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.cmp{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:10px 0 14px;}
+@media(max-width:700px){.cmp{grid-template-columns:1fr;}}
+.cmp .card h4{color:var(--cyan-deep);}
+.cmp .card.bad h4{color:var(--magenta);}
+.check{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 14px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--ink); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--ink); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:#fff; cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / EQ‑CORE — ОНЛАЙН</span><span>ЛЕКЦІЯ: 02</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// LECTURE_02 · EMOTIONS.AS.RESOURCE</span>
+    <h1>Емоції як ресурс професійної діяльності та самоусвідомлення</h1>
+    <p class="sub">Інтерактивний конспект лекції: функції емоцій, емоційна регуляція за моделлю Гросса, емоційні процеси в організації та самоусвідомлення як основа емоційного інтелекту.</p>
+    <div class="hero-meta">
+      <span class="chip">📘 4 розділи теорії</span>
+      <span class="chip">🃏 15 карток</span>
+      <span class="chip">✅ 6 кроків практики</span>
+      <span class="chip">❓ 3 питання тесту</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Емоції та функції</button>
+    <button data-t="t-2">02 · Регуляція</button>
+    <button data-t="t-3">03 · В організації</button>
+    <button data-t="t-4">04 · Самоусвідомлення</button>
+    <button data-t="t-prac">✅ Практика</button>
+    <button data-t="t-quiz">❓ Тест</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Загальна карта лекції</h2>
+    <p class="lede">У сучасній психології емоції розглядаються не як перешкода раціональному мисленню, а як важливий ресурс ефективної діяльності. Лекція показує, як емоції працюють, як ними керувати та чому саме самоусвідомлення лежить в основі емоційного інтелекту.</p>
+    <div class="gridf">
+      <div class="card"><h4>01 · Емоції та функції</h4>Визначення, теоретичні підходи та п'ять функцій емоцій.</div>
+      <div class="card"><h4>02 · Регуляція</h4>Модель Дж. Гросса, п'ять стратегій і когнітивна переоцінка.</div>
+      <div class="card"><h4>03 · В організації</h4>Емоційний клімат, емоційна праця, лідерство, вигорання.</div>
+      <div class="card"><h4>04 · Самоусвідомлення</h4>Центральний компонент ЕІ, рефлексія та робота психолога.</div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Наводьте курсор (або торкайтеся) на слова з пунктирним підкресленням — з'явиться коротке визначення. Картки у розділах 01, 02, 03 і 04 можна перевертати.</div>
+    <h3>Висновки</h3>
+    <div class="acc-item"><button class="acc-head">Ключові висновки лекції <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Емоції — важливий механізм психічної регуляції. Вони виконують <b>сигнальну, оціночну, регулятивну, мотиваційну та комунікативну</b> функції й забезпечують адаптацію особистості до середовища.</p>
+      <p><b>Емоційна регуляція</b> забезпечує контроль і конструктивне управління емоційними реакціями. В організаціях емоційні процеси визначають взаємодію, клімат, лідерство й ефективність персоналу.</p>
+      <p><b>Самоусвідомлення</b> — центральний компонент ЕІ та основа емоційної компетентності, професійного зростання й психологічного благополуччя. Для майбутнього психолога воно разом з емоційною регуляцією є умовою професійної ефективності й особистісної зрілості.</p></div></div>
+  </section>
+
+  <!-- 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Поняття емоцій та їх функції</h2>
+    <p class="lede">Емоції — одна з фундаментальних форм психічного відображення дійсності та один із найважливіших механізмів регуляції поведінки людини.</p>
+    <div class="acc-item open"><button class="acc-head">Що таке емоції <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Емоції визначаються як особливий клас психічних процесів і станів, що відображають <b>суб'єктивне ставлення</b> людини до об'єктів світу, інших людей, самої себе та результатів власної діяльності. Через емоції особистість оцінює значущість подій для своїх потреб, цінностей та життєвих цілей.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Теоретичні підходи та автори <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Значний внесок зробили В. Вундт, В. Джемс, К. Ланге, У. Кеннон, Ф. Бард, С. Шахтер, Р. Лазарус, К. Ізард та інші. Різноманітність підходів свідчить про складність емоцій як феномену:</p>
+      <ul><li><b>біологічні концепції</b> — емоції як механізм пристосування організму до середовища;</li><li><b>когнітивні теорії</b> — роль оцінювання ситуації;</li><li><b>гуманістичний підхід</b> — емоції як компонент особистісного розвитку та самореалізації.</li></ul></div></div>
+    <h3>П'ять функцій емоцій (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Оціночна</h4><small>натисни, щоб перевернути</small></div><div class="face back">Емоції сигналізують про корисність або шкідливість подій. Особистість швидко визначає значущість ситуації ще до раціонального осмислення.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Сигнальна</h4><small>натисни, щоб перевернути</small></div><div class="face back">Передача інформації про внутрішній стан людини іншим через міміку, жести, інтонації, пози та інші невербальні прояви.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Мотиваційна</h4><small>натисни, щоб перевернути</small></div><div class="face back">Емоції активізують або гальмують діяльність: позитивні переживання стимулюють повторення поведінки, негативні спонукають уникати небажаних ситуацій.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">4</span><h4>Регулятивна</h4><small>натисни, щоб перевернути</small></div><div class="face back">Вплив емоцій на прийняття рішень, вибір поведінкових стратегій та адаптацію до змінних умов середовища.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">5</span><h4>Комунікативна</h4><small>натисни, щоб перевернути</small></div><div class="face back">Забезпечує ефективність міжособистісної взаємодії: через емоції люди встановлюють контакт, формують соціальні зв'язки й підтримують взаєморозуміння.</div></div></div>
+    </div>
+    <div class="acc-item" style="margin-top:14px"><button class="acc-head">Емоції як джерело інформації <span class="arrow">▶</span></button>
+      <div class="acc-body"><div class="cmp"><div class="card"><h4>Позитивні емоції</h4>Розширюють когнітивні можливості, сприяють творчому мисленню та формуванню нових моделей поведінки.</div><div class="card bad"><h4>Негативні емоції</h4>Виконують захисну функцію: мобілізують ресурси організму для подолання труднощів і небезпек.</div></div></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Емоції не лише супроводжують діяльність, а й є важливим джерелом інформації. У професії вони впливають на якість роботи, мотивацію, відносини та психологічне благополуччя працівника.</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Емоційна регуляція поведінки</h2>
+    <p class="lede">Від рівня сформованості навичок емоційної регуляції залежить успішність професійної діяльності, якість стосунків, психічне здоров'я та адаптація до складних обставин.</p>
+    <div class="acc-item open"><button class="acc-head">Що таке емоційна регуляція <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Це система внутрішніх і зовнішніх механізмів, спрямованих на <b>усвідомлення, контроль, модифікацію та управління</b> емоційними реакціями відповідно до вимог ситуації. Вона дає змогу підтримувати психологічну рівновагу й ефективно діяти навіть за високого стресу.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Процесуальна модель Дж. Гросса <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Емоційна регуляція може відбуватися на різних етапах виникнення емоційної реакції: <b>до появи емоції</b> та <b>після її виникнення</b>. Тому стратегії розрізняються за моментом застосування.</p></div></div>
+    <h3>П'ять стратегій регуляції (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Вибір ситуації</h4><small>натисни, щоб перевернути</small></div><div class="face back">Заздалегідь обирати чи уникати ситуацій, що викличуть бажані або небажані емоції. Діє до появи емоції.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Модифікація ситуації</h4><small>натисни, щоб перевернути</small></div><div class="face back">Змінювати обставини так, щоб змінився їх емоційний вплив. Діє до появи емоції.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Управління увагою</h4><small>натисни, щоб перевернути</small></div><div class="face back">Спрямовувати чи переключати увагу: зосередитися на одних аспектах ситуації й відволіктися від інших.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">4</span><h4>Когнітивна переоцінка</h4><small>натисни, щоб перевернути</small></div><div class="face back"><b>Найефективніша.</b> Зміна інтерпретації ситуації для зменшення інтенсивності негативних переживань. Помилка — не доказ неспроможності, а можливість отримати досвід.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">5</span><h4>Контроль експресії</h4><small>натисни, щоб перевернути</small></div><div class="face back">Вплив на зовнішнє вираження емоції (міміку, голос, поведінку). Діє вже після виникнення емоції.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Самоконтроль — не придушення емоцій. Людина з високим ЕІ <b>усвідомлює</b> їх, аналізує причини та обирає найконструктивніший спосіб реагування.</div>
+    <div class="acc-item"><button class="acc-head">Професії «людина-людина» <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Психолог, педагог, лікар, соціальний працівник, менеджер, керівник постійно стикаються зі значним емоційним навантаженням, тому здатність підтримувати внутрішню рівновагу — необхідна складова професійної компетентності.</p></div></div>
+    <h3>Наслідки рівня регуляції</h3>
+    <div class="cmp">
+      <div class="card bad"><h4>Низький рівень</h4>Конфлікти, імпульсивна поведінка, професійне вигорання, зниження продуктивності, психологічне виснаження.</div>
+      <div class="card"><h4>Сформовані навички</h4>Розвиток <span class="tip" tabindex="0" data-tip="Резильєнтність — здатність протистояти труднощам і відновлюватися після стресу.">резильєнтності</span>, стресостійкості та психологічного благополуччя.</div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Для запам'ятовування: стратегії 1–4 діють «до» емоції (вибір, модифікація, увага, переоцінка), а контроль експресії — «після».</div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Емоційні процеси в організації</h2>
+    <p class="lede">Організації — це не лише економічні системи, а й соціально-психологічні середовища, де відбуваються складні емоційні процеси.</p>
+    <div class="acc-item open"><button class="acc-head">Від раціоналізму до емоційної взаємодії <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Тривалий час у менеджменті домінувало раціоналістичне бачення, за яким емоції — небажаний чинник. Сучасні дослідження довели, що діяльність будь-якої організації супроводжується постійною емоційною взаємодією її членів. Емоції впливають на атмосферу, комунікацію, прийняття рішень, продуктивність і культуру.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Емоційний клімат організації <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Стійка система емоційних переживань, настроїв та установок, що переважають у колективі.</p>
+      <div class="cmp"><div class="card"><h4>Позитивний клімат</h4>Довіра, згуртованість, продуктивна співпраця.</div><div class="card bad"><h4>Негативний клімат</h4>Конфлікти, напруження, професійне виснаження.</div></div></div></div>
+    <div class="acc-item"><button class="acc-head">Емоційна праця (А. Хохшильд) <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><span class="tip" tabindex="0" data-tip="Емоційна праця — демонстрація певних емоцій незалежно від реальних переживань працівника.">Емоційна праця</span> передбачає необхідність демонструвати певні емоції незалежно від реальних переживань. Особливо характерна для сфери обслуговування, медицини, освіти, психологічної допомоги та управління.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Емоційне лідерство <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Керівник із високим ЕІ формує позитивний настрій колективу, знижує напругу, підтримує мотивацію й забезпечує конструктивне вирішення конфліктів.</p></div></div>
+    <h3>Професійне вигорання (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Емоційне виснаження</h4><small>натисни, щоб перевернути</small></div><div class="face back">Відчуття вичерпаності емоційних ресурсів унаслідок тривалого напруження.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Деперсоналізація</h4><small>натисни, щоб перевернути</small></div><div class="face back">Знеособлене, відсторонене ставлення до людей, з якими працює фахівець.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Зниження мотивації</h4><small>натисни, щоб перевернути</small></div><div class="face back">Падіння професійної мотивації та відчуття втрати сенсу роботи.</div></div></div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Причини вигорання: надмірне навантаження, дефіцит підтримки, тривалий стрес і негативний емоційний клімат. В умовах криз, воєнних викликів і невизначеності емоційний стан персоналу є ресурсом стійкості організації.</div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Самоусвідомлення як компонент емоційного інтелекту</h2>
+    <p class="lede">Самоусвідомлення — центральний компонент ЕІ та основа для розвитку всіх інших емоційних компетентностей.</p>
+    <div class="acc-item open"><button class="acc-head">Що таке самоусвідомлення <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Здатність людини усвідомлювати свої психічні стани, потреби, мотиви, переконання та поведінкові реакції. Воно відображає розвиток рефлексивних процесів і вміння аналізувати власний внутрішній світ. Без нього неможливо ефективно регулювати емоції та будувати конструктивні стосунки.</p></div></div>
+    <h3>Структура самоусвідомлення (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Розпізнавання емоцій</h4><small>натисни, щоб перевернути</small></div><div class="face back">Помічати й називати власні емоційні переживання.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Розуміння причин</h4><small>натисни, щоб перевернути</small></div><div class="face back">З'ясовувати, чим саме викликана емоція.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Вплив на поведінку</h4><small>натисни, щоб перевернути</small></div><div class="face back">Усвідомлювати, як емоції впливають на рішення й вчинки.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">4</span><h4>Рефлексія</h4><small>натисни, щоб перевернути</small></div><div class="face back"><span class="tip" tabindex="0" data-tip="Рефлексія — здатність аналізувати власні думки, переживання та дії.">Здатність аналізувати</span> власні думки, переживання та дії.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">5</span><h4>Реалістична самооцінка</h4><small>натисни, щоб перевернути</small></div><div class="face back">Чітке розуміння сильних і слабких сторін, здатність приймати конструктивну критику й адекватно оцінювати результати діяльності.</div></div></div>
+    </div>
+    <div class="acc-item" style="margin-top:14px"><button class="acc-head">Позиція Д. Гоулмана <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Самоусвідомлення — база для формування <b>саморегуляції, мотивації, емпатії та соціальних навичок</b>. Людина, яка добре розуміє свої емоційні реакції, легше приймає зважені рішення й контролює поведінку.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Значення для психолога <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Психолог постійно взаємодіє з переживаннями інших. Недостатнє самоусвідомлення може призводити до <span class="tip" tabindex="0" data-tip="Проєкція — приписування іншим власних почуттів, мотивів чи рис.">проєкцій</span>, викривлення сприйняття клієнта та порушення професійних меж.</p><p>Саме <b>рефлексивна практика</b> є основою професійного розвитку: вона дає змогу критично оцінювати власну діяльність і вдосконалювати майстерність.</p></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>У динамічному та невизначеному середовищі розвиток самоусвідомлення — ресурс збереження психологічного благополуччя, особистісної зрілості й професійної ефективності.</div>
+  </section>
+
+  <!-- ПРАКТИКА -->
+  <section class="panel" id="t-prac">
+    <h2><span class="idx">PR</span> Практичне завдання: аналіз емоційної ситуації</h2>
+    <p class="lede">У лекції немає окремої практичної частини, тому це завдання складено на основі розділів 1, 2 і 4: проаналізуйте власну емоційну ситуацію за моделлю регуляції. Виконуйте кроки по черзі та відзначайте їх.</p>
+    <div class="progress"><i id="progBar"></i></div>
+    <div class="mono" id="progTxt" style="font-size:12px;margin-bottom:10px">Виконано: 0 / 6</div>
+    <div id="checklist">
+      <label class="check"><input type="checkbox"><span><b>Крок 1.</b> Опишіть робочу чи навчальну ситуацію останнього тижня, що викликала виразну емоцію.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 2 (самоусвідомлення).</b> Назвіть емоцію, її причину та те, як вона вплинула на вашу поведінку.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 3 (функції).</b> Визначте, яку функцію емоція виконувала: оціночну, сигнальну, мотиваційну, регулятивну чи комунікативну.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 4 (регуляція).</b> Яку зі стратегій Гросса ви застосували (чи ні) і на якому етапі?</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 5 (переоцінка).</b> Сформулюйте альтернативну інтерпретацію ситуації, яка зменшує негативну інтенсивність переживання.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 6 (рефлексія).</b> Запишіть висновок: що ви зрозуміли про себе й що спробуєте наступного разу.</span></label>
+    </div>
+    <div class="btnrow"><button class="btn ghost small" id="resetChecks">Скинути чек-лист</button></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Записуйте відповіді у формі нижче й копіюйте її, щоб вставити у власний щоденник рефлексії.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Ситуація: ...
+1. Емоція, причина, вплив на поведінку: ...
+2. Функція емоції (оціночна/сигнальна/мотиваційна/регулятивна/комунікативна): ...
+3. Стратегія регуляції (етап): ...
+4. Когнітивна переоцінка (нова інтерпретація): ...
+Висновок і план на наступний раз: ...</pre></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Самоперевірка</h2>
+    <p class="lede">Оберіть варіант відповіді — результат і пояснення з'являться одразу.</p>
+    <div class="quiz-q" data-ok="1">
+      <h4>1. Яка функція емоцій забезпечує передачу інформації про внутрішній стан людини іншим через міміку, жести й інтонації?</h4>
+      <button class="quiz-opt">Оціночна</button>
+      <button class="quiz-opt">Сигнальна</button>
+      <button class="quiz-opt">Мотиваційна</button>
+      <div class="quiz-fb">Сигнальна функція передає інформацію про внутрішній стан через невербальні прояви. Оціночна визначає значущість подій, а мотиваційна активізує чи гальмує діяльність.</div>
+    </div>
+    <div class="quiz-q" data-ok="2">
+      <h4>2. Яку стратегію емоційної регуляції в лекції названо найефективнішою?</h4>
+      <button class="quiz-opt">Контроль емоційної експресії</button>
+      <button class="quiz-opt">Вибір ситуації</button>
+      <button class="quiz-opt">Когнітивна переоцінка</button>
+      <div class="quiz-fb">Когнітивна переоцінка змінює інтерпретацію ситуації й зменшує інтенсивність негативних переживань, наприклад сприйняття помилки як нового досвіду.</div>
+    </div>
+    <div class="quiz-q" data-ok="0">
+      <h4>3. Що означає поняття «емоційна праця», запропоноване А. Хохшильд?</h4>
+      <button class="quiz-opt">Необхідність демонструвати певні емоції незалежно від реальних переживань працівника</button>
+      <button class="quiz-opt">Здатність розпізнавати емоції колег</button>
+      <button class="quiz-opt">Фізичне навантаження в стресових умовах</button>
+      <div class="quiz-fb">Емоційна праця — це демонстрація потрібних емоцій незалежно від справжніх переживань; характерна для обслуговування, медицини, освіти й психологічної допомоги.</div>
+    </div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 3</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Лекція 2 · Емоції як ресурс професійної діяльності та самоусвідомлення</footer>
+</div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  $$('#tabsNav button').forEach(function(b){
+    b.addEventListener('click',function(){
+      $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});
+      $$('section.panel').forEach(function(p){p.classList.remove('active')});
+      b.classList.add('active'); var p=$('#'+b.dataset.t); p.classList.add('active');
+      $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+
+  function setAcc(item,open){var body=$('.acc-body',item); item.classList.toggle('open',open); body.style.maxHeight=open?body.scrollHeight+'px':'0px';}
+  $$('.acc-item').forEach(function(item){$('.acc-head',item).addEventListener('click',function(){setAcc(item,!item.classList.contains('open'))});});
+  function initAcc(){$$('.acc-item.open').forEach(function(i){setAcc(i,true)});}
+  initAcc(); window.addEventListener('resize',initAcc);
+
+  $$('.flip').forEach(function(f){
+    f.addEventListener('click',function(){f.classList.toggle('on')});
+    f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});
+  });
+  $$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+  var boxes=$$('#checklist input');
+  function upd(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    boxes.forEach(function(b){b.parentNode.classList.toggle('done',b.checked)});
+    $('#progBar').style.width=(n/boxes.length*100)+'%';
+    $('#progTxt').textContent='Виконано: '+n+' / '+boxes.length+(n===boxes.length?' — чудово, завдання завершено! 🎉':'');
+  }
+  boxes.forEach(function(b){b.addEventListener('change',upd)});
+  $('#resetChecks').addEventListener('click',function(){boxes.forEach(function(b){b.checked=false});upd()});
+
+  $$('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var txt=$('pre',btn.parentNode).textContent;
+      function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+      function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(ta)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else{fallback()}
+    });
+  });
+
+  var score=0, answered=0, qs=$$('.quiz-q');
+  qs.forEach(function(q){
+    var opts=$$('.quiz-opt',q), ok=+q.dataset.ok;
+    opts.forEach(function(o,i){
+      o.addEventListener('click',function(){
+        if(q.classList.contains('locked'))return;
+        q.classList.add('locked'); answered++;
+        if(i===ok){o.classList.add('correct'); o.textContent='✔ Правильно! '+o.textContent; score++;}
+        else{o.classList.add('wrong'); o.textContent='✘ Неправильно. '+o.textContent; opts[ok].classList.add('correct');}
+        $('.quiz-fb',q).classList.add('show');
+        $('#quizScore').textContent='Результат: '+score+' / '+qs.length+(answered===qs.length?' — тест завершено':'');
+      });
+    });
+  });
+  $('#quizReset').addEventListener('click',function(){
+    score=0;answered=0;
+    qs.forEach(function(q){
+      q.classList.remove('locked');
+      $$('.quiz-opt',q).forEach(function(o){o.classList.remove('correct','wrong');o.textContent=o.textContent.replace(/^(✔ Правильно! |✘ Неправильно\. )/,'')});
+      $('.quiz-fb',q).classList.remove('show');
+    });
+    $('#quizScore').textContent='Результат: 0 / '+qs.length;
+  });
+})();
+</script>
+</body>
+</html>
