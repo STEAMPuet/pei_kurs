@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Практичне заняття 2. Емоційний інтелект психолога</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+.flip{perspective:900px; height:230px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tip::after{content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 8px); transform:translateX(-50%); width:max-content; max-width:min(260px,70vw);
+  background:var(--ink); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35; opacity:0; pointer-events:none; transition:.15s; z-index:20; box-shadow:var(--shadow);}
+.tip:hover::after,.tip:focus::after{opacity:1;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--ink); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--ink); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px;}
+textarea,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:#fff; color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:12px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.sc{display:flex; flex-wrap:wrap; gap:6px;}
+.sc button{flex:1 1 34px; min-width:32px; height:40px; border-radius:8px; border:1px solid var(--line); background:#fff; font-family:'Share Tech Mono',monospace; font-size:14px; cursor:pointer; color:var(--ink);}
+.sc button:hover{border-color:var(--cyan);}
+.sc button.on{background:var(--ink); color:#fff; border-color:var(--cyan); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.stat{display:grid; grid-template-columns:minmax(120px,1.4fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:#fff; cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / EQ‑PRACTICE — ОНЛАЙН</span><span>ПРАКТИЧНЕ ЗАНЯТТЯ: 02</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// PRACTICE_02 · PSYCHOLOGIST_EI + REPORT.DOCX</span>
+    <h1>Практичне заняття 2. Емоційний інтелект психолога</h1>
+    <p class="sub">Інтерактивний робочий зошит: самодіагностика ЕІ за шкалою 1–10, аналіз професійної ситуації, план розвитку на 3 місяці та тест. Усі відповіді збираються у звіт, який можна завантажити як файл Word.</p>
+    <div class="hero-meta">
+      <span class="chip">🧩 3 завдання</span>
+      <span class="chip">📊 профіль ЕІ</span>
+      <span class="chip">❓ 4 питання тесту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Самодіагностика</button>
+    <button data-t="t-2">02 · Кейс</button>
+    <button data-t="t-3">03 · План розвитку</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Як працювати із зошитом</h2>
+    <p class="lede">Пройдіть завдання 1–3, виконайте тест, а потім перейдіть на вкладку «Звіт», укажіть ПІБ і групу та завантажте файл Word. Завдання 3 спирається на результати завдання 1, тому виконуйте їх по порядку.</p>
+    <div class="callout important"><b class="lbl">Важливо</b>Відповіді автоматично зберігаються в цьому браузері (якщо він дозволяє) і потраплять у звіт. На іншому пристрої поля будуть порожні — завантажте звіт до завершення роботи.</div>
+    <h3>Що потрібно створити (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in">
+        <div class="face front"><h4>Завдання 1. Самодіагностика</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Оцініть 5 показників ЕІ за шкалою 1–10, отримайте автоматичний профіль, визначте зони розвитку й напишіть рефлексивний коментар (1 стор.).</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in">
+        <div class="face front"><h4>Завдання 2. Ситуаційний аналіз</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Кейс: працівник із <span class="tip" tabindex="0" data-tip="Професійне вигорання — стан емоційного, розумового й фізичного виснаження через тривалий професійний стрес.">професійним вигоранням</span>. Відповісти на 4 питання (2 стор.).</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in">
+        <div class="face front"><h4>Завдання 3. План розвитку</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Індивідуальна програма розвитку ЕІ на 3 місяці: цілі, заходи, очікувані результати, критерії оцінювання прогресу.</div></div></div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Оцінюйте себе чесно: профіль потрібен вам для росту, а не для «гарного результату». Неточна самооцінка зробить план розвитку марним.</div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що саме потрібно здати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Завдання 1:</b> індивідуальний профіль ЕІ та рефлексивний коментар (1 стор.).</p><p><b>Завдання 2:</b> ситуаційний аналіз (2 стор.).</p><p><b>Завдання 3:</b> індивідуальна програма розвитку.</p><p><b>Додатково:</b> результат тесту самоперевірки.</p></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Самодіагностика емоційного інтелекту</h2>
+    <p class="lede">Проведіть самооцінку власного ЕІ за п'ятьма критеріями. Оцініть кожен показник за шкалою від 1 до 10 та визначте власні зони розвитку.</p>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Форма звітності: індивідуальний профіль ЕІ та рефлексивний коментар (1 стор.). Це самооцінка, а не психодіагностичний тест: результат суб'єктивний.</div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl1"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: як розуміти критерії <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Усвідомлення власних емоцій</b> — наскільки точно ви помічаєте й називаєте свої переживання.</p><p><b>Управління власними емоціями</b> — чи вмієте змінювати інтенсивність і вираження переживань.</p><p><b>Емпатія</b> — чутливість до емоцій інших і здатність їх розуміти.</p><p><b>Саморегуляція</b> — стриманість, контроль імпульсів, збереження рівноваги під тиском.</p><p><b>Навички міжособистісної взаємодії</b> — комунікація, вирішення конфліктів, побудова контакту.</p><p>Пояснюйте у коментарі, чим для вас відрізняються «управління емоціями» та «саморегуляція», бо ці показники частково перетинаються.</p></div></div>
+    <h3>Оцінювання (1 — дуже низько, 10 — дуже високо)</h3>
+    <div id="t1scale"></div>
+    <h3>Ваш профіль ЕІ</h3>
+    <div id="profile" class="result-box"></div>
+    <div class="fld"><label for="t1_com">Рефлексивний коментар (1 стор.)</label><textarea id="t1_com" data-save data-wc rows="9" placeholder="Що вас здивувало? З чим пов'язані найнижчі й найвищі оцінки? Які ситуації з досвіду це підтверджують?"></textarea><div class="wc"></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Аналіз професійної ситуації організаційного психолога</h2>
+    <div class="result-box"><b>Кейс.</b> Психолог підприємства проводить консультацію працівника, який переживає професійне вигорання. Під час розмови співробітник проявляє агресію, висловлює недовіру до керівництва та демонструє ознаки емоційного виснаження.</div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Форма звітності: ситуаційний аналіз (2 стор.).</div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl2"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: на що спиратися в аналізі <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Емоційний стан:</b> пов'язуйте поведінкові ознаки (агресія, недовіра) з вигоранням, виснаженням, можливими пригніченими потребами.</p><p><b>Контакт:</b> розгляньте <span class="tip" tabindex="0" data-tip="Активне слухання — уважне слухання з уточненнями, перефразуванням і відображенням почуттів співрозмовника.">активне слухання</span>, визнання почуттів без оцінювання, спокійну інтонацію, конфіденційність.</p><p><b>Компоненти ЕІ:</b> скористайтеся чотирма здібностями моделі Маєра–Саловея–Карузо з лекції 1 (сприйняття, використання, розуміння й управління емоціями).</p><p><b>Рекомендації:</b> окремо для працівника і для керівництва.</p></div></div>
+    <div id="t2fields"></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Індивідуальний план розвитку ЕІ на 3 місяці</h2>
+    <p class="lede">На основі результатів самодіагностики розробіть особистий план розвитку ЕІ. План має містити цілі розвитку, конкретні заходи, очікувані результати та критерії оцінювання прогресу.</p>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Форма звітності: індивідуальна програма розвитку.</div>
+    <div class="result-box"><b>Ваші зони розвитку за результатами завдання 1:</b> <span class="zonesTxt">—</span></div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl3"></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Формулюйте цілі конкретно й вимірювано: «двічі на тиждень вести щоденник емоцій і за 3 місяці підняти самооцінку емпатії на 1–2 бали» краще, ніж «стати емпатичнішим». Нижче — шаблон, який можна скопіювати.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Мета: ... (зона розвитку, до якої вона належить)
+Заходи (місяць 1 / 2 / 3): ...
+Очікуваний результат: ...
+Критерій оцінювання: ... (як і коли я це перевірю)</pre></div>
+    <div id="t3fields"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Оберіть відповідь — одразу з'явиться «правильно/неправильно» та пояснення. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 4</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані студента та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" data-save placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Практичне заняття 2 · Емоційний інтелект психолога</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var CRIT=[
+ {n:'Усвідомлення власних емоцій',d:'Здатність помічати й точно називати власні переживання.'},
+ {n:'Управління власними емоціями',d:'Уміння змінювати інтенсивність і вираження власних емоцій.'},
+ {n:'Емпатія',d:'Чутливість до емоцій інших і здатність їх розуміти.'},
+ {n:'Саморегуляція',d:'Контроль імпульсів і збереження рівноваги під тиском.'},
+ {n:'Навички міжособистісної взаємодії',d:'Комунікація, вирішення конфліктів, побудова контакту.'}];
+var T2=[{id:'t2_a1',l:'1. Емоційний стан працівника',r:6},{id:'t2_a2',l:'2. Дії психолога для встановлення довірливого контакту',r:7},
+ {id:'t2_a3',l:'3. Компоненти емоційного інтелекту, необхідні фахівцю в цій ситуації',r:6},
+ {id:'t2_a4',l:'4. Рекомендації працівнику',r:6},{id:'t2_a5',l:'4. Рекомендації керівництву',r:6}];
+var T3=[{id:'t3_goal',l:'Цілі розвитку',r:5},{id:'t3_m1',l:'Конкретні заходи — місяць 1',r:4},{id:'t3_m2',l:'Конкретні заходи — місяць 2',r:4},{id:'t3_m3',l:'Конкретні заходи — місяць 3',r:4},
+ {id:'t3_res',l:'Очікувані результати',r:5},{id:'t3_crit',l:'Критерії оцінювання прогресу',r:5}];
+var CL={cl1:['Прочитайте опис п\'яти критеріїв у підказці.','Оцініть кожен показник за шкалою від 1 до 10.','Перегляньте автоматичний профіль і зони розвитку.','Напишіть рефлексивний коментар (1 стор.).'],
+ cl2:['Уважно прочитайте кейс.','Визначте емоційний стан працівника.','Опишіть дії психолога для налагодження довірливого контакту.','Назвіть потрібні компоненти ЕІ фахівця.','Сформулюйте рекомендації працівнику та керівництву.'],
+ cl3:['Перегляньте свої зони розвитку із завдання 1.','Сформулюйте вимірювані цілі.','Розпишіть заходи по місяцях.','Опишіть очікувані результати.','Визначте критерії оцінювання прогресу.']};
+var QZ=[
+ {q:'Яка дія психолога найдоцільніша на початку розмови з працівником, який проявляє агресію?',o:['Аргументовано спростувати його критику керівництва','Спокійно визнати почуття працівника й застосувати активне слухання','Одразу перейти до порад щодо подолання вигорання'],ok:1,e:'Визнання емоцій, спокійний тон і активне слухання зменшують напругу й закладають основу довірливого контакту. Поради та аргументи доречні пізніше.'},
+ {q:'Яка трійка ознак відповідає складовим професійного вигорання за К. Маслач?',o:['Емоційне виснаження, деперсоналізація (цинізм), зниження професійних досягнень','Підвищена мотивація, ентузіазм, прагнення до змін','Агресія, імпульсивність, брак пам\'яті'],ok:0,e:'Класична модель вигорання К. Маслач включає емоційне виснаження, деперсоналізацію (цинізм) і редукцію професійних досягнень.'},
+ {q:'Яке головне обмеження самодіагностики за шкалою 1–10?',o:['Вона не дає жодної корисної інформації','Результат суб\'єктивний і залежить від самосприйняття, тому його варто доповнювати зворотним зв\'язком','Її можна проводити тільки у психолога'],ok:1,e:'Самооцінка корисна для рефлексії, але вона суб\'єктивна. Надійнішу картину дає поєднання з відгуками інших і додатковими методами.'},
+ {q:'Яка ціль у плані розвитку ЕІ найкраще відповідає принципу вимірюваності?',o:['Стати емоційно розвиненішим','Тричі на тиждень вести щоденник емоцій і за 3 місяці підвищити самооцінку емпатії на 1–2 бали','Більше думати про емоції'],ok:1,e:'Вимірювана ціль має конкретну дію, частоту, строк і показник, за яким можна перевірити результат.'}];
+
+function mk(id,l,r){return '<div class="fld"><label for="'+id+'">'+l+'</label><textarea id="'+id+'" data-save data-wc rows="'+r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+$('#t1scale').innerHTML=CRIT.map(function(c,i){var b='';for(var k=1;k<=10;k++)b+='<button type="button" data-v="'+k+'">'+k+'</button>';
+ return '<div class="crit"><h4>'+(i+1)+'. <span class="tip" tabindex="0" data-tip="'+c.d+'">'+c.n+'</span></h4><div class="sc" data-i="'+i+'">'+b+'</div></div>';}).join('');
+$('#t2fields').innerHTML=T2.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$('#t3fields').innerHTML=T3.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='pz2_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ el.addEventListener(el.type==='checkbox'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();});});
+clProg();
+
+/* шкали та профіль */
+function sc(i){var x=store['sc'+i];return typeof x==='number'?x:null}
+function bar(n){return '█'.repeat(n)+'░'.repeat(10-n)}
+function pick(asc){var a=CRIT.map(function(c,i){return {n:c.n,s:sc(i)}}).sort(function(x,y){return asc?x.s-y.s:y.s-x.s});
+ var lim=a[1].s;return a.filter(function(x,i){return i<2||x.s===lim}).map(function(x){return x.n+' ('+x.s+')'});}
+function allScored(){return CRIT.every(function(c,i){return sc(i)!==null})}
+function zoneText(){return allScored()?pick(true).join('; '):'';}
+function strongText(){return allScored()?pick(false).join('; '):'';}
+function prof(){
+ $$('.sc').forEach(function(r){var v=sc(+r.dataset.i);$$('button',r).forEach(function(b){b.classList.toggle('on',+b.dataset.v===v)});});
+ var h=CRIT.map(function(c,i){var v=sc(i);return '<div class="stat"><span>'+c.n+'</span><div class="progress"><i style="width:'+(v?v*10:0)+'%"></i></div><span>'+(v!==null?v+' / 10':'—')+'</span></div>'}).join('');
+ if(allScored()){var sum=0;CRIT.forEach(function(c,i){sum+=sc(i)});
+  h+='<p style="margin:10px 0 4px"><b>Середній бал:</b> '+(sum/5).toFixed(1)+' / 10</p><p style="margin:0 0 4px"><b>Зони розвитку (найнижчі оцінки):</b> '+zoneText()+'</p><p style="margin:0"><b>Сильні сторони:</b> '+strongText()+'</p>';}
+ else h+='<p style="margin:10px 0 0;color:var(--ink-soft)">Оцініть усі п\'ять показників, щоб побачити зони розвитку.</p>';
+ $('#profile').innerHTML=h;$$('.zonesTxt').forEach(function(z){z.textContent=allScored()?zoneText():'спочатку оцініть усі показники у завданні 1'});}
+$$('.sc').forEach(function(r){$$('button',r).forEach(function(b){b.addEventListener('click',function(){store['sc'+r.dataset.i]=+b.dataset.v;persist();prof();});});});
+prof();
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+var ans=[],score=0;
+$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('.quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function filled(a){return a.filter(function(f){return $('#'+f.id).value.trim()}).length}
+function stats(){var s1=CRIT.filter(function(c,i){return sc(i)!==null}).length+($('#t1_com').value.trim()?1:0);
+ var rows=[['Завдання 1',s1,6],['Завдання 2',filled(T2),T2.length],['Завдання 3',filled(T3),T3.length],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('з практичного заняття 2. Емоційний інтелект психолога',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'),{})+para('Група: '+(g||'—'),{})+para('Дата: '+d,{sa:240});
+ x+=para('Завдання 1. Самодіагностика емоційного інтелекту',{b:1,s:28,k:1,sb:120,c:'007A84'});
+ var rows=[['Показник','Оцінка','Профіль']],sum=0;CRIT.forEach(function(c,i){var s=sc(i);if(s!==null)sum+=s;rows.push([c.n,s!==null?s+' / 10':'—',s!==null?bar(s):'—'])});
+ x+=para('Індивідуальний профіль ЕІ',{b:1,k:1})+table(rows,[4200,1500,3938]);
+ if(allScored())x+=para('Середній бал: '+(sum/5).toFixed(1)+' / 10')+para('Зони розвитку: '+zoneText())+para('Сильні сторони: '+strongText());
+ else x+=para('Не всі показники оцінено, зони розвитку не визначено.',{i:1,c:'888888'});
+ x+=para('Рефлексивний коментар',{b:1,k:1,sb:120})+paras(v('t1_com'));
+ x+=para('Завдання 2. Аналіз професійної ситуації організаційного психолога',{b:1,s:28,k:1,sb:240,c:'007A84'});
+ T2.forEach(function(f){x+=para(f.l,{b:1,k:1,sb:120})+paras(v(f.id));});
+ x+=para('Завдання 3. Індивідуальний план розвитку ЕІ на 3 місяці',{b:1,s:28,k:1,sb:240,c:'007A84'});
+ x+=table([['Розділ плану','Зміст']].concat(T3.map(function(f){return [f.l,v(f.id)]})),[2800,6838]);
+ x+=para('Тест для самоперевірки',{b:1,s:28,k:1,sb:240,c:'007A84'})+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok],{})):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_ПЗ2_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, оцінки, чек-листи та дані студента?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clProg();prof();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+</body>
+</html>

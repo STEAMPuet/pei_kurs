@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Самостійна робота 1. Еволюція інтелекту: від Торндайка до сучасності</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:rgba(255,255,255,.9);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+@media(max-width:480px){.grid4{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:210px; cursor:pointer; outline:none;}
+.flip.sm{height:190px;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front .em{font-size:26px; margin-bottom:4px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tip::after{content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 8px); transform:translateX(-50%); width:max-content; max-width:min(260px,70vw);
+  background:var(--ink); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35; opacity:0; pointer-events:none; transition:.15s; z-index:20; box-shadow:var(--shadow);}
+.tip:hover::after,.tip:focus::after{opacity:1;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.bignum{text-align:center;} .bignum .n{font-family:'Orbitron','Segoe UI',sans-serif; font-size:38px; font-weight:900; color:var(--magenta); line-height:1.1;}
+.bignum small{display:block; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep); margin-bottom:8px;}
+.bignum p{font-size:14px; text-align:left; margin:0;}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--ink); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--ink); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:#fff; color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:6px;} .crit .fld label{color:var(--ink-soft);}
+.qbox{border-top:2px dashed var(--line); margin-top:22px; padding-top:16px;}
+.qbox .tag{font-family:'Share Tech Mono',monospace; font-size:12px; color:#fff; background:var(--cyan-deep); padding:2px 9px; border-radius:6px; display:inline-block; margin-bottom:8px;}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:#fff; cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / SELF-STUDY — ОНЛАЙН</span><span>САМОСТІЙНА РОБОТА: 01</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// SELF_STUDY_01 · INTELLIGENCE.EVOLUTION + REPORT.DOCX</span>
+    <h1>Еволюція інтелекту: від Торндайка до сучасності</h1>
+    <p class="sub">Від перших спроб класифікувати людський розум у 1920-х роках — до сучасних дискусій про емоційний інтелект в організаційній психології. Вивчайте матеріал, відповідайте на питання й завдання, а потім завантажте звіт у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">📚 5 частин</span>
+      <span class="chip">✍️ питання й 4 завдання</span>
+      <span class="chip">❓ 6 питань тесту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Торндайк</button>
+    <button data-t="t-2">02 · Гарднер</button>
+    <button data-t="t-3">03 · Критика ЕІ</button>
+    <button data-t="t-4">04 · Професія</button>
+    <button data-t="t-5">05 · Динаміка і ШІ</button>
+    <button data-t="t-work">✍ Завдання</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Карта самостійної роботи</h2>
+    <p class="lede">Матеріал простежує інтелектуальну революцію, яка змінила розуміння того, що означає бути розумним: від соціального інтелекту Торндайка через множинний інтелект Гарднера до критики ЕІ та практики організаційного психолога.</p>
+    <div class="callout important"><b class="lbl">Важливо</b>Відповіді автоматично зберігаються в цьому браузері (якщо він дозволяє) і потраплять у звіт. На іншому пристрої поля будуть порожні — завантажте звіт до завершення роботи.</div>
+    <h3>Чотири опорні точки (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>1. Торндайк</h4><small>натисни, щоб перевернути</small></div><div class="face back">Соціальний інтелект як окрема здатність; фундамент для всіх подальших досліджень емоційної та міжособистісної сфери.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>2. Гарднер</h4><small>натисни, щоб перевернути</small></div><div class="face back">Множинність інтелектів та їх культурний вимір; внутрішньо- та міжособистісний інтелект як попередники ЕІ.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>3. Критика ЕІ</h4><small>натисни, щоб перевернути</small></div><div class="face back">Наукові суперечки: множинність визначень, перетин із рисами особистості, проблеми валідності та вимірювання.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>4. Практика</h4><small>натисни, щоб перевернути</small></div><div class="face back">ЕІ у роботі організаційного психолога: підтримка, профілактика вигорання, конфлікти, ШІ-інструменти й наукова доброчесність.</div></div></div>
+    </div>
+    <h3>Чек-лист вивчення</h3>
+    <div class="cl" data-id="cl0"></div>
+    <div class="callout advice"><b class="lbl">Порада</b>У кінці кожної частини є питання для відповіді. Пишіть своїми словами, а не переписуйте тези: звіт має показувати ваше розуміння.</div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що саме потрібно здати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Питання до частин 1–5:</b> короткі письмові відповіді.</p><p><b>Завдання 1:</b> таблиця критики трьох моделей ЕІ й висновок.</p><p><b>Завдання 2:</b> аналітичне есе та джерела.</p><p><b>Завдання 3:</b> аналіз кейсу про інструменти в епоху ШІ.</p><p><b>Завдання 4:</b> план соціальної підтримки команди за моделлю Хауса.</p><p><b>Додатково:</b> результат тесту самоперевірки.</p></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Фундамент Едварда Торндайка</h2>
+    <p class="lede">Торндайк — один із найвпливовіших американських психологів першої половини XX століття. Він першим розширив поняття «інтелект» за межі логіки та математичних здібностей.</p>
+    <div class="acc-item open"><button class="acc-head">1920-ті: революція в психометрії <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>До Торндайка панувала концепція єдиного загального інтелекту — <span class="tip" tabindex="0" data-tip="g-теорія Спірмена: інтелект зводиться до єдиного загального фактора g.">g-теорія Спірмена</span>. Соціальні, творчі та міжособистісні здібності залишалися поза увагою науки.</p>
+      <p>У 1920 р. у статті «Intelligence and Its Uses» Торндайк стверджує: інтелект не монолітний, а складається з якісно різних компонентів. Це стало справжньою революцією в <span class="tip" tabindex="0" data-tip="Психометрія — галузь психології, що займається вимірюванням психічних властивостей.">психометрії</span>.</p></div></div>
+    <h3>Три види інтелекту (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">⚙️</div><h4>Механічний</h4><small>натисни</small></div><div class="face back">Робота з предметами та машинами.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🔣</div><h4>Абстрактний</h4><small>натисни</small></div><div class="face back">Оперування символами та ідеями.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🤝</div><h4>Соціальний</h4><small>натисни</small></div><div class="face back">Розуміння людей і керування ними; відкрив новий вимір людської здатності, який наука раніше ігнорувала.</div></div></div>
+    </div>
+    <div class="acc-item" style="margin-top:14px"><button class="acc-head">Що таке соціальний інтелект <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Класичне визначення:</b> здатність розуміти чоловіків, жінок і дітей та мудро поводитися в людських стосунках. Воно практичне: фокусується на реальній здатності ефективно взаємодіяти.</p><p><b>Мистецтво читати людей:</b> сприймання вербальних і невербальних, явних і прихованих соціальних сигналів. Це не містична інтуїція, а навичка, що піддається розвитку.</p><p><b>Прагматичний вимір:</b> ключове слово — «мудро». Потрібно діяти ефективно й етично; це не маніпуляція, а адаптивна взаємодія, що враховує потреби всіх учасників.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Соціальний інтелект як система <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Торндайк розглядав його як багатокомпонентну систему. Пізніші дослідники (Гілфорд, Вон та ін.) розгорнули ідеї у цілісну модель:</p>
+      <p><b>Когнітивні характеристики:</b> соціальна пам'ять, соціальне мислення, соціальний прогноз.</p>
+      <p><b>Соціально-перцептивні здібності:</b> точне сприйняття міміки, жестів, тону голосу, пауз; основа «емпатійної точності».</p>
+      <p><b>Комунікативні техніки:</b> соціальна уява, гнучкість стратегій спілкування, побудова довіри, вирішення конфліктів.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Чому Торндайк був першопрохідцем <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>1. Зв'язок інтелекту з адаптивною взаємодією:</b> здатність взаємодіяти з людьми — самостійна форма інтелекту, не менш важлива за логічне мислення.</p><p><b>2. Роль емпатії у професійному успіху:</b> він пов'язав соціальний інтелект із лідерством, педагогікою, менеджментом.</p><p><b>3. Фундамент для моделей Маєра та Саловея:</b> вони визнавали Торндайка попередником (1990 р.).</p></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Торндайк підкреслював: соціальний інтелект не вроджений дар — він розвивається через досвід, рефлексію та цілеспрямоване тренування соціальних навичок.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 1</span><div id="q1"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Теорія множинного інтелекту Говарда Гарднера</h2>
+    <p class="lede">У 1983 р. Гарднер опублікував книгу «Структури розуму» (Frames of Mind). Відмовившись від єдиного IQ, він запропонував модель, що враховує різноманіття здібностей і культурних контекстів.</p>
+    <div class="acc-item open"><button class="acc-head">1983 рік: відмова від g-фактора та нове визначення <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Гарднер відкидає традицію Спірмена: зведення здібностей до однієї цифри IQ — наукове спрощення, що дискримінує людей, чиї таланти не вписуються у вербально-логічні тести.</p>
+      <p><b>Визначення:</b> інтелект — здатність вирішувати проблеми або створювати продукти, які мають цінність принаймні в одному культурному середовищі.</p>
+      <p>Щоб здатність вважалася окремим інтелектом, Гарднер встановив вісім критеріїв, серед яких потенційна ізоляція при ураженнях мозку, наявність «ідіотів-геніїв», впізнавана основна операція, чітка еволюційна історія, підтвердження психометрією та психологічними дослідженнями.</p></div></div>
+    <h3>Види інтелектів Гарднера (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">📝</div><h4>Вербально-лінгвістичний</h4></div><div class="face back">Чутливість до мови та слів: поети, письменники, оратори, перекладачі.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🔢</div><h4>Логіко-математичний</h4></div><div class="face back">Абстрактне мислення, логічні операції; класичний «академічний» інтелект тестів IQ.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🎨</div><h4>Просторовий</h4></div><div class="face back">Зорово-просторові образи: архітектори, скульптори, хірурги, навігатори.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🎵</div><h4>Музичний</h4></div><div class="face back">Ритм, мелодія, тембр; виявляється раніше за інші інтелекти — вже у немовлят.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🤸</div><h4>Кінестетичний</h4></div><div class="face back">Майстерне використання тіла для вирішення проблем: спортсмени, танцюристи, ремісники.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🌿</div><h4>Натуралістичний</h4></div><div class="face back">Розпізнавання й класифікація природних об'єктів; доданий Гарднером у 1996 р. як восьмий.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🪞</div><h4>Внутрішньо­особистісний</h4></div><div class="face back">Пізнання самого себе: власні почуття, мотиви, страхи, сильні й слабкі сторони.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">👥</div><h4>Міжособистісний</h4></div><div class="face back">Розуміння інших: їхні наміри, мотивації, бажання та почуття.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Найзначущими для організаційної психології є внутрішньо- та міжособистісний інтелекти: саме вони стали безпосередніми попередниками концепції емоційного інтелекту.</div>
+    <div class="acc-item"><button class="acc-head">Внутрішньоособистісний інтелект <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Це активна здатність у реальному часі моніторити власний внутрішній стан і адаптувати поведінку. Компоненти: усвідомлення емоцій у момент виникнення; розуміння мотивів і цінностей; реалістична самооцінка без самозвинувачень; вольова саморегуляція та відстрочене задоволення.</p><p><b>Зв'язок з ЕІ:</b> компонент «усвідомлення власних емоцій» у моделі Саловея–Маєра — розвиток цієї ідеї; Гоулман зробив самосвідомість першим компонентом своєї моделі. Це ключ до психологічного здоров'я: емоції не витісняються, а інтегруються.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Міжособистісний інтелект <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Не просто «комунікабельність», а когнітивна здатність точно моделювати внутрішній світ іншої людини й використовувати це для взаємодії, у тому числі з людьми, дуже відмінними від себе.</p><p><b>Прояви:</b> вчителі, що знаходять підхід до кожного учня; терапевти; лідери, що надихають без примусу; дипломати.</p><p><b>Нейробіологія:</b> ушкодження лобових часток часто руйнує особистість і соціальні здібності при збереженні формальних когнітивних функцій, що свідчить про самостійну нейробіологічну систему.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Вплив на сучасну психологію та критика <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Відмова від детермінізму:</b> інтелект залежить від досвіду, культури й навчання (growth mindset).</p><p><b>Динамічна система:</b> нейропластичність підтвердила, що мозок змінюється під впливом практики.</p><p><b>Освіта та HR:</b> диференційоване навчання; оцінка персоналу через ширший спектр компетентностей.</p><p><b>Критика:</b> деякі «інтелекти» — скоріше таланти чи стилі навчання; Гарднер частково погоджується, але наполягає на цінності класифікації.</p></div></div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 2</span><div id="q2"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Критика концепції емоційного інтелекту</h2>
+    <p class="lede">Попри популярність у масовій культурі та бізнесі, наукова психологія ставиться до ЕІ стриманіше: дослідники сумніваються в теоретичній обґрунтованості, психометричній надійності та практичній валідності моделей.</p>
+    <div class="acc-item open"><button class="acc-head">Проблема множинності визначень <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Центральна проблема — відсутність єдиного наукового визначення. Три конкуруючі підходи:</p>
+      <p><b>Здібнісний</b> (Маєр, Саловей, Карузо) — ЕІ як когнітивна здібність сприймати, розуміти, використовувати та регулювати емоції.</p><p><b>Компетентнісний</b> (Гоулман) — набір навичок і компетентностей, яких можна навчити.</p><p><b>Змішаний</b> (Бар-Он) — поєднання когнітивних здібностей і рис особистості.</p>
+      <p>Підходи вимірюють ЕІ різними інструментами з низькою кореляцією, що ставить під сумнів <span class="tip" tabindex="0" data-tip="Конвергентна валідність — наскільки різні методики, що мають вимірювати одне й те саме, дають узгоджені результати.">конвергентну валідність</span>. Локер і Кіркпатрик (2006) говорили про «дефініційну анархію».</p></div></div>
+    <div class="acc-item"><button class="acc-head">Когнітивне чи особистісне? <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Позиція критиків:</b> популярні версії ЕІ, особливо модель Гоулмана, змішують здібності з рисами <span class="tip" tabindex="0" data-tip="Велика П'ятірка: відкритість, сумлінність, екстраверсія, доброзичливість, нейротизм.">Великої П'ятірки</span>. Без рис особистості передбачувальна сила ЕІ різко знижується; ЕІ називають «кошиком» для всього, що не вкладається в IQ.</p>
+      <p><b>Ризик моральних суджень:</b> включення доброти й альтруїзму перетворює конструкт на інструмент нормативних оцінок «правильної людини».</p>
+      <p><b>Позиція Маєра–Саловея–Карузо:</b> ЕІ — справжня когнітивна здібність: має правильні й неправильні відповіді, корелює з іншими вимірами інтелекту, розвивається з віком. Тест <span class="tip" tabindex="0" data-tip="MSCEIT — тест Маєра–Саловея–Карузо на емоційний інтелект; вимірює здібності завданнями.">MSCEIT</span> має прийнятні психометричні характеристики.</p></div></div>
+    <h3>Критика конкретних моделей (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>Модель Маєра–Саловея–Карузо</h4><small>натисни</small></div><div class="face back">Найбільш науково обґрунтована, але критерій «правильної відповіді» невирішений: консенсус вибірки чи експерти? Залежить від культури. MSCEIT вимірює знання про емоції, а не реальне регулювання.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>Модель Гоулмана</h4><small>натисни</small></div><div class="face back">Занадто широкий перелік компетентностей — конструкт перестає бути операціональним. Після контролю за Великою П'ятіркою предикативна валідність щодо трудових показників зникає (метааналіз, 2003).</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>Модель Бар-Она</h4><small>натисни</small></div><div class="face back">Структура зводиться до вимірювання рис особистості самозвітом; EQ-i сильно корелює з нейротизмом і доброзичливістю, що ставить під сумнів дискримінантну валідність.</div></div></div>
+    </div>
+    <div class="acc-item" style="margin-top:14px"><button class="acc-head">Сучасний погляд на обмеження ЕІ <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>ЕІ не антипод IQ:</b> g-фактор залишається найкращим предиктором академічних і професійних досягнень; ЕІ додає певний внесок там, де центральна робота з людьми.</p><p><b>Емпатія без маніпуляцій:</b> точне читання емоцій може слугувати і підтримці, і маніпуляціям; ЕІ морально нейтральний.</p><p><b>Унікальний перетин мислення й емоцій:</b> у вузькому (здібнісному) розумінні ЕІ описує реальний феномен: емоційна інформація входить у когнітивні процеси й покращує рішення (дослідження Дамасіо).</p></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Висновок сучасної науки: ЕІ — реальний, але скромніший феномен, ніж обіцяли ранні ентузіасти; його дослідження потребує строгих методів і чесного визнання обмежень.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 3</span><div id="q3"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> ЕІ у професії організаційного психолога</h2>
+    <p class="lede">Попри суперечки, в організаційній психології емоційно-інтелектуальні компетентності вважаються критично важливими: психолог працює на перетині когнітивного аналізу та глибокої людської взаємодії.</p>
+    <h3>Чому ЕІ важливий для бізнесу (за матеріалами презентації)</h3>
+    <div class="grid3">
+      <div class="card bignum"><small>УСПІХ ЧЕРЕЗ ЕІ</small><div class="n">80%</div><p>За даними Harvard Business Review, до 80% успіху в більшості професій визначають соціально-емоційні навички, техніка — 20%.</p></div>
+      <div class="card bignum"><small>ВПЛИВ НА ЕФЕКТИВНІСТЬ</small><div class="n">58%</div><p>За дослідженням TalentSmart, ЕІ відповідає за 58% ефективності роботи в різних галузях.</p></div>
+      <div class="card bignum"><small>ЗНИЖЕННЯ ПЛИННОСТІ</small><div class="n">34%</div><p>Організації, що розвивають ЕІ лідерів, фіксують нижчу плинність кадрів і вищу залученість.</p></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Такі цифри часто цитують у бізнес-літературі, але частина 3 показує, що наукова база подібних тверджень обмежена (кореляція не є причинністю). Перевіряйте первинні джерела й методологію, перш ніж спиратися на ці числа.</div>
+    <div class="acc-item open"><button class="acc-head">Емпатія як управлінський інструмент <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Менеджери з розвиненою емпатією оцінюються підлеглими як ефективніші, а їхні команди показують вищу продуктивність і задоволеність. Емпатія дозволяє вчасно розпізнавати демотивацію, перевантаження та конфлікти.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Запобігання вигоранню <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Психолог із розвиненим ЕІ відстежує власні стресові стани й регулює їх. Дослідження показують: фахівці з вищим ЕІ демонструють нижчий рівень <span class="tip" tabindex="0" data-tip="Професійне вигорання — стан емоційного, розумового й фізичного виснаження через тривалий професійний стрес.">вигорання</span> навіть при вищому навантаженні.</p></div></div>
+    <h3>Соціальна підтримка як буфер організаційного стресу: модель Дж. Хауса (1981)</h3>
+    <div class="grid4">
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">💛</div><h4>Емоційна</h4></div><div class="face back">Емпатія, турбота, довіра між колегами.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">💡</div><h4>Інформаційна</h4></div><div class="face back">Поради, зворотний зв'язок, корисна інформація.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🛠</div><h4>Інструментальна</h4></div><div class="face back">Реальна допомога у виконанні завдань.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">📋</div><h4>Оцінювальна</h4></div><div class="face back">Конструктивний зворотний зв'язок щодо результатів.</div></div></div>
+    </div>
+    <div class="acc-item" style="margin-top:14px"><button class="acc-head">Надспеціалізація та профілактика вигорання <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Парадокс:</b> прагнення до ефективності через вузьку спеціалізацію фрагментує ролі, послаблює колегіальні зв'язки й буферну функцію підтримки.</p><p><b>Профілактика:</b> за даними Маслах і Лейтер, ефективнішою за індивідуальну стресостійкість є якість соціальних зв'язків у колективі. Психолог може проєктувати середовище: структура командної роботи, ритуали зворотного зв'язку, культура психологічної безпеки.</p></div></div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 4</span><div id="q4"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 5 -->
+  <section class="panel" id="t-5">
+    <h2><span class="idx">05</span> Емоційний інтелект у сучасній динаміці</h2>
+    <p class="lede">Від академічних дискусій про природу ЕІ — до прикладних корпоративних моделей, програм розвитку, нових технологій і питань наукової доброчесності.</p>
+    <div class="acc-item open"><button class="acc-head">Від теорії до практики <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Великі компанії (Google, Microsoft, Johnson &amp; Johnson) інвестують у програми розвитку емоційної компетентності; ринок ЕІ-тренінгів досяг мільярдних обсягів.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Навчені навички чи фіксований конструкт? <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Якщо ЕІ — когнітивна здібність (Маєр–Саловей), його розвиток обмежений генетично. Якщо набір компетентностей (Гоулман) — їх можна формувати навчанням і коучингом. Сучасна практика схиляється до другого погляду: емпатія, активне слухання, емоційна саморегуляція розвиваються через структуроване навчання, зворотний зв'язок і рефлексію, хоча темп і межі індивідуальні.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Проблема комерціалізації та критичні розбіжності <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Ринок переповнений недостатньо валідизованими тестами та «сертифікованими коучами» без наукової бази; ефект програм не піддається незалежній оцінці.</p>
+      <p><b>Валідність прогнозів:</b> метааналіз (2004) показав помірні кореляції ЕІ з трудовими показниками (r≈0,24), що суттєво слабшають після контролю за IQ і рисами особистості.</p>
+      <p><b>Перетин з рисами:</b> значна частина «ЕІ» відображає низький нейротизм і високу доброзичливість.</p>
+      <p><b>Анекдотичні докази:</b> кореляція ≠ причинність; без рандомізованих контрольованих досліджень важко ізолювати внесок ЕІ.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Інструменти організаційного психолога в епоху ШІ <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Автоматизація психометрії:</b> аналіз профілів алгоритмами, предиктивні моделі плинності та ризику вигорання, sentiment-аналіз комунікацій, автоматизоване відеоінтерв'ю з аналізом мікровиразів.</p><p><b>Personality AI і етичні виклики:</b> платформи обіцяють будувати психологічні профілі з публічних даних. Алгоритми виявляють патерни, але не враховують контекст, культуру та унікальність людини; ризики дискримінації та деперсоналізації реальні.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Адаптивне середовище, конфлікти та «колективний ЕІ» <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Дослідження MIT: ефективність команд визначається не середнім IQ, а якістю взаємодії: соціальною чутливістю, рівномірністю участі, психологічною безпекою.</p><p>Практики: «кола» рефлексії, peer-coaching, check-in / check-out. Конфлікт — симптом незадоволених потреб і порушених зв'язків; медіація, що спирається на розуміння емоцій сторін, перетворює деструктивні конфлікти на продуктивні.</p></div></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Майбутнє — за інтегральною компетентністю: когнітивна гнучкість, емоційна регуляція та соціальна чутливість. Психолог — не конкурент ШІ, а той, хто критично інтерпретує дані алгоритмів у світлі розуміння людської природи.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Головний виклик — наукова доброчесність в епоху хайпу: критично оцінювати інструменти вимірювання ЕІ, не продавати «магічні рішення» й чесно говорити про обмеження.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 5</span><div id="q5"></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ -->
+  <section class="panel" id="t-work">
+    <h2><span class="idx">TASK</span> Завдання для самостійної роботи</h2>
+    <p class="lede">Завдання 1–4 спираються на матеріал частин 1–5. Виконуйте їх у відкритих полях: усе потрапить у звіт.</p>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl1"></div>
+
+    <h3>Завдання 1. Критика трьох моделей ЕІ</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для кожної моделі запишіть, як вона визначає ЕІ, яка її головна критика та ваша власна оцінка (чи слушна критика, що можна заперечити).</div>
+    <div id="t1fields"></div>
+
+    <h3>Завдання 2. Аналітичне есе</h3>
+    <div class="result-box"><b>Тема.</b> «ЕІ — реальний, але скромніший феномен, ніж обіцяли ентузіасти»: погодьтеся чи заперечте цю тезу, спираючись на науковий матеріал.</div>
+    <div class="callout advice"><b class="lbl">Порада</b>Використайте шаблон структури нижче й додайте щонайменше два джерела поза презентацією.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Теза: моя позиція щодо статусу ЕІ.
+Аргументи «за» (з посиланням на модель/дослідження).
+Контраргументи й обмеження (валідність, риси особистості).
+Висновок: що це означає для організаційного психолога.
+Список джерел.</pre></div>
+    <div id="t2fields"></div>
+
+    <h3>Завдання 3. Кейс: ШІ-інструменти в організації</h3>
+    <div class="result-box"><b>Ситуація.</b> Компанія планує: (а) автоматизований аналіз мікровиразів на відеоінтерв'ю; (б) програму розвитку ЕІ від зовнішніх «сертифікованих коучів» з недостатньо валідизованим тестом; (в) профілі кандидатів, побудовані за публічними даними. Керівництво просить організаційного психолога висловити позицію.</div>
+    <div id="t3fields"></div>
+
+    <h3>Завдання 4. План соціальної підтримки команди (модель Хауса)</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для команди з вузькою спеціалізацією, де колегіальні зв'язки ослабли, запропонуйте по одній конкретній дії чи ритуалу для кожного типу підтримки.</div>
+    <div id="t4fields"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Оберіть відповідь — одразу з'явиться «правильно/неправильно» та пояснення. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 6</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані студента та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" data-save placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Самостійна робота 1 · Еволюція інтелекту: від Торндайка до сучасності</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var PQ=[
+ {id:'q1',l:'Чому Торндайка вважають першопрохідцем? Наведіть три аргументи своїми словами.',r:5},
+ {id:'q2',l:'Які два види інтелекту Гарднера найважливіші для організаційного психолога й чому?',r:5},
+ {id:'q3',l:'Яку з критичних позицій щодо ЕІ ви вважаєте найсильнішою? Обґрунтуйте.',r:5},
+ {id:'q4',l:'Як ЕІ допомагає організаційному психологу запобігати вигоранню (власному та працівників)?',r:5},
+ {id:'q5',l:'Чи можна розвинути ЕІ? Порівняйте відповіді здібнісного й компетентнісного підходів.',r:5}];
+var MODELS=['Майєр–Саловей–Карузо (MSCEIT)','Гоулман','Бар-Он (EQ-i)'];
+var COLS=['Як визначає ЕІ','Головна критика','Ваша оцінка / контраргумент'];
+var T1=[],T2=[{id:'t2_s1',l:'Джерело 1 поза презентацією (автор, назва, рік)',r:2},{id:'t2_s2',l:'Джерело 2 поза презентацією (автор, назва, рік)',r:2},{id:'t2_essay',l:'Аналітичне есе',r:14}];
+var T3=[{id:'t3_a1',l:'1. Які наукові й етичні ризики мають пропоновані інструменти?',r:6},{id:'t3_a2',l:'2. Що ви перевірите перед впровадженням (валідність, надійність, незалежна оцінка, культурна чутливість, дискримінація)?',r:6},{id:'t3_a3',l:'3. Ваші рекомендації керівництву та людиноцентрична альтернатива',r:7}];
+var T4=[{id:'t4_emo',l:'Емоційна підтримка — дія / ритуал',r:3},{id:'t4_inf',l:'Інформаційна підтримка — дія / ритуал',r:3},{id:'t4_ins',l:'Інструментальна підтримка — дія / ритуал',r:3},{id:'t4_eva',l:'Оцінювальна підтримка — дія / ритуал',r:3}];
+var CL={cl0:['Опрацьовано частину 1 (Торндайк).','Опрацьовано частину 2 (Гарднер).','Опрацьовано частину 3 (критика ЕІ).','Опрацьовано частину 4 (ЕІ у професії).','Опрацьовано частину 5 (динаміка та ШІ).'],
+ cl1:['Дайте відповіді на питання до частин 1–5.','Заповніть таблицю критики моделей (завдання 1).','Напишіть есе й додайте два джерела (завдання 2).','Проаналізуйте кейс (завдання 3).','Складіть план підтримки команди (завдання 4).','Пройдіть тест і завантажте звіт.']};
+var QZ=[
+ {q:'Які три види інтелекту виділив Торндайк у статті 1920 р.?',o:['Механічний, абстрактний, соціальний','Вербальний, музичний, натуралістичний','Когнітивний, емоційний, моральний'],ok:0,e:'У «Intelligence and Its Uses» Торндайк виділив механічний (предмети), абстрактний (символи й ідеї) та соціальний (розуміння людей) інтелект.'},
+ {q:'Як Гарднер визначає інтелект?',o:['Єдиний загальний фактор g, що вимірюється IQ','Здатність вирішувати проблеми або створювати продукти, цінні принаймні в одному культурному середовищі','Результат вербально-логічного тесту'],ok:1,e:'Визначення Гарднера включає культурний контекст і практичну значущість, на відміну від g-фактора Спірмена.'},
+ {q:'Які види інтелекту Гарднера стали безпосередніми попередниками концепції ЕІ?',o:['Логіко-математичний і просторовий','Внутрішньоособистісний і міжособистісний','Музичний і кінестетичний'],ok:1,e:'Саме внутрішньо- та міжособистісний інтелекти є найближчими до емоційного інтелекту за змістом.'},
+ {q:'Яка головна претензія до моделі Бар-Она у презентації?',o:['Вона вимірює лише IQ','Її структура зводиться до вимірювання рис особистості самозвітом (висока кореляція з нейротизмом і доброзичливістю)','Тест має занадто багато правильних відповідей'],ok:1,e:'Висока кореляція EQ-i зі шкалами Великої П\u2019ятірки ставить під сумнів дискримінантну валідність моделі.'},
+ {q:'У чому полягає проблема «правильної відповіді» в MSCEIT?',o:['Тест не має підрахунку балів','Незрозуміло, хто визначає правильну відповідь (консенсус чи експерти), а це залежить від культури','Тест вимірює лише фізіологічні реакції'],ok:1,e:'Правильність визначається консенсусом вибірки або думкою експертів; емоційне розуміння залежить від культури, а тест вимірює скоріше знання про емоції, ніж реальне регулювання.'},
+ {q:'Які чотири типи соціальної підтримки виділив Дж. Хаус?',o:['Фізична, фінансова, юридична, медична','Емоційна, інформаційна, інструментальна, оцінювальна','Вербальна, невербальна, візуальна, цифрова'],ok:1,e:'Модель Хауса (1981) виокремлює емоційну, інформаційну, інструментальну та оцінювальну підтримку як буфер організаційного стресу.'}];
+
+function mk(id,l,r){return '<div class="fld"><label for="'+id+'">'+l+'</label><textarea id="'+id+'" data-save data-wc rows="'+r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+PQ.forEach(function(f){$('#'+f.id).innerHTML=mk('f_'+f.id,f.l,f.r);f.id='f_'+f.id;});
+var h='';
+MODELS.forEach(function(m,i){h+='<div class="crit"><h4>'+(i+1)+'. '+m+'</h4><div class="grid3">';
+ COLS.forEach(function(c,j){var id='t1_'+i+'_'+j;T1.push({id:id});h+=mk(id,c,5);});h+='</div></div>';});
+T1.push({id:'t1_con'});h+=mk('t1_con','Узагальнюючий висновок: що спільного й відмінного в критиці трьох моделей',7);
+$('#t1fields').innerHTML=h;
+$('#t2fields').innerHTML=T2.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$('#t3fields').innerHTML=T3.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$('#t4fields').innerHTML=T4.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='sr1_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ el.addEventListener(el.type==='checkbox'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();});});
+clProg();
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+var ans=[],score=0;
+$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('.quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function filled(a){return a.filter(function(f){return $('#'+f.id).value.trim()}).length}
+function stats(){var rows=[['Питання до частин',filled(PQ),PQ.length],['Завдання 1',filled(T1),T1.length],['Завдання 2',filled(T2),T2.length],['Завдання 3',filled(T3),T3.length],['Завдання 4',filled(T4),T4.length],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('із самостійної роботи 1. Еволюція інтелекту: від Торндайка до сучасності',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:240});
+ x+=H('Питання до частин 1–5');
+ PQ.forEach(function(f,i){x+=S((i+1)+'. '+f.l)+paras(v(f.id));});
+ x+=H('Завдання 1. Критика трьох моделей ЕІ');
+ var rows=[['Модель'].concat(COLS)];MODELS.forEach(function(m,i){rows.push([m,v('t1_'+i+'_0'),v('t1_'+i+'_1'),v('t1_'+i+'_2')])});
+ x+=table(rows,[2200,2480,2480,2478])+S('Узагальнюючий висновок')+paras(v('t1_con'));
+ x+=H('Завдання 2. Аналітичне есе')+para('Тема: «ЕІ — реальний, але скромніший феномен, ніж обіцяли ентузіасти»',{i:1});
+ x+=S('Джерела')+paras('1. '+(v('t2_s1').trim()||'— не заповнено —'))+paras('2. '+(v('t2_s2').trim()||'— не заповнено —'))+S('Есе')+paras(v('t2_essay'));
+ x+=H('Завдання 3. Кейс: ШІ-інструменти в організації');
+ T3.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('Завдання 4. План соціальної підтримки команди (модель Хауса)');
+ x+=table([['Тип підтримки','Дія / ритуал']].concat(T4.map(function(f){return [f.l.replace(/ — дія \/ ритуал/,''),v(f.id)]})),[2800,6838]);
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_СР1_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, чек-листи та дані студента?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clProg();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+</body>
+</html>

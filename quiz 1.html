@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ПСИХОЛОГІЯ.LAB — Психо-квіз: влучи у відповідь</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+  /* змінні, які використовує логіка гри */
+  --surface:#ffffff; --muted:#4a5568; --accent:#00b8c4; --bad:#d6006e;
+  --okbg:rgba(10,155,92,.1); --badbg:rgba(214,0,110,.1);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink);font-family:'Rajdhani','Segoe UI',Arial,sans-serif;font-size:16px;line-height:1.5;min-height:100vh;overflow-x:hidden}
+::selection{background:var(--cyan);color:#fff}
+h1,h2,h3{font-family:'Orbitron','Segoe UI',Arial,sans-serif;letter-spacing:.02em}
+main{display:block;width:100%;max-width:860px;margin:0 auto;padding:18px 18px 60px}
+.hud-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:10px 18px;background:var(--bg-panel);
+  border:1px solid var(--line);border-radius:10px;margin-bottom:16px;box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--ink-soft)}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok)}
+.stats{display:flex;align-items:center;gap:10px;white-space:nowrap;flex-wrap:wrap}
+.stats b{color:var(--ink);font-size:15px;font-variant-numeric:tabular-nums}
+section.panel{position:relative;background:var(--bg-panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px;box-shadow:var(--shadow);overflow:hidden}
+section.panel::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.04) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.03) 0 2px, transparent 2px 30px)}
+section.panel > *{position:relative}
+.hero-tag{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.15em;
+  color:var(--cyan-deep);background:rgba(0,184,196,.1);border:1px solid rgba(0,184,196,.4);padding:4px 10px;border-radius:20px;margin-bottom:14px}
+.controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;
+  font-family:'Share Tech Mono',monospace;font-size:12.5px;color:var(--ink-soft)}
+.controls b{color:var(--ink)}
+.control-btn{padding:7px 12px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;
+  font:13px 'Share Tech Mono',monospace;cursor:pointer;transition:.15s}
+.control-btn:hover:not(:disabled){background:var(--cyan-deep);border-color:var(--cyan-deep)}
+.control-btn:disabled{opacity:.4;cursor:default;background:transparent;color:var(--ink);border-color:var(--line)}
+.control-btn:focus-visible{outline:3px solid rgba(0,184,196,.55);outline-offset:2px}
+.dots{display:flex;gap:6px;margin-bottom:18px}
+.dots i{height:5px;flex:1;border-radius:4px;background:var(--grid);transition:background .3s}
+.dots i.done{background:var(--cyan)}
+.dots i.now{background:var(--magenta)}
+h1{font-size:clamp(17px,3.4vw,24px);line-height:1.35;border-bottom:2px solid var(--cyan);padding-bottom:10px;margin:0 0 16px;min-height:2.9em}
+.timer{height:8px;background:var(--grid);border-radius:6px;overflow:hidden}
+.timer span{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),var(--ok))}
+.hint{margin:10px 0 14px;font-family:'Share Tech Mono',monospace;font-size:12.5px;color:var(--ink-soft);min-height:1.4em}
+.stage{position:relative;height:288px;overflow:hidden;border-radius:12px;background:var(--bg-soft);border:1px solid var(--line)}
+.lane{position:absolute;left:0;right:0;height:72px;border-top:1px dashed var(--line)}
+.lane:first-child{border-top:0}
+.ans{position:absolute;top:0;left:0;margin:0;height:46px;line-height:44px;padding:0 20px;border:1.5px solid var(--ink);
+  border-radius:10px;background:var(--bg-panel);color:var(--ink);font:600 17px 'Rajdhani','Segoe UI',Arial,sans-serif;white-space:nowrap;
+  cursor:pointer;will-change:transform;touch-action:manipulation;box-shadow:0 2px 8px rgba(16,24,38,.08)}
+.ans:hover{background:var(--ink);color:#fff}
+.ans:focus-visible{outline:3px solid rgba(0,184,196,.55);outline-offset:2px}
+.ans.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+.ans.bad{background:var(--bad);border-color:var(--bad);color:#fff}
+.ans.popped{animation:answer-pop .2s ease-out forwards}
+@keyframes answer-pop{to{scale:.05;opacity:0;filter:blur(2px)}}
+.particle{position:absolute;width:7px;height:7px;border-radius:2px;z-index:3;pointer-events:none;will-change:transform,opacity;animation:particle-burst .62s cubic-bezier(.16,.7,.4,1) forwards}
+@keyframes particle-burst{to{transform:translate(var(--dx),var(--dy)) rotate(var(--turn)) scale(.25);opacity:0}}
+.stage.idle{display:flex;align-items:center;justify-content:center;color:var(--cyan-deep);font-family:'Share Tech Mono',monospace;font-size:14px;letter-spacing:.1em}
+main.shake{animation:screen-shake .28s ease-in-out}
+@keyframes screen-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+@media(prefers-reduced-motion:reduce){main.shake{animation:none}}
+.confetti-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:60}
+.confetti-piece{position:absolute;opacity:0;will-change:transform,opacity;animation:confetti-flight 1.3s ease-out forwards}
+@keyframes confetti-flight{0%{transform:translate(0,0) rotate(0);opacity:0}8%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--turn));opacity:0}}
+.overlay{position:fixed;inset:0;background:rgba(16,24,38,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.overlay.show{display:flex}
+.card{width:100%;max-width:520px;max-height:92vh;overflow:auto;background:var(--bg-panel);border-radius:var(--radius);padding:26px;border:1px solid var(--line);box-shadow:var(--shadow);animation:pop .25s ease-out}
+@keyframes pop{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
+.card h2{margin:0 0 14px;font-size:19px;border-bottom:2px solid var(--cyan);padding-bottom:10px}
+.card .right{display:block;margin:6px 0 14px;padding:10px 14px;border-radius:10px;background:rgba(10,155,92,.08);
+  border:1px solid var(--ok);border-left-width:5px;color:var(--ink);font-weight:700;font-size:17px}
+.card p{margin:0 0 20px;line-height:1.55;font-size:16px}
+.btn{width:100%;padding:13px 16px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;
+  font:14px 'Share Tech Mono',monospace;cursor:pointer;transition:.15s}
+.btn:hover{background:var(--cyan-deep);border-color:var(--cyan-deep)}
+.btn:focus-visible{outline:3px solid rgba(0,184,196,.55);outline-offset:3px}
+.end{text-align:left}
+.end .big{font-family:'Orbitron','Segoe UI',sans-serif;font-size:68px;font-weight:900;line-height:1;margin-bottom:6px;
+  background:linear-gradient(90deg,var(--ink) 30%,var(--cyan-deep));-webkit-background-clip:text;background-clip:text;color:transparent}
+.end .btn + .btn{margin-top:10px}
+.setup-mode{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 18px;color:var(--ink-soft);
+  font-family:'Share Tech Mono',monospace;font-size:13px}
+.setup-mode select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:600 15px 'Rajdhani','Segoe UI',sans-serif}
+.setup-mode select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,184,196,.18)}
+.setup-options{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 18px;color:var(--ink-soft);font-family:'Share Tech Mono',monospace;font-size:13px}
+.setup-options label{display:flex;align-items:center;gap:7px;cursor:pointer}
+.setup-options input{accent-color:var(--cyan-deep);width:18px;height:18px}
+footer{text-align:center;color:var(--ink-soft);font-family:'Share Tech Mono',monospace;font-size:12px;padding:20px 0 0}
+@media (max-width:600px){section.panel{padding:20px 16px}}
+@media (max-width:520px){.stage{height:264px}.lane{height:66px}.ans{font-size:16px;padding:0 16px}}
+</style>
+</head>
+<body>
+<main>
+  <header class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / QUIZ-CORE — ОНЛАЙН</span><span class="stats"><span>БАЛИ: <b id="score">0</b></span><span>·</span><span>СЕРІЯ: <b id="streak">0</b></span><span>·</span><span>ТОЧНІСТЬ: <b id="accuracy">0%</b></span></span></header>
+  <section class="panel">
+    <span class="hero-tag">// PSYCH_QUIZ · REACTION.TEST</span>
+    <div class="controls"><span class="difficulty-current">СКЛАДНІСТЬ: <b id="modeLabel">Звичайна</b></span><button class="control-btn" id="pause" type="button" disabled>Пауза (Esc)</button></div>
+    <div class="dots" id="dots"></div>
+    <h1 id="q"></h1>
+    <div class="timer"><span id="bar"></span></div>
+    <p class="hint" id="hint"></p>
+    <div class="stage" id="stage"></div>
+  </section>
+  <footer>ПСИХОЛОГІЯ.LAB · Психо-квіз: влучи у відповідь</footer>
+</main>
+
+<div class="overlay" id="ov"><div class="card" id="card" role="dialog" aria-modal="true"></div></div>
+
+<script>
+const QS=[
+ {q:"Хто вважається засновником психоаналізу?",a:"Зигмунд Фрейд",w:["Карл Роджерс","Іван Павлов","Б. Ф. Скіннер"],t:"Психоаналіз",e:"Зигмунд Фрейд на межі XIX–XX століть запропонував, що поведінкою керують і несвідомі мотиви, витіснені бажання та дитячий досвід. Роджерс розвивав гуманістичний напрям, Павлов вивчав рефлекси, Скіннер — підкріплення."},
+ {q:"Хто описав класичне обумовлення на прикладі собак і дзвінка?",a:"Іван Павлов",w:["Зигмунд Фрейд","Абрахам Маслоу","Жан Піаже"],t:"Класичне обумовлення",e:"Павлов помітив, що нейтральний сигнал (дзвінок), який повторно збігається з їжею, починає сам викликати слиновиділення. Так формується умовний рефлекс — основа багатьох звичок і страхів."},
+ {q:"Що таке когнітивний дисонанс?",a:"Дискомфорт від суперечливих думок і вчинків",w:["Втрата пам'яті","Страх відкритих просторів","Швидке мислення"],t:"Когнітивний дисонанс",e:"Леон Фестінгер показав: коли наші вчинки розходяться з переконаннями, виникає напруга. Щоб її зняти, ми змінюємо поведінку, переконання або вигадуємо виправдання («усі так роблять»)."},
+ {q:"Що лежить в основі піраміди потреб Маслоу?",a:"Фізіологічні потреби",w:["Самореалізація","Повага оточення","Дружба"],t:"Піраміда потреб",e:"За Маслоу, спершу людина задовольняє базове: сон, їжа, вода. Далі йдуть безпека, приналежність, повага і на вершині — самореалізація. Верхні рівні важко досягти, коли базові не закриті."},
+ {q:"Що описує ефект Даннінга–Крюгера?",a:"Новачки переоцінюють свою компетентність",w:["Експерти завжди впевнені","Групи ухвалюють кращі рішення","Страх публічних виступів"],t:"Ефект Даннінга–Крюгера",e:"Люди з малим досвідом часто не бачать власних помилок, бо їм бракує знань, щоб оцінити якість роботи. З досвідом оцінка стає реалістичнішою, а іноді експерти навіть себе недооцінюють."},
+ {q:"Що таке упередження підтвердження?",a:"Шукати докази своєї правоти",w:["Довіряти експертам","Вірити першому враженню","Забувати погане"],t:"Упередження підтвердження",e:"Ми помічаємо й запам'ятовуємо інформацію, що збігається з нашими переконаннями, а суперечливу ігноруємо. Щоб протидіяти, варто свідомо шукати аргументи проти власної думки."},
+ {q:"Чому в натовпі людині допомагають рідше?",a:"Розмивання відповідальності",w:["Через поспіх","Через слабку емпатію","Через страх темряви"],t:"Ефект свідка",e:"Що більше людей поруч, то сильніше кожен вважає, що допоможе хтось інший. Тому в екстреній ситуації корисно звернутися до конкретної людини: «Ви, у жовтій куртці, викличте швидку!»"},
+ {q:"Яка структура мозку головно пов'язана зі страхом?",a:"Мигдалеподібне тіло",w:["Мозочок","Гіпокамп","Потилична частка"],t:"Мигдалеподібне тіло",e:"Амігдала швидко оцінює загрозу ще до того, як ми її усвідомимо, і запускає реакцію «бий або тікай». Гіпокамп відповідає за пам'ять, мозочок — за координацію рухів."}
+];
+
+const $=id=>document.getElementById(id);
+const stage=$('stage'),bar=$('bar'),hint=$('hint');
+const pauseButton=$('pause');
+let i=0,score=0,correctCount=0,answeredCount=0,streak=0,bestStreak=0,locked=true,raf=0,timer=0,items=[];
+let runQuestions=QS,missedQuestions=[],isReview=false,mainResult=null;
+let phase='setup',isPaused=false,waitDuration=0,waitRemaining=0,waitStartedAt=0,currentDuration=4200,runClock=0,lastFrame=0,difficulty='normal';
+let soundEnabled=true,vibrationEnabled=true,audioContext=null;
+function updateStats(){
+  $('score').textContent=score;
+  $('streak').textContent=streak;
+  $('accuracy').textContent=answeredCount?Math.round(correctCount/answeredCount*100)+'%':'0%';
+}
+
+function getPrepDuration(){return difficulty==='hard'?1200+Math.random()*900:2000+Math.random()*1500}
+function setPhase(next){phase=next;pauseButton.disabled=phase!=='prep'&&phase!=='answers'}
+function schedulePreparation(){
+  waitStartedAt=performance.now();
+  bar.style.transition='none';bar.style.width=`${waitDuration?waitRemaining/waitDuration*100:0}%`;
+  void bar.offsetWidth;
+  bar.style.transition=`width ${waitRemaining}ms linear`;bar.style.width='0%';
+  timer=setTimeout(()=>{waitRemaining=0;launch()},waitRemaining);
+}
+function pauseGame(){
+  if(isPaused||(phase!=='prep'&&phase!=='answers'))return;
+  isPaused=true;pauseButton.disabled=true;
+  if(phase==='prep'){
+    clearTimeout(timer);
+    waitRemaining=Math.max(0,waitRemaining-(performance.now()-waitStartedAt));
+    bar.style.transition='none';bar.style.width=`${waitDuration?waitRemaining/waitDuration*100:0}%`;
+  }else{
+    cancelAnimationFrame(raf);raf=0;
+  }
+  show('<h2>&#1055;&#1072;&#1091;&#1079;&#1072;</h2><p>&#1056;&#1072;&#1091;&#1085;&#1076; &#1087;&#1088;&#1080;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1086;.</p><button class="btn" id="go">&#1055;&#1088;&#1086;&#1076;&#1086;&#1074;&#1078;&#1080;&#1090;&#1080;</button>',resumeGame);
+}
+function resumeGame(){
+  hide();isPaused=false;setPhase(phase);
+  if(phase==='prep')schedulePreparation();
+  else if(phase==='answers'){lastFrame=performance.now();raf=requestAnimationFrame(tick)}
+}
+const DUR=4200; // скільки секунд відповідь летить через екран
+
+function shuffle(a){a=a.slice();for(let k=a.length-1;k>0;k--){const j=Math.floor(Math.random()*(k+1));[a[k],a[j]]=[a[j],a[k]]}return a}
+function dots(){$('dots').innerHTML=runQuestions.map((_,k)=>`<i class="${k<i?'done':k===i?'now':''}"></i>`).join('')}
+
+function start(){
+  cancelAnimationFrame(raf);clearTimeout(timer);
+  isPaused=false;setPhase('prep');
+  const Q=runQuestions[i];dots();locked=true;
+  $('q').textContent=Q.q;
+  stage.innerHTML='';stage.className='stage idle';stage.textContent='\u041f\u0440\u0438\u0433\u043e\u0442\u0443\u0439\u0441\u044f\u2026';
+  hint.textContent='\u0412\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456 \u0437\u2019\u044f\u0432\u043b\u044f\u0442\u044c\u0441\u044f \u0437\u0430 \u043a\u0456\u043b\u044c\u043a\u0430 \u0441\u0435\u043a\u0443\u043d\u0434. \u041f\u0440\u043e\u0447\u0438\u0442\u0430\u0439 \u0437\u0430\u043f\u0438\u0442\u0430\u043d\u043d\u044f.';
+  waitDuration=getPrepDuration();waitRemaining=waitDuration;
+  schedulePreparation();
+}
+
+function launch(){
+  if(isPaused)return;
+  const Q=runQuestions[i];
+  setPhase('answers');
+  currentDuration=difficulty==='hard'?3200:DUR;
+  stage.className='stage';stage.textContent='';
+  hint.textContent='\u041a\u043b\u0456\u043a\u043d\u0438 \u0430\u0431\u043e \u0442\u043e\u0440\u043a\u043d\u0438\u0441\u044c \u043f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e\u0457 \u0432\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456.';
+  bar.style.transition='none';bar.style.width='0%';
+  const order=shuffle([{t:Q.a,c:true},...Q.w.map(t=>({t,c:false}))]);
+  // Stagger the answers in two pairs.
+  const early=Math.random()*400, late=1700+Math.random()*500;
+  const delays=shuffle([early,early+200+Math.random()*300,late,late+250+Math.random()*350]);
+  for(let l=0;l<4;l++){
+    const lane=document.createElement('div');lane.className='lane';lane.style.top=(l*(stage.clientHeight/4))+'px';
+    lane.style.height=(stage.clientHeight/4)+'px';
+    stage.appendChild(lane);
+  }
+  const laneH=stage.clientHeight/4;
+  const trickLanes=[];
+  if(Math.random()<.75)trickLanes.push(Math.floor(Math.random()*order.length));
+  if(Math.random()<.2){let second;do{second=Math.floor(Math.random()*order.length)}while(trickLanes.includes(second));trickLanes.push(second)}
+  const trickTypes=['lane','accelerate','wobble'];
+  const tricks=new Map(trickLanes.map(l=>[l,trickTypes[Math.floor(Math.random()*trickTypes.length)]]));
+  items=order.map((o,l)=>{
+    const b=document.createElement('button');b.className='ans';b.textContent=o.t;
+    b.style.top=(l*laneH+(laneH-46)/2)+'px';
+    b.style.transform='translateX(-9999px)';
+    b.addEventListener('pointerdown',e=>{e.preventDefault();pick(o.c,b)});
+    stage.appendChild(b);
+    const laneDirection=l===0?1:l===3?-1:Math.random()<.5?-1:1;
+    const item={el:b,c:o.c,delay:delays[l],dir:l%2?1:-1,w:b.offsetWidth,progress:0,trick:tricks.get(l)||null,laneH,laneDirection,baseY:l*laneH+(laneH-46)/2,dodgeStart:null,dodgeX:0,dodgeY:0,dodgeAttempted:false,done:false};
+    b.addEventListener('pointerenter',e=>dodgeAnswer(item,e));
+    return item;
+  });
+  locked=false;runClock=0;lastFrame=performance.now();
+  raf=requestAnimationFrame(tick);
+}
+
+function tick(now){
+  if(isPaused||locked)return;
+  const frameStart=runClock;
+  runClock+=Math.min(now-lastFrame,50);lastFrame=now;
+  let alive=false;
+  items.forEach(it=>{
+    const activeDelta=Math.max(0,runClock-Math.max(frameStart,it.delay));
+    const accelerating=it.trick==='accelerate'&&it.progress>=.34&&it.progress<.7;
+    it.progress+=activeDelta/currentDuration*(accelerating?1.7:1);
+    const p=it.progress;
+    if(p>=1){it.done=true;it.el.style.transform='translateX(-9999px)';return}
+    alive=true;
+    if(runClock<it.delay){it.el.style.transform='translateX(-9999px)';return}
+    const w=stage.clientWidth,span=w+it.w;
+    const x=it.dir<0?w-p*span:-it.w+p*span;
+    const laneProgress=Math.max(0,Math.min(1,(p-.32)/.2));
+    const laneEase=laneProgress*laneProgress*(3-2*laneProgress);
+    const laneShift=it.trick==='lane'?it.laneDirection*it.laneH*.82*laneEase:0;
+    const wobble=it.trick==='wobble'?Math.sin((runClock-it.delay)/220)*16:0;
+    let dodge=0;
+    if(it.dodgeStart!==null){
+      const elapsed=runClock-it.dodgeStart;
+      if(elapsed<360)dodge=Math.sin(elapsed/360*Math.PI);
+      else{it.dodgeStart=null;it.dodgeX=0;it.dodgeY=0}
+    }
+    const requestedY=laneShift+it.dodgeY*dodge;
+    const safeY=Math.max(-it.baseY,Math.min(stage.clientHeight-it.baseY-it.el.offsetHeight,requestedY));
+    it.el.style.transform=`translate(${x+wobble+it.dodgeX*dodge}px,${safeY}px)`;
+  });
+  if(!alive){raf=0;miss(true);return}
+  raf=requestAnimationFrame(tick);
+}
+
+function dodgeAnswer(item,event){
+  if(item.dodgeAttempted||event.pointerType==='touch'||locked||isPaused)return;
+  item.dodgeAttempted=true;
+  if(Math.random()>=.5)return;
+  const direction=event.clientX<item.el.getBoundingClientRect().left+item.el.offsetWidth/2?1:-1;
+  const move=Math.floor(Math.random()*3);
+  item.dodgeX=move===2?direction*(55+Math.random()*45):0;
+  item.dodgeY=move===0?-(28+Math.random()*20):move===1?28+Math.random()*20:(Math.random()-.5)*18;
+  item.dodgeStart=runClock;
+}
+
+function burstAnswer(el,correct){
+  const stageRect=stage.getBoundingClientRect();
+  const answerRect=el.getBoundingClientRect();
+  const x=answerRect.left+answerRect.width/2-stageRect.left;
+  const y=answerRect.top+answerRect.height/2-stageRect.top;
+  const color=getComputedStyle(document.documentElement).getPropertyValue(correct?'--ok':'--bad').trim();
+  const count=14;
+  for(let n=0;n<count;n++){
+    const angle=(Math.PI*2*n/count)+(Math.random()-.5)*.3;
+    const distance=34+Math.random()*48;
+    const particle=document.createElement('span');
+    particle.className='particle';
+    particle.style.left=`${x}px`;particle.style.top=`${y}px`;
+    particle.style.backgroundColor=color;
+    particle.style.width=particle.style.height=`${5+Math.random()*5}px`;
+    particle.style.setProperty('--dx',`${Math.cos(angle)*distance}px`);
+    particle.style.setProperty('--dy',`${Math.sin(angle)*distance}px`);
+    particle.style.setProperty('--turn',`${Math.random()*360-180}deg`);
+    particle.addEventListener('animationend',()=>particle.remove(),{once:true});
+    stage.appendChild(particle);
+  }
+  el.classList.add('popped');
+}
+
+function shakeScreen(){
+  const main=document.querySelector('main');
+  main.classList.remove('shake');void main.offsetWidth;main.classList.add('shake');
+  main.addEventListener('animationend',()=>main.classList.remove('shake'),{once:true});
+}
+
+function celebratePerfectRun(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const previous=document.getElementById('confetti-layer');if(previous)previous.remove();
+  const layer=document.createElement('div');layer.id='confetti-layer';layer.className='confetti-layer';
+  const styles=getComputedStyle(document.documentElement);
+  const colors=['--accent','--ok','--bad'].map(name=>styles.getPropertyValue(name).trim()).filter(Boolean);
+  for(let side=0;side<2;side++){
+    for(let n=0;n<14;n++){
+      const piece=document.createElement('span');
+      const direction=side===0?1:-1;
+      piece.className='confetti-piece';
+      piece.style.left=side===0?'0':'auto';piece.style.right=side===1?'0':'auto';
+      piece.style.top=`${48+Math.random()*24}vh`;
+      piece.style.width=`${5+Math.random()*5}px`;piece.style.height=`${8+Math.random()*8}px`;
+      piece.style.borderRadius=Math.random()<.25?'50%':'2px';
+      piece.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)]||'#4338ca';
+      piece.style.animationDuration=`${1000+Math.random()*550}ms`;
+      piece.style.animationDelay=`${Math.random()*160}ms`;
+      piece.style.setProperty('--dx',`${direction*(140+Math.random()*260)}px`);
+      piece.style.setProperty('--dy',`${-120+Math.random()*220}px`);
+      piece.style.setProperty('--turn',`${Math.random()*720-360}deg`);
+      layer.appendChild(piece);
+    }
+  }
+  document.body.appendChild(layer);
+  setTimeout(()=>layer.remove(),2100);
+}
+
+function showCorrectExplanation(){
+  const Q=runQuestions[i];
+  show(`<h2>&#1055;&#1088;&#1072;&#1074;&#1080;&#1083;&#1100;&#1085;&#1086;!</h2><div style="color:var(--muted);font-weight:600;font-size:14px">${Q.t}</div><div class="right">${Q.a}</div><p>${Q.e}</p><button class="btn" id="go">&#1044;&#1072;&#1083;&#1110;</button>`,()=>{hide();next()});
+}
+
+function pick(correct,el){
+  if(locked)return;locked=true;cancelAnimationFrame(raf);setPhase('feedback');
+  playAnswerFeedback(correct);
+  items.forEach(it=>{if(it.c)it.el.classList.add('ok')});
+  burstAnswer(el,correct);
+  if(correct){
+    answeredCount++;correctCount++;streak++;bestStreak=Math.max(bestStreak,streak);
+    const multiplier=Math.min(3,streak);
+    const points=multiplier;
+    score+=points;updateStats();
+    hint.textContent=`\u041f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e! x${multiplier} +${points} \u0431\u0430\u043b`;
+    setTimeout(showCorrectExplanation,450);
+  }else{
+    if(!isReview)missedQuestions.push(runQuestions[i]);
+    answeredCount++;streak=0;updateStats();
+    el.classList.add('bad');
+    hint.textContent='Не влучив.';
+    setTimeout(()=>miss(false),350);
+  }
+}
+
+function miss(timeout){
+  locked=true;cancelAnimationFrame(raf);setPhase('feedback');
+  if(timeout){if(!isReview)missedQuestions.push(runQuestions[i]);answeredCount++;streak=0;updateStats();playAnswerFeedback(false)}
+  const Q=runQuestions[i];
+  shakeScreen();
+  setTimeout(()=>show(`<h2>${timeout?'Час вийшов':'Розберімо ще раз'}</h2>
+   <div style="color:var(--muted);font-weight:600;font-size:14px">${Q.t}</div>
+   <div class="right">${Q.a}</div>
+   <p>${Q.e}</p>
+   <button class="btn" id="go">Далі</button>`,()=>{hide();next()}),260);
+}
+
+function next(){i++;i<runQuestions.length?start():finish()}
+
+function finish(){
+  dots();clearTimeout(timer);setPhase('result');
+  if(isReview){
+    const accuracy=answeredCount?Math.round(correctCount/answeredCount*100):0;
+    show(`<div class="end"><h2>&#1055;&#1086;&#1074;&#1090;&#1086;&#1088; &#1087;&#1086;&#1084;&#1080;&#1083;&#1086;&#1082;</h2><div class="big">${score}</div><p>&#1041;&#1072;&#1083;&#1110;&#1074; &#1091; &#1073;&#1086;&#1085;&#1091;&#1089;&#1085;&#1086;&#1084;&#1091; &#1088;&#1072;&#1091;&#1085;&#1076;&#1110;</p><p>&#1058;&#1086;&#1095;&#1085;&#1110;&#1089;&#1090;&#1100;: ${accuracy}% &middot; &#1053;&#1072;&#1081;&#1082;&#1088;&#1072;&#1097;&#1072; &#1089;&#1077;&#1088;&#1110;&#1103;: ${bestStreak}</p><button class="btn" id="go">&#1044;&#1086; &#1086;&#1089;&#1085;&#1086;&#1074;&#1085;&#1086;&#1075;&#1086; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;&#1091;</button></div>`,showMainResult);
+    return;
+  }
+  mainResult={score,correctCount,answeredCount,streak,bestStreak};
+  showMainResult();
+}
+
+function showMainResult(){
+  setPhase('result');
+  runQuestions=QS;i=QS.length;
+  score=mainResult.score;correctCount=mainResult.correctCount;answeredCount=mainResult.answeredCount;
+  streak=mainResult.streak;bestStreak=mainResult.bestStreak;
+  updateStats();dots();
+  const pct=mainResult.correctCount/QS.length;
+  const accuracy=mainResult.answeredCount?Math.round(mainResult.correctCount/mainResult.answeredCount*100):0;
+  const msg=pct===1?'&#1030;&#1076;&#1077;&#1072;&#1083;&#1100;&#1085;&#1086;. &#1056;&#1077;&#1072;&#1082;&#1094;&#1110;&#1103; &#1110; &#1079;&#1085;&#1072;&#1085;&#1085;&#1103; &#1085;&#1072; &#1074;&#1080;&#1089;&#1086;&#1090;&#1110;.':pct>=.6?'&#1044;&#1086;&#1073;&#1088;&#1080;&#1081; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;. &#1065;&#1077; &#1088;&#1072;&#1091;&#1085;&#1076; &mdash; &#1110; &#1073;&#1091;&#1076;&#1077; &#1082;&#1088;&#1072;&#1097;&#1077;.':'&#1028; &#1097;&#1086; &#1087;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1080;. &#1057;&#1087;&#1088;&#1086;&#1073;&#1091;&#1081; &#1097;&#1077; &#1088;&#1072;&#1079;.';
+  const reviewButton=missedQuestions.length?'<button class="btn" id="review">&#1055;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1080; &#1087;&#1086;&#1084;&#1080;&#1083;&#1082;&#1080; ('+missedQuestions.length+')</button>':'';
+  show(`<div class="end"><h2>&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;</h2><div class="big">${mainResult.score}</div><p>&#1041;&#1072;&#1083;&#1110;&#1074;</p><p>&#1058;&#1086;&#1095;&#1085;&#1110;&#1089;&#1090;&#1100;: ${accuracy}% &middot; &#1053;&#1072;&#1081;&#1082;&#1088;&#1072;&#1097;&#1072; &#1089;&#1077;&#1088;&#1110;&#1103;: ${mainResult.bestStreak}</p><p style="margin-top:14px">${msg}</p>${reviewButton}<button class="btn" id="go">&#1047;&#1110;&#1075;&#1088;&#1072;&#1090;&#1080; &#1097;&#1077; &#1088;&#1072;&#1079;</button></div>`,()=>showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()}),()=>showSetup(()=>{isReview=true;runQuestions=shuffle(missedQuestions);i=0;resetRound();start()}));
+  if(!isReview&&mainResult.correctCount===QS.length)celebratePerfectRun();
+}
+
+function resetRound(){score=0;correctCount=0;answeredCount=0;streak=0;bestStreak=0;updateStats()}
+
+function initAudio(){
+  if(!soundEnabled)return Promise.resolve();
+  const AudioContextClass=window.AudioContext||window.webkitAudioContext;
+  if(!AudioContextClass)return Promise.resolve();
+  try{
+    if(!audioContext)audioContext=new AudioContextClass();
+    return audioContext.state==='suspended'?audioContext.resume().catch(()=>{}):Promise.resolve();
+  }catch(_){audioContext=null;return Promise.resolve()}
+}
+function playTone(frequency,delay,duration,type,volume){
+  if(!soundEnabled||!audioContext||audioContext.state!=='running')return;
+  try{
+    const startAt=audioContext.currentTime+delay;
+    const oscillator=audioContext.createOscillator();
+    const gain=audioContext.createGain();
+    oscillator.type=type;oscillator.frequency.setValueAtTime(frequency,startAt);
+    gain.gain.setValueAtTime(.0001,startAt);
+    gain.gain.exponentialRampToValueAtTime(volume,startAt+.012);
+    gain.gain.exponentialRampToValueAtTime(.0001,startAt+duration);
+    oscillator.connect(gain);gain.connect(audioContext.destination);
+    oscillator.start(startAt);oscillator.stop(startAt+duration+.02);
+  }catch(_){/* Audio is optional; never interrupt a round. */}
+}
+function playAnswerFeedback(correct){
+  if(soundEnabled)initAudio().then(()=>{
+    if(!audioContext||audioContext.state!=='running')return;
+    if(correct){playTone(540,0,.09,'sine',.04);playTone(760,.08,.14,'sine',.04)}
+    else playTone(190,0,.16,'triangle',.05);
+  });
+  if(vibrationEnabled&&typeof navigator!=='undefined'&&typeof navigator.vibrate==='function'){
+    try{navigator.vibrate(correct?22:45)}catch(_){}
+  }
+}
+
+function showSetup(onStart){
+  setPhase('setup');isPaused=false;
+  show('<div class="end"><h2>&#1053;&#1086;&#1074;&#1080;&#1081; &#1079;&#1072;&#1073;&#1110;&#1075;</h2><p>&#1054;&#1073;&#1077;&#1088;&#1080; &#1089;&#1082;&#1083;&#1072;&#1076;&#1085;&#1110;&#1089;&#1090;&#1100; &#1087;&#1077;&#1088;&#1077;&#1076; &#1087;&#1086;&#1095;&#1072;&#1090;&#1082;&#1086;&#1084;.</p><label class="setup-mode" for="setupDifficulty">&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1110;&#1089;&#1090;&#1100;<select id="setupDifficulty"><option value="normal">&#1047;&#1074;&#1080;&#1095;&#1072;&#1081;&#1085;&#1072;</option><option value="hard">&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1072;</option></select></label><div class="setup-options"><label><input id="soundToggle" type="checkbox" checked>&#1047;&#1074;&#1091;&#1082;</label><label><input id="vibrationToggle" type="checkbox" checked>&#1042;&#1110;&#1073;&#1088;&#1072;&#1094;&#1110;&#1103;</label></div><button class="btn" id="go">&#1055;&#1086;&#1095;&#1072;&#1090;&#1080; &#1079;&#1072;&#1073;&#1110;&#1075;</button></div>',()=>{
+    difficulty=$('setupDifficulty').value;
+    soundEnabled=$('soundToggle').checked;vibrationEnabled=$('vibrationToggle').checked;
+    if(soundEnabled)initAudio();
+    $('modeLabel').innerHTML=difficulty==='hard'?'&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1072;':'&#1047;&#1074;&#1080;&#1095;&#1072;&#1081;&#1085;&#1072;';
+    hide();onStart();
+  });
+  const choice=$('setupDifficulty');choice.value=difficulty;
+  $('soundToggle').checked=soundEnabled;$('vibrationToggle').checked=vibrationEnabled;
+  choice.focus();
+}
+
+function show(html,cb,reviewCb){
+  $('card').innerHTML=html;$('ov').classList.add('show');
+  const g=$('go');g.onclick=cb;g.focus();
+  const review=$('review');if(review&&reviewCb)review.onclick=reviewCb;
+}
+function hide(){$('ov').classList.remove('show')}
+
+pauseButton.addEventListener('click',pauseGame);
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape'&&e.key!=='Esc')return;
+  if(isPaused){e.preventDefault();resumeGame();return}
+  if(phase==='prep'||phase==='answers'){e.preventDefault();pauseGame()}
+});
+showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()});
+</script>
+</body>
+</html>
