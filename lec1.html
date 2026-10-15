@@ -84,9 +84,10 @@ p{margin:0 0 12px;}
 .face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; color:var(--ink);}
 /* tooltips */
 .tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
-.tip::after{content:attr(data-tip); position:absolute; left:50%; bottom:calc(100% + 8px); transform:translateX(-50%); width:max-content; max-width:min(260px,70vw);
-  background:var(--ink); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35; opacity:0; pointer-events:none; transition:.15s; z-index:20; box-shadow:var(--shadow);}
-.tip:hover::after,.tip:focus::after{opacity:1;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--ink); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
 /* callouts */
 .callout{border-radius:10px; padding:12px 16px 12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
 .callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
@@ -388,6 +389,50 @@ footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',m
     });
     $('#quizScore').textContent='Результат: 0 / '+qs.length;
   });
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
 })();
 </script>
 </body>
