@@ -6,6 +6,13 @@
 <title>ПСИХОЛОГІЯ.LAB — Лекція 1. Теоретичні засади психології емоційного інтелекту</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
 <style>
 :root{
   --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
@@ -38,12 +45,12 @@ header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,
 header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
 .hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
 .chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
-nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:rgba(255,255,255,.9);
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
   backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
 nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
   border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
 nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
-nav.tabs button.active{background:var(--ink); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
 section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
   padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
 section.panel.active{display:block; animation:fadeIn .35s ease;}
@@ -85,7 +92,7 @@ p{margin:0 0 12px;}
 /* tooltips */
 .tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
 .tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
-  background:var(--ink); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
   overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
 .tooltip-popup[hidden]{display:none;}
 /* callouts */
@@ -110,29 +117,48 @@ p{margin:0 0 12px;}
 .progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 14px;}
 .progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
 /* buttons */
-.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--ink); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
 .btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
 .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
 .btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
 .btn.small{padding:5px 10px; font-size:11px;}
 .btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
 /* code block */
-.codebox{position:relative; background:var(--ink); color:#d8e6f2; border-radius:10px; padding:16px 16px 14px; margin:12px 0;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px 16px 14px; margin:12px 0;}
 .codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:80px;}
 .codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
 .codebox .btn:hover{background:var(--cyan-deep);}
 /* quiz */
 .quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
 .quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
-.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:#fff; cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
 .quiz-opt:hover{border-color:var(--cyan);}
 .quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
 .quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
 .quiz-q.locked .quiz-opt{cursor:default;}
 .quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;}
 .quiz-fb.show{display:block;}
-#quizScoreBar{position:sticky; bottom:10px; background:var(--ink); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
 footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
 </style>
 </head>
 <body>
@@ -433,6 +459,30 @@ footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',m
     if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
     else show(active);
   },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
 })();
 </script>
 </body>

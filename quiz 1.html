@@ -6,6 +6,13 @@
 <title>ПСИХОЛОГІЯ.LAB — Психо-квіз: влучи у відповідь</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
 <style>
 :root{
   box-sizing:border-box;
@@ -43,7 +50,7 @@ section.panel > *{position:relative}
 .controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;
   font-family:'Share Tech Mono',monospace;font-size:12.5px;color:var(--ink-soft)}
 .controls b{color:var(--ink)}
-.control-btn{padding:7px 12px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;
+.control-btn{padding:7px 12px;border:1px solid var(--ink);border-radius:8px;background:var(--solid);color:#fff;
   font:13px 'Share Tech Mono',monospace;cursor:pointer;transition:.15s}
 .control-btn:hover:not(:disabled){background:var(--cyan-deep);border-color:var(--cyan-deep)}
 .control-btn:disabled{opacity:.4;cursor:default;background:transparent;color:var(--ink);border-color:var(--line)}
@@ -62,7 +69,7 @@ h1{font-size:clamp(17px,3.4vw,24px);line-height:1.35;border-bottom:2px solid var
 .ans{position:absolute;top:0;left:0;margin:0;height:46px;line-height:44px;padding:0 20px;border:1.5px solid var(--ink);
   border-radius:10px;background:var(--bg-panel);color:var(--ink);font:600 17px 'Rajdhani','Segoe UI',Arial,sans-serif;white-space:nowrap;
   cursor:pointer;will-change:transform;touch-action:manipulation;box-shadow:0 2px 8px rgba(16,24,38,.08)}
-.ans:hover{background:var(--ink);color:#fff}
+.ans:hover{background:var(--solid);color:#fff}
 .ans:focus-visible{outline:3px solid rgba(0,184,196,.55);outline-offset:2px}
 .ans.ok{background:var(--ok);border-color:var(--ok);color:#fff}
 .ans.bad{background:var(--bad);border-color:var(--bad);color:#fff}
@@ -85,7 +92,7 @@ main.shake{animation:screen-shake .28s ease-in-out}
 .card .right{display:block;margin:6px 0 14px;padding:10px 14px;border-radius:10px;background:rgba(10,155,92,.08);
   border:1px solid var(--ok);border-left-width:5px;color:var(--ink);font-weight:700;font-size:17px}
 .card p{margin:0 0 20px;line-height:1.55;font-size:16px}
-.btn{width:100%;padding:13px 16px;border:1px solid var(--ink);border-radius:8px;background:var(--ink);color:#fff;
+.btn{width:100%;padding:13px 16px;border:1px solid var(--ink);border-radius:8px;background:var(--solid);color:#fff;
   font:14px 'Share Tech Mono',monospace;cursor:pointer;transition:.15s}
 .btn:hover{background:var(--cyan-deep);border-color:var(--cyan-deep)}
 .btn:focus-visible{outline:3px solid rgba(0,184,196,.55);outline-offset:3px}
@@ -95,7 +102,7 @@ main.shake{animation:screen-shake .28s ease-in-out}
 .end .btn + .btn{margin-top:10px}
 .setup-mode{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 18px;color:var(--ink-soft);
   font-family:'Share Tech Mono',monospace;font-size:13px}
-.setup-mode select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);font:600 15px 'Rajdhani','Segoe UI',sans-serif}
+.setup-mode select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg-panel);color:var(--ink);font:600 15px 'Rajdhani','Segoe UI',sans-serif}
 .setup-mode select:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,184,196,.18)}
 .setup-options{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 18px;color:var(--ink-soft);font-family:'Share Tech Mono',monospace;font-size:13px}
 .setup-options label{display:flex;align-items:center;gap:7px;cursor:pointer}
@@ -103,6 +110,25 @@ main.shake{animation:screen-shake .28s ease-in-out}
 footer{text-align:center;color:var(--ink-soft);font-family:'Share Tech Mono',monospace;font-size:12px;padding:20px 0 0}
 @media (max-width:600px){section.panel{padding:20px 16px}}
 @media (max-width:520px){.stage{height:264px}.lane{height:66px}.ans{font-size:16px;padding:0 16px}}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
 </style>
 </head>
 <body>
@@ -458,6 +484,30 @@ document.addEventListener('keydown',e=>{
   if(phase==='prep'||phase==='answers'){e.preventDefault();pauseGame()}
 });
 showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()});
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
 </script>
 </body>
 </html>

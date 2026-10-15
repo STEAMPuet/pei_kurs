@@ -6,6 +6,13 @@
 <title>ПСИХОЛОГІЯ.LAB — Тести до теми 1. Теоретичні засади психології емоційного інтелекту</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
 <style>
 :root{
   --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
@@ -55,7 +62,7 @@ section.panel h2{font-size:20px; border-bottom:2px solid var(--cyan); padding-bo
 .setup{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:10px;}
 @media(max-width:700px){.setup{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:24px 18px;}}
 .fld label.l{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px;}
-select.txt,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15.5px; background:#fff; color:var(--ink);}
+select.txt,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15.5px; background:var(--bg-panel); color:var(--ink);}
 select.txt:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
 .modes{display:flex; flex-direction:column; gap:8px;}
 .mode{display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border:1px solid var(--line); border-radius:10px; background:var(--bg-soft); cursor:pointer;}
@@ -65,7 +72,7 @@ select.txt:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-sha
 .mode span{font-size:14px; color:var(--ink-soft);}
 .chk{display:flex; align-items:center; gap:8px; margin-top:12px; cursor:pointer; font-family:'Share Tech Mono',monospace; font-size:13px; color:var(--ink-soft);}
 .chk input{accent-color:var(--cyan-deep); width:18px; height:18px;}
-.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--ink); color:#fff; padding:10px 18px; border-radius:8px; transition:.15s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:10px 18px; border-radius:8px; transition:.15s;}
 .btn:hover:not(:disabled){background:var(--cyan-deep); border-color:var(--cyan-deep);}
 .btn:disabled{opacity:.4; cursor:default;}
 .btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
@@ -79,17 +86,17 @@ select.txt:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-sha
 .progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
 .qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--ink-soft);}
 .nv{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px; margin:10px 0 18px;}
-.nv button{height:36px; border-radius:8px; border:1px solid var(--line); background:#fff; font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; color:var(--ink);}
+.nv button{height:36px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; color:var(--ink);}
 .nv button:hover{border-color:var(--cyan);}
 .nv button.done{background:var(--bg-soft); border-color:var(--cyan-deep); color:var(--cyan-deep); font-weight:700;}
 .nv button.ok{background:rgba(10,155,92,.16); border-color:var(--ok); color:var(--ok); font-weight:700;}
 .nv button.bad{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--magenta); font-weight:700;}
 .nv button.cur{box-shadow:0 0 0 3px rgba(0,184,196,.45); border-color:var(--cyan);}
 h3.qtext{font-size:clamp(16px,2.6vw,20px); line-height:1.45; color:var(--ink); margin:0 0 16px; min-height:2.9em;}
-.opt{display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; margin-bottom:9px; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:#fff; cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:16.5px; color:var(--ink); transition:.15s;}
+.opt{display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; margin-bottom:9px; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:16.5px; color:var(--ink); transition:.15s;}
 .opt:hover:not(.locked){border-color:var(--cyan); background:rgba(0,184,196,.05);}
 .opt .k{flex:none; width:28px; height:28px; border-radius:7px; background:var(--bg-soft); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-size:13px; font-weight:700;}
-.opt.sel{background:var(--ink); color:#fff; border-color:var(--ink);} .opt.sel .k{background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.3); color:#fff;}
+.opt.sel{background:var(--solid); color:#fff; border-color:var(--ink);} .opt.sel .k{background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.3); color:#fff;}
 .opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700; color:var(--ink);} .opt.correct .k{background:var(--ok); border-color:var(--ok); color:#fff;}
 .opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--ink);} .opt.wrong .k{background:var(--magenta); border-color:var(--magenta); color:#fff;}
 .opt.locked{cursor:default;}
@@ -104,6 +111,25 @@ h3.qtext{font-size:clamp(16px,2.6vw,20px); line-height:1.45; color:var(--ink); m
 .mist p{margin:0 0 3px; font-size:15px;}
 .mist .y{color:var(--magenta);} .mist .r{color:var(--ok); font-weight:700;}
 footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
 </style>
 </head>
 <body>
@@ -342,6 +368,30 @@ $('#dlBtn').addEventListener('click',function(){
  var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Тест_тема1_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
  $('#repMsg').textContent=$('#rep_name').value.trim()?'Файл сформовано. Перевірте папку «Завантаження».':'Файл сформовано, але ПІБ не вказано — введіть його й завантажте ще раз.';});
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
 })();
 </script>
 </body>
