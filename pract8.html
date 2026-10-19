@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Практичне заняття 8. Техніки управління емоціями</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:230px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px;}
+textarea,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:6px;} .crit .fld label{color:var(--ink-soft);}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin-top:10px; font-family:'Share Tech Mono',monospace; font-size:13px;}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / EQ‑PRACTICE — ОНЛАЙН</span><span>ПРАКТИЧНЕ ЗАНЯТТЯ: 08</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// PRACTICE_08 · EMOTION_REGULATION + REPORT.DOCX</span>
+    <h1>Практичне заняття 8. Техніки управління емоціями</h1>
+    <p class="sub">Інтерактивний робочий зошит: когнітивна переоцінка професійної ситуації, дихальні техніки з візуальним тренажером, аналіз власних стратегій емоційного контролю, кейс «Емоційно складний клієнт» і тест. Усі ваші відповіді збираються у звіт, який можна завантажити як файл Word.</p>
+    <div class="hero-meta">
+      <span class="chip">🧩 4 завдання</span>
+      <span class="chip">❓ 4 питання тесту</span>
+      <span class="chip">✍️ відкриті відповіді</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Переоцінка</button>
+    <button data-t="t-2">02 · Дихальні техніки</button>
+    <button data-t="t-3">03 · Мої стратегії</button>
+    <button data-t="t-4">04 · Кейс</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Як працювати із зошитом</h2>
+    <p class="lede">Пройдіть завдання 1–4 у відкритих полях, виконайте тест, а потім перейдіть на вкладку «Звіт», укажіть ПІБ і групу та завантажте файл Word.</p>
+    <div class="callout important"><b class="lbl">Важливо</b>Відповіді автоматично зберігаються в цьому браузері (якщо він дозволяє) і потраплять у звіт. Якщо ви відкриєте сторінку на іншому пристрої, поля будуть порожні — завантажте звіт до завершення роботи.</div>
+    <h3>Ключові поняття (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in">
+        <div class="face front"><h4>Когнітивна переоцінка</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Зміна інтерпретації ситуації, щоб змінити її емоційний вплив. За моделлю Дж. Гросса — стратегія, що діє <b>до</b> повного розгортання емоції, тому вважається однією з найефективніших.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in">
+        <div class="face front"><h4>Автоматичні негативні думки</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Швидкі, мимовільні й часто викривлені оцінки ситуації («мене не цінують», «усе марно»), описані А. Беком. Їх виявлення — перший крок до переоцінки.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in">
+        <div class="face front"><h4>Дихальна саморегуляція</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Повільне дихання з подовженим видихом активізує <span class="tip" tabindex="0" data-tip="Парасимпатична нервова система відповідає за відновлення та заспокоєння організму.">парасимпатичну нервову систему</span>, знижує частоту серцевих скорочень і рівень напруження.</div></div></div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Ефективна саморегуляція поєднує «тілесні» (дихання) та «когнітивні» (переоцінка) техніки: перші швидко знижують напруження, другі змінюють саме ставлення до ситуації.</div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що саме потрібно здати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Завдання 1:</b> письмовий аналіз професійної ситуації з когнітивною переоцінкою.</p><p><b>Завдання 2:</b> порівняльний аналіз трьох дихальних технік.</p><p><b>Завдання 3:</b> таблиця власних стратегій емоційного контролю та висновок щодо їх ефективності.</p><p><b>Завдання 4:</b> письмовий аналіз кейсу «Емоційно складний клієнт».</p><p><b>Додатково:</b> результат тесту самоперевірки.</p></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Когнітивна переоцінка професійної ситуації</h2>
+    <div class="result-box" style="margin-bottom:14px;"><b>Ситуація.</b> Організаційний психолог підготував тренінг для персоналу, проте керівництво скасувало захід за день до проведення, мотивуючи це зміною пріоритетів компанії.</div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Форма звітності: письмовий аналіз ситуації за п'ятьма пунктами.</div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl1"></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Для переоцінки зручно використати модель <span class="tip" tabindex="0" data-tip="ABCDE — модель раціонально-емотивної терапії А. Елліса.">ABCDE</span> А. Елліса. Шаблон можна скопіювати нижче.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>A — подія: що об'єктивно сталося?
+B — переконання: що я собі про це кажу (автоматичні думки)?
+C — наслідки: які емоції та дії це викликає?
+D — оскарження: які докази «за» і «проти» моїх думок? як інакше можна це пояснити?
+E — новий ефект: як змінюються емоції та поведінка після переоцінки?</pre></div>
+    <div id="t1fields"></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Опанування технік емоційної саморегуляції</h2>
+    <p class="lede">Виконайте три техніки — діафрагмальне дихання, «4-7-8» та квадратне дихання — і підготуйте порівняльний аналіз: стан до та після вправи, рівень напруження, складність виконання, можливість використання в професійній діяльності.</p>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Перед кожною технікою оцініть свій стан і напруження, після — оцініть повторно. У звіті Word порівняння перетвориться на таблицю 6 × 3.</div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl2"></div>
+    <h3>Дихальний тренажер</h3>
+    <div class="acc-item"><button class="acc-head">Як виконувати техніки <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Діафрагмальне дихання:</b> долоня на животі; повільний вдих носом так, щоб піднімався живіт, а не грудна клітка; повільний подовжений видих. 5–10 циклів.</p><p><b>Техніка «4-7-8»:</b> вдих носом на 4 рахунки, затримка дихання на 7, повний видих ротом на 8. Для початку — 4 цикли.</p><p><b>Квадратне дихання:</b> вдих — 4, затримка — 4, видих — 4, затримка — 4. 4–6 циклів.</p></div></div>
+    <div class="result-box" style="text-align:center;">
+      <div class="btnrow" style="justify-content:center;" id="techBtns">
+        <button class="btn ghost small" data-tech="d">Діафрагмальне</button>
+        <button class="btn ghost small" data-tech="f">«4-7-8»</button>
+        <button class="btn ghost small" data-tech="s">Квадратне</button>
+      </div>
+      <div style="height:200px;display:flex;align-items:center;justify-content:center;">
+        <div id="bCircle" style="width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(0,184,196,.35),rgba(0,184,196,.08));border:2px solid var(--cyan);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:scale(.55);transition:transform 1s linear;">
+          <span id="bCount" style="font-family:'Orbitron','Segoe UI',sans-serif;font-size:30px;font-weight:700;color:var(--cyan-deep);">—</span>
+        </div>
+      </div>
+      <div id="bPhase" style="font-family:'Orbitron','Segoe UI',sans-serif;font-size:15px;color:var(--ink);margin-bottom:4px;">Оберіть техніку</div>
+      <div id="bInfo" class="mono" style="font-size:12px;color:var(--ink-soft);">Циклів: 0</div>
+      <div class="btnrow" style="justify-content:center;"><button class="btn" id="bStart">▶ Старт</button><button class="btn ghost" id="bStop">Стоп</button></div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Дихайте комфортно, без надмірних зусиль. Якщо з'явилися запаморочення чи дискомфорт — припиніть вправу й поверніться до звичайного дихання.</div>
+    <h3>Порівняльний аналіз</h3>
+    <div id="t2fields"></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Аналіз власних стратегій емоційного контролю</h2>
+    <p class="lede">Оцініть власні способи реагування на складні ситуації: заповніть таблицю (стресова ситуація, типова реакція, наслідки, альтернативний спосіб саморегуляції) та сформулюйте висновок щодо ефективності своїх стратегій.</p>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Заповніть щонайменше 3 рядки. У звіті Word вони перетворяться на таблицю; порожні рядки не потрапляють.</div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl3"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: типові стратегії <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Неефективні: <span class="tip" tabindex="0" data-tip="Експресивне придушення — стримування зовнішнього вияву емоцій без зміни самого переживання.">придушення</span>, уникнення, руминація (прокручування думок), імпульсивний вибух, «заїдання» стресу.</p><p>Ефективні: когнітивна переоцінка, дихальні техніки, пауза перед реакцією, фізична активність, звернення по соціальну підтримку, вирішення проблеми.</p></div></div>
+    <div id="t3fields"></div>
+  </section>
+
+  <!-- ЗАВДАННЯ 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Кейс «Емоційно складний клієнт»</h2>
+    <div class="result-box" style="margin-bottom:14px;"><b>Ситуація.</b> Під час консультації працівник компанії проявляє агресію, звинувачує керівництво та відмовляється слухати рекомендації психолога.</div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Форма звітності: письмовий аналіз кейсу за чотирма пунктами.</div>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl4"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: на що спиратися <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Агресія клієнта часто є способом вираження безсилля, страху чи несправедливості. Ризики для психолога — <span class="tip" tabindex="0" data-tip="Контрперенесення — емоційні реакції психолога на клієнта, зумовлені власним досвідом фахівця.">контрперенесення</span>, захисна реакція, втрата нейтральності, «злиття» з позицією клієнта проти керівництва.</p><p>Для стратегії взаємодії згадайте активне слухання, відображення почуттів, встановлення меж і повернення до запиту клієнта.</p></div></div>
+    <div id="t4fields"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Оберіть відповідь — одразу з'явиться «правильно/неправильно» та пояснення. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 4</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані студента та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" data-save placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Практичне заняття 8 · Техніки управління емоціями</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var CASE1='Організаційний психолог підготував тренінг для персоналу, проте керівництво скасувало захід за день до проведення, мотивуючи це зміною пріоритетів компанії.';
+var CASE4='Під час консультації працівник компанії проявляє агресію, звинувачує керівництво та відмовляється слухати рекомендації психолога.';
+var T1=[{id:'t1_q1',l:'1. Первинні емоційні реакції психолога',r:4},{id:'t1_q2',l:'2. Автоматичні негативні думки',r:5},{id:'t1_q3',l:'3. Когнітивна переоцінка ситуації',r:7},{id:'t1_q4',l:'4. Конструктивна модель поведінки',r:6},{id:'t1_q5',l:'5. Значення когнітивної переоцінки для професійної діяльності психолога',r:6}];
+var TECHN=['Діафрагмальне дихання','Техніка «4-7-8»','Квадратне дихання'];
+var CRIT=[{l:'Емоційний стан до вправи',t:'a'},{l:'Емоційний стан після вправи',t:'a'},{l:'Рівень напруження до (1–10)',t:'n'},{l:'Рівень напруження після (1–10)',t:'n'},{l:'Складність виконання',t:'a'},{l:'Можливість використання в професійній діяльності',t:'a'}];
+var SRN=5,SCOL=[{k:'sit',l:'Стресова ситуація'},{k:'re',l:'Типова реакція'},{k:'con',l:'Наслідки'},{k:'alt',l:'Альтернативний спосіб саморегуляції'}];
+var T2=[],T3=[],T4=[{id:'t4_q1',l:'1. Можливі емоції психолога',r:4},{id:'t4_q2',l:'2. Ризики втрати професійної позиції',r:5},{id:'t4_q3',l:'3. Алгоритм саморегуляції',r:7},{id:'t4_q4',l:'4. Стратегія конструктивної взаємодії',r:7}];
+var CL={cl1:['Уважно прочитайте опис ситуації.','Визначте первинні емоційні реакції психолога.','Виявіть автоматичні негативні думки.','Проведіть когнітивну переоцінку ситуації.','Сформулюйте конструктивну модель поведінки та обґрунтуйте значення переоцінки.'],
+ cl2:['Виконайте діафрагмальне дихання (з тренажером або самостійно).','Виконайте техніку «4-7-8».','Виконайте квадратне дихання.','Для кожної техніки зафіксуйте стан і напруження до та після.','Сформулюйте порівняльний висновок.'],
+ cl3:['Пригадайте щонайменше три стресові ситуації.','Опишіть свої типові реакції та їхні наслідки.','Доберіть альтернативні способи саморегуляції.','Сформулюйте висновок щодо ефективності власних стратегій.'],
+ cl4:['Уважно прочитайте опис ситуації.','Визначте можливі емоції психолога.','Виявіть ризики втрати професійної позиції.','Запропонуйте алгоритм саморегуляції.','Розробіть стратегію конструктивної взаємодії.']};
+var QZ=[
+ {q:'Що таке когнітивна переоцінка?',o:['Придушення зовнішнього вияву емоцій','Зміна інтерпретації ситуації з метою змінити її емоційний вплив','Уникнення ситуацій, що викликають емоції'],ok:1,e:'Переоцінка змінює те, як людина тлумачить подію, і тому змінює саму емоцію, а не лише її зовнішній вияв.'},
+ {q:'Як правильно виконується техніка «4-7-8»?',o:['Вдих 4 рахунки, затримка 7, видих 8','Вдих 8 рахунків, затримка 7, видих 4','Вдих 4, видих 4, затримка 4, вдих 4'],ok:0,e:'Вдих носом на 4, затримка на 7, повний видих ротом на 8. Варіант «4-4-4-4» — це квадратне дихання.'},
+ {q:'Чому повільне дихання з подовженим видихом знижує напруження?',o:['Воно підвищує рівень адреналіну','Воно активізує парасимпатичну нервову систему','Воно відволікає від роботи'],ok:1,e:'Подовжений видих стимулює парасимпатичну регуляцію: сповільнюється серцебиття, знижується фізіологічне збудження.'},
+ {q:'Клієнт проявляє агресію на консультації. Який перший крок саморегуляції психолога?',o:['Відповісти так само жорстко, щоб встановити авторитет','Негайно завершити консультацію','Помітити власну реакцію, зробити паузу та повільний видих, зберігаючи нейтральну позицію'],ok:2,e:'Усвідомлення власної емоції та пауза дозволяють не піддатися контрперенесенню й зберегти професійну позицію.'}];
+
+/* генерація форм */
+function mk(id,l,r){return '<div class="fld"><label for="'+id+'">'+l+'</label><textarea id="'+id+'" data-save data-wc rows="'+r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+function mkIn(id,l,ph,t){return '<div class="fld"><label for="'+id+'">'+l+'</label><input class="txt" id="'+id+'" data-save placeholder="'+ph+'"'+(t?' type="'+t+'" min="1" max="10"':'')+'></div>';}
+$('#t1fields').innerHTML=mk(T1[0].id,T1[0].l,T1[0].r)+'<div class="grid2">'+mk(T1[1].id,T1[1].l,T1[1].r)+mk(T1[2].id,T1[2].l,T1[2].r)+'</div>'+T1.slice(3).map(function(f){return mk(f.id,f.l,f.r)}).join('');
+var h='';
+CRIT.forEach(function(c,i){h+='<div class="crit"><h4>'+(i+1)+'. '+c.l+'</h4><div class="grid3">';
+ TECHN.forEach(function(t,j){var id='t2_'+i+'_'+j;T2.push({id:id});h+=c.t==='n'?mkIn(id,t,'Від 1 до 10','number'):mk(id,t,3);});h+='</div></div>';});
+T2.push({id:'t2_con'});h+=mk('t2_con','Порівняльний висновок: яка техніка найефективніша для мене і чому',7);
+$('#t2fields').innerHTML=h;
+h='';
+for(var r=0;r<SRN;r++){h+='<div class="crit"><h4>Ситуація '+(r+1)+(r>=3?' (необов\'язкова)':'')+'</h4><div class="grid2">';
+ SCOL.forEach(function(c){var id='t3_'+r+'_'+c.k;h+=mk(id,c.l,3);});h+='</div></div>';}
+h+=mk('t3_con','Висновок щодо ефективності власних стратегій',7);
+$('#t3fields').innerHTML=h;
+$('#t4fields').innerHTML=T4.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+/* вкладки */
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+
+/* акордеони, картки, підказки */
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+/* дихальний тренажер */
+var TECH={d:{n:'Діафрагмальне дихання',ph:[['Вдих животом',4,1],['Повільний видих',6,0]]},
+ f:{n:'Техніка «4-7-8»',ph:[['Вдих через ніс',4,1],['Затримка дихання',7,-1],['Видих через рот',8,0]]},
+ s:{n:'Квадратне дихання',ph:[['Вдих',4,1],['Затримка',4,-1],['Видих',4,0],['Затримка',4,-1]]}};
+var cur=null,bt=null,pi=0,left=0,cyc=0;
+function circ(sc,dur){var c=$('#bCircle');c.style.transition='transform '+dur+'s linear';c.style.transform='scale('+sc+')';}
+function phase(){var p=TECH[cur].ph[pi];left=p[1];$('#bPhase').textContent=p[0];$('#bCount').textContent=left;
+ if(p[2]===1)circ(1,p[1]);else if(p[2]===0)circ(.55,p[1]);}
+function stopB(msg){clearInterval(bt);bt=null;$('#bStart').textContent='▶ Старт';circ(.55,.6);$('#bCount').textContent='—';if(msg)$('#bPhase').textContent=msg;}
+$$('#techBtns button').forEach(function(b){b.addEventListener('click',function(){
+ stopB();cur=b.dataset.tech;cyc=0;$$('#techBtns button').forEach(function(x){x.classList.toggle('ghost',x!==b)});
+ $('#bPhase').textContent=TECH[cur].n+' — натисніть «Старт»';$('#bInfo').textContent='Циклів: 0';});});
+$('#bStart').addEventListener('click',function(){
+ if(!cur){$('#bPhase').textContent='Спершу оберіть техніку';return;}
+ if(bt){stopB('Пауза');return;}
+ this.textContent='⏸ Пауза';pi=0;phase();
+ bt=setInterval(function(){left--;if(left>0){$('#bCount').textContent=left;return;}
+  pi++;if(pi>=TECH[cur].ph.length){pi=0;cyc++;$('#bInfo').textContent='Циклів: '+cyc;}phase();},1000);});
+$('#bStop').addEventListener('click',function(){cyc=0;$('#bInfo').textContent='Циклів: 0';stopB(cur?TECH[cur].n+' — натисніть «Старт»':'Оберіть техніку');});
+
+/* збереження */
+var KEY='pz8_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+$$('[data-save]').forEach(function(el){
+ var k=el.id;if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ el.addEventListener(el.type==='checkbox'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();});});
+clProg();
+
+/* копіювання */
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+/* тест */
+var ans=[],score=0;
+$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('.quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+/* заповненість */
+function filled(a){return a.filter(function(f){return $('#'+f.id).value.trim()}).length}
+function t3Fields(){var a=[];for(var r=0;r<SRN;r++){var any=SCOL.some(function(c){return $('#t3_'+r+'_'+c.k).value.trim()});if(r<3||any)SCOL.forEach(function(c){a.push({id:'t3_'+r+'_'+c.k})});}a.push({id:'t3_con'});return a;}
+function stats(){var a3=t3Fields(),rows=[['Завдання 1',filled(T1),T1.length],['Завдання 2',filled(T2),T2.length],['Завдання 3',filled(a3),a3.length],['Завдання 4',filled(T4),T4.length],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* генерація DOCX без бібліотек */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('з практичного заняття 8. Техніки управління емоціями',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'),{})+para('Група: '+(g||'—'),{})+para('Дата: '+d,{sa:240});
+ x+=para('Завдання 1. Когнітивна переоцінка професійної ситуації',{b:1,s:28,k:1,sb:120,c:'007A84'});
+ x+=para('Ситуація',{b:1,k:1})+para(CASE1,{i:1});
+ T1.forEach(function(f){x+=para(f.l,{b:1,k:1,sb:120})+paras(v(f.id));});
+ x+=para('Завдання 2. Опанування технік емоційної саморегуляції',{b:1,s:28,k:1,sb:240,c:'007A84'});
+ var rows=[['Критерій'].concat(TECHN)];CRIT.forEach(function(c,i){rows.push([c.l,v('t2_'+i+'_0'),v('t2_'+i+'_1'),v('t2_'+i+'_2')])});
+ x+=para('Порівняльний аналіз',{b:1,k:1})+table(rows,[2138,2500,2500,2500])+para('Порівняльний висновок',{b:1,k:1,sb:120})+paras(v('t2_con'));
+ x+=para('Завдання 3. Аналіз власних стратегій емоційного контролю',{b:1,s:28,k:1,sb:240,c:'007A84'});
+ var sr=[SCOL.map(function(c){return c.l})];
+ for(var r=0;r<SRN;r++){var row=SCOL.map(function(c){return v('t3_'+r+'_'+c.k)});if(r===0||row.some(function(s){return s.trim()}))sr.push(row);}
+ x+=table(sr,[2410,2410,2409,2409])+para('Висновок щодо ефективності власних стратегій',{b:1,k:1,sb:120})+paras(v('t3_con'));
+ x+=para('Завдання 4. Кейс «Емоційно складний клієнт»',{b:1,s:28,k:1,sb:240,c:'007A84'});
+ x+=para('Ситуація',{b:1,k:1})+para(CASE4,{i:1});
+ T4.forEach(function(f){x+=para(f.l,{b:1,k:1,sb:120})+paras(v(f.id));});
+ x+=para('Тест для самоперевірки',{b:1,s:28,k:1,sb:240,c:'007A84'})+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok],{})):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_ПЗ8_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, чек-листи та дані студента?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clProg();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+</body>
+</html>
