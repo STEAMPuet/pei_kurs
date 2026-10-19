@@ -130,6 +130,7 @@ textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shado
 .quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
 #quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
 .result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin-top:10px; font-family:'Share Tech Mono',monospace; font-size:13px;}
+.result-box canvas{display:block;margin:0 auto;}
 .stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
 .stat .progress{margin:0;}
 @media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
@@ -399,16 +400,21 @@ function extremes(){var f=comps().filter(function(x){return x.s!=null});if(!f.le
  var mx=Math.max.apply(null,f.map(function(x){return x.s})),mn=Math.min.apply(null,f.map(function(x){return x.s}));
  return {mx:mx,mn:mn,hi:f.filter(function(x){return x.s===mx}).map(function(x){return x.n}).join(', ')+' ('+mx+')',lo:f.filter(function(x){return x.s===mn}).map(function(x){return x.n}).join(', ')+' ('+mn+')'};}
 function scaleMax(){var m=parseFloat($('#t2_max').value),f=comps().filter(function(x){return x.s!=null});if(!isNaN(m)&&m>0)return m;return f.length?Math.max.apply(null,f.map(function(x){return x.s})):10;}
-function drawProf(cv,k){var a=comps(),e=extremes(),M=scaleMax(),rows=Math.max(a.length,1);cv.height=Math.round((40+rows*42+30)*k);
+function chartPalette(exportImage){
+ if(exportImage)return {ink:'#101826',muted:'#4a5568',line:'#c7d2e0',grid:'#dde5ee',track:'#eef2f6',surface:'#f4f7fb',cyan:'#00b8c4',cyanDeep:'#007a84',magenta:'#d6006e',ok:'#0a9b5c'};
+ var css=getComputedStyle(document.documentElement),color=function(name){return css.getPropertyValue('--'+name).trim()};
+ return {ink:color('ink'),muted:color('ink-soft'),line:color('line'),grid:color('line'),track:color('bg'),surface:color('bg-panel'),cyan:color('cyan'),cyanDeep:color('cyan-deep'),magenta:color('magenta'),ok:color('ok')};
+}
+function drawProf(cv,k,exportImage){var pal=chartPalette(exportImage);var a=comps(),e=extremes(),M=scaleMax(),rows=Math.max(a.length,1);cv.height=Math.round((40+rows*42+30)*k);
  var c=cv.getContext('2d'),W=cv.width,H=cv.height,L=230*k,R=W-50*k,top=24*k,rh=(H-top-34*k)/rows;
- c.fillStyle='#ffffff';c.fillRect(0,0,W,H);c.font=(10*k)+'px sans-serif';c.textAlign='center';
- for(var g=0;g<=4;g++){var x=L+(R-L)*g/4;c.strokeStyle='#dde5ee';c.lineWidth=1*k;c.beginPath();c.moveTo(x,top-6*k);c.lineTo(x,H-28*k);c.stroke();c.fillStyle='#4a5568';c.fillText(Math.round(M*g/4*10)/10,x,H-12*k);}
- if(!a.length){c.fillStyle='#4a5568';c.font=(13*k)+'px sans-serif';c.fillText('Введіть назви та бали компонентів',W/2,top+rh/2);return;}
+ c.clearRect(0,0,W,H);if(exportImage){c.fillStyle='#ffffff';c.fillRect(0,0,W,H);}c.font=(10*k)+'px sans-serif';c.textAlign='center';
+ for(var g=0;g<=4;g++){var x=L+(R-L)*g/4;c.strokeStyle=pal.grid;c.lineWidth=1*k;c.beginPath();c.moveTo(x,top-6*k);c.lineTo(x,H-28*k);c.stroke();c.fillStyle=pal.muted;c.fillText(Math.round(M*g/4*10)/10,x,H-12*k);}
+ if(!a.length){c.fillStyle=pal.muted;c.font=(13*k)+'px sans-serif';c.fillText('Введіть назви та бали компонентів',W/2,top+rh/2);return;}
  a.forEach(function(it,i){var y=top+i*rh,bh=rh*0.58,v=it.s,lbl=it.n.length>30?it.n.slice(0,29)+'…':it.n;
-  c.fillStyle='#101826';c.font='600 '+(13*k)+'px sans-serif';c.textAlign='right';c.fillText(lbl,L-10*k,y+rh/2+4*k);
-  c.fillStyle='#eef2f6';c.fillRect(L,y+(rh-bh)/2,R-L,bh);
-  if(v!=null){var w=Math.max(0,Math.min(1,v/M));var col=e&&e.mx!==e.mn&&v===e.mx?'#0a9b5c':(e&&e.mx!==e.mn&&v===e.mn?'#d6006e':'#00b8c4');c.fillStyle=col;c.fillRect(L,y+(rh-bh)/2,(R-L)*w,bh);
-   c.fillStyle='#101826';c.font='700 '+(12*k)+'px sans-serif';c.textAlign='left';c.fillText(v,L+(R-L)*w+6*k,y+rh/2+4*k);}});}
+  c.fillStyle=pal.ink;c.font='600 '+(13*k)+'px sans-serif';c.textAlign='right';c.fillText(lbl,L-10*k,y+rh/2+4*k);
+  c.fillStyle=pal.track;c.fillRect(L,y+(rh-bh)/2,R-L,bh);
+  if(v!=null){var w=Math.max(0,Math.min(1,v/M));var col=e&&e.mx!==e.mn&&v===e.mx?pal.ok:(e&&e.mx!==e.mn&&v===e.mn?pal.magenta:pal.cyan);c.fillStyle=col;c.fillRect(L,y+(rh-bh)/2,(R-L)*w,bh);
+   c.fillStyle=pal.ink;c.font='700 '+(12*k)+'px sans-serif';c.textAlign='left';c.fillText(v,L+(R-L)*w+6*k,y+rh/2+4*k);}});}
 function prof(){drawProf($('#prof'),1);var e=extremes();
  $('#profTxt').innerHTML=e?'<span style="color:var(--ok)">▲ Найсильніші: '+e.hi+'</span><br><span style="color:var(--magenta)">▼ Потребують розвитку: '+e.lo+'</span>':'<span style="color:var(--ink-soft)">Введіть бали — профіль з\'явиться тут.</span>';}
 
@@ -431,6 +437,7 @@ $$('[data-save]').forEach(function(el){
  if(el.hasAttribute('data-wc'))wc(el);
  el.addEventListener(el.type==='checkbox'||el.tagName==='SELECT'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();if(/^t2_(\d_[ns]|max)/.test(k))prof();if(/^t5_[qdf]\d/.test(k))qShow();});});
 clProg();prof();qShow();
+new MutationObserver(function(){prof()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 
 /* таймер репетиції */
 var sec=0,tmr=null,LIM=900;
@@ -535,7 +542,7 @@ function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
 $('#dlBtn').addEventListener('click',function(){
  if(tmr)saveTime();
  var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',im={},media=[],rels='';
- try{if(extremes()){var c1=document.createElement('canvas');c1.width=1280;drawProf(c1,2);im.p={cx:Math.round(6*914400),cy:Math.round(6*914400*c1.height/c1.width)};media.push({n:'word/media/profile.png',d:png(c1)});rels+='<Relationship Id="rIdImg1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/profile.png"/>';}}catch(e){im.p=null}
+ try{if(extremes()){var c1=document.createElement('canvas');c1.width=1280;drawProf(c1,2,true);im.p={cx:Math.round(6*914400),cy:Math.round(6*914400*c1.height/c1.width)};media.push({n:'word/media/profile.png',d:png(c1)});rels+='<Relationship Id="rIdImg1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/profile.png"/>';}}catch(e){im.p=null}
  var files=[
   {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
   {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
