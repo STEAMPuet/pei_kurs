@@ -82,7 +82,7 @@ main.shake{animation:screen-shake .28s ease-in-out}
 @keyframes screen-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
 @media(prefers-reduced-motion:reduce){main.shake{animation:none}}
 .confetti-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:60}
-.confetti-piece{position:absolute;opacity:0;will-change:transform,opacity;animation:confetti-flight 1.3s ease-out forwards}
+.confetti-piece{position:absolute;opacity:0;box-shadow:0 0 0 1px rgba(16,24,38,.55),0 0 7px rgba(255,255,255,.55);will-change:transform,opacity;animation:confetti-flight 1.3s ease-out forwards}
 @keyframes confetti-flight{0%{transform:translate(0,0) rotate(0);opacity:0}8%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--turn));opacity:0}}
 .overlay{position:fixed;inset:0;background:rgba(16,24,38,.55);backdrop-filter:blur(3px);display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
 .overlay.show{display:flex}
@@ -167,6 +167,49 @@ let i=0,score=0,correctCount=0,answeredCount=0,streak=0,bestStreak=0,locked=true
 let runQuestions=QS,missedQuestions=[],isReview=false,mainResult=null;
 let phase='setup',isPaused=false,waitDuration=0,waitRemaining=0,waitStartedAt=0,currentDuration=4200,runClock=0,lastFrame=0,difficulty='normal';
 let soundEnabled=true,vibrationEnabled=true,audioContext=null;
+const progressKey='pei-quiz-progress:'+location.pathname;
+const questionSignature=QS.map(q=>q.q);
+function saveGameProgress(savedPhase,savedIndex){
+  try{
+    sessionStorage.setItem(progressKey,JSON.stringify({
+      version:1,questions:questionSignature,phase:savedPhase,
+      order:runQuestions.map(q=>QS.indexOf(q)),index:savedIndex===undefined?i:savedIndex,
+      score,correctCount,answeredCount,streak,bestStreak,
+      missed:missedQuestions.map(q=>QS.indexOf(q)),isReview,mainResult,
+      difficulty,soundEnabled,vibrationEnabled
+    }));
+  }catch(_){/* Progress storage is optional. */}
+}
+function restoreGameProgress(){
+  let data;
+  try{data=JSON.parse(sessionStorage.getItem(progressKey)||'null')}catch(_){return false}
+  const validIds=ids=>Array.isArray(ids)&&ids.every(id=>Number.isInteger(id)&&id>=0&&id<QS.length)&&new Set(ids).size===ids.length;
+  const validStats=value=>value&&['score','correctCount','answeredCount','streak','bestStreak'].every(name=>Number.isInteger(value[name])&&value[name]>=0);
+  if(!data||data.version!==1||JSON.stringify(data.questions)!==JSON.stringify(questionSignature)||
+     !['round','between','result','review-result'].includes(data.phase)||!validIds(data.order)||!data.order.length||
+     !validIds(data.missed)||!Number.isInteger(data.index)||data.index<0||
+     (data.phase==='round'?data.index>=data.order.length:data.phase==='between'?(data.index===0||data.index>data.order.length):data.phase==='review-result'&&data.index!==data.order.length)||
+     !validStats(data)||data.correctCount>data.answeredCount||data.answeredCount>data.order.length||
+     typeof data.isReview!=='boolean'||(data.isReview&&!data.missed.length)||
+     !['normal','hard'].includes(data.difficulty)||typeof data.soundEnabled!=='boolean'||
+     typeof data.vibrationEnabled!=='boolean'||(data.mainResult!==null&&!validStats(data.mainResult))||
+     (data.phase==='result'&&!data.mainResult)){
+    try{sessionStorage.removeItem(progressKey)}catch(_){}
+    return false;
+  }
+  runQuestions=data.order.map(id=>QS[id]);missedQuestions=data.missed.map(id=>QS[id]);
+  i=data.index;score=data.score;correctCount=data.correctCount;answeredCount=data.answeredCount;
+  streak=data.streak;bestStreak=data.bestStreak;isReview=data.isReview;mainResult=data.mainResult;
+  difficulty=data.difficulty;soundEnabled=data.soundEnabled;vibrationEnabled=data.vibrationEnabled;
+  $('modeLabel').innerHTML=difficulty==='hard'?'&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1072;':'&#1047;&#1074;&#1080;&#1095;&#1072;&#1081;&#1085;&#1072;';
+  updateStats();
+  if(data.phase==='round'||data.phase==='between'){
+    if(i===runQuestions.length)finish();
+    else{start();pauseGame()}
+  }else if(data.phase==='review-result')finish();
+  else showMainResult();
+  return true;
+}
 function updateStats(){
   $('score').textContent=score;
   $('streak').textContent=streak;
@@ -192,7 +235,7 @@ function pauseGame(){
   }else{
     cancelAnimationFrame(raf);raf=0;
   }
-  show('<h2>&#1055;&#1072;&#1091;&#1079;&#1072;</h2><p>&#1056;&#1072;&#1091;&#1085;&#1076; &#1087;&#1088;&#1080;&#1090;&#1072;&#1085;&#1086;&#1074;&#1083;&#1077;&#1085;&#1086;.</p><button class="btn" id="go">&#1055;&#1088;&#1086;&#1076;&#1086;&#1074;&#1078;&#1080;&#1090;&#1080;</button>',resumeGame);
+  show('<h2>&#1055;&#1072;&#1091;&#1079;&#1072;</h2><p>&#1056;&#1072;&#1091;&#1085;&#1076; &#1087;&#1088;&#1080;&#1079;&#1091;&#1087;&#1080;&#1085;&#1077;&#1085;&#1086;.</p><button class="btn" id="go">&#1055;&#1088;&#1086;&#1076;&#1086;&#1074;&#1078;&#1080;&#1090;&#1080;</button>',resumeGame);
 }
 function resumeGame(){
   hide();isPaused=false;setPhase(phase);
@@ -213,6 +256,7 @@ function start(){
   hint.textContent='\u0412\u0456\u0434\u043f\u043e\u0432\u0456\u0434\u0456 \u0437\u2019\u044f\u0432\u043b\u044f\u0442\u044c\u0441\u044f \u0437\u0430 \u043a\u0456\u043b\u044c\u043a\u0430 \u0441\u0435\u043a\u0443\u043d\u0434. \u041f\u0440\u043e\u0447\u0438\u0442\u0430\u0439 \u0437\u0430\u043f\u0438\u0442\u0430\u043d\u043d\u044f.';
   waitDuration=getPrepDuration();waitRemaining=waitDuration;
   schedulePreparation();
+  saveGameProgress('round');
 }
 
 function launch(){
@@ -331,28 +375,28 @@ function celebratePerfectRun(){
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const previous=document.getElementById('confetti-layer');if(previous)previous.remove();
   const layer=document.createElement('div');layer.id='confetti-layer';layer.className='confetti-layer';
-  const styles=getComputedStyle(document.documentElement);
-  const colors=['--accent','--ok','--bad'].map(name=>styles.getPropertyValue(name).trim()).filter(Boolean);
+  const colors=['#ff1744','#ff6d00','#ffd600','#00d869','#00b8ff','#a259ff'];
+  const piecesPerSide=30;
   for(let side=0;side<2;side++){
-    for(let n=0;n<14;n++){
+    for(let n=0;n<piecesPerSide;n++){
       const piece=document.createElement('span');
       const direction=side===0?1:-1;
       piece.className='confetti-piece';
       piece.style.left=side===0?'0':'auto';piece.style.right=side===1?'0':'auto';
-      piece.style.top=`${48+Math.random()*24}vh`;
-      piece.style.width=`${5+Math.random()*5}px`;piece.style.height=`${8+Math.random()*8}px`;
+      piece.style.top=`${(n+.5+(Math.random()-.5)*.7)/piecesPerSide*100}vh`;
+      piece.style.width=`${6+Math.random()*6}px`;piece.style.height=`${10+Math.random()*8}px`;
       piece.style.borderRadius=Math.random()<.25?'50%':'2px';
-      piece.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)]||'#4338ca';
-      piece.style.animationDuration=`${1000+Math.random()*550}ms`;
-      piece.style.animationDelay=`${Math.random()*160}ms`;
-      piece.style.setProperty('--dx',`${direction*(140+Math.random()*260)}px`);
-      piece.style.setProperty('--dy',`${-120+Math.random()*220}px`);
+      piece.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+      piece.style.animationDuration=`${1150+Math.random()*650}ms`;
+      piece.style.animationDelay=`${Math.random()*240}ms`;
+      piece.style.setProperty('--dx',`${direction*window.innerWidth*(.14+Math.random()*.42)}px`);
+      piece.style.setProperty('--dy',`${(Math.random()-.5)*190}px`);
       piece.style.setProperty('--turn',`${Math.random()*720-360}deg`);
       layer.appendChild(piece);
     }
   }
   document.body.appendChild(layer);
-  setTimeout(()=>layer.remove(),2100);
+  setTimeout(()=>layer.remove(),2300);
 }
 
 function showCorrectExplanation(){
@@ -370,11 +414,13 @@ function pick(correct,el){
     const multiplier=Math.min(3,streak);
     const points=multiplier;
     score+=points;updateStats();
+    saveGameProgress('between',i+1);
     hint.textContent=`\u041f\u0440\u0430\u0432\u0438\u043b\u044c\u043d\u043e! x${multiplier} +${points} \u0431\u0430\u043b`;
     setTimeout(showCorrectExplanation,450);
   }else{
     if(!isReview)missedQuestions.push(runQuestions[i]);
     answeredCount++;streak=0;updateStats();
+    saveGameProgress('between',i+1);
     el.classList.add('bad');
     hint.textContent='Не влучив.';
     setTimeout(()=>miss(false),350);
@@ -383,7 +429,7 @@ function pick(correct,el){
 
 function miss(timeout){
   locked=true;cancelAnimationFrame(raf);setPhase('feedback');
-  if(timeout){if(!isReview)missedQuestions.push(runQuestions[i]);answeredCount++;streak=0;updateStats();playAnswerFeedback(false)}
+  if(timeout){if(!isReview)missedQuestions.push(runQuestions[i]);answeredCount++;streak=0;updateStats();saveGameProgress('between',i+1);playAnswerFeedback(false)}
   const Q=runQuestions[i];
   shakeScreen();
   setTimeout(()=>show(`<h2>${timeout?'Час вийшов':'Розберімо ще раз'}</h2>
@@ -400,6 +446,7 @@ function finish(){
   if(isReview){
     const accuracy=answeredCount?Math.round(correctCount/answeredCount*100):0;
     show(`<div class="end"><h2>&#1055;&#1086;&#1074;&#1090;&#1086;&#1088; &#1087;&#1086;&#1084;&#1080;&#1083;&#1086;&#1082;</h2><div class="big">${score}</div><p>&#1041;&#1072;&#1083;&#1110;&#1074; &#1091; &#1073;&#1086;&#1085;&#1091;&#1089;&#1085;&#1086;&#1084;&#1091; &#1088;&#1072;&#1091;&#1085;&#1076;&#1110;</p><p>&#1058;&#1086;&#1095;&#1085;&#1110;&#1089;&#1090;&#1100;: ${accuracy}% &middot; &#1053;&#1072;&#1081;&#1082;&#1088;&#1072;&#1097;&#1072; &#1089;&#1077;&#1088;&#1110;&#1103;: ${bestStreak}</p><button class="btn" id="go">&#1044;&#1086; &#1086;&#1089;&#1085;&#1086;&#1074;&#1085;&#1086;&#1075;&#1086; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;&#1091;</button></div>`,showMainResult);
+    saveGameProgress('review-result');
     return;
   }
   mainResult={score,correctCount,answeredCount,streak,bestStreak};
@@ -418,6 +465,7 @@ function showMainResult(){
   const reviewButton=missedQuestions.length?'<button class="btn" id="review">&#1055;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1080; &#1087;&#1086;&#1084;&#1080;&#1083;&#1082;&#1080; ('+missedQuestions.length+')</button>':'';
   show(`<div class="end"><h2>&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;</h2><div class="big">${mainResult.score}</div><p>&#1041;&#1072;&#1083;&#1110;&#1074;</p><p>&#1058;&#1086;&#1095;&#1085;&#1110;&#1089;&#1090;&#1100;: ${accuracy}% &middot; &#1053;&#1072;&#1081;&#1082;&#1088;&#1072;&#1097;&#1072; &#1089;&#1077;&#1088;&#1110;&#1103;: ${mainResult.bestStreak}</p><p style="margin-top:14px">${msg}</p>${reviewButton}<button class="btn" id="go">&#1047;&#1110;&#1075;&#1088;&#1072;&#1090;&#1080; &#1097;&#1077; &#1088;&#1072;&#1079;</button></div>`,()=>showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()}),()=>showSetup(()=>{isReview=true;runQuestions=shuffle(missedQuestions);i=0;resetRound();start()}));
   if(!isReview&&mainResult.correctCount===QS.length)celebratePerfectRun();
+  saveGameProgress('result');
 }
 
 function resetRound(){score=0;correctCount=0;answeredCount=0;streak=0;bestStreak=0;updateStats()}
@@ -483,7 +531,7 @@ document.addEventListener('keydown',e=>{
   if(isPaused){e.preventDefault();resumeGame();return}
   if(phase==='prep'||phase==='answers'){e.preventDefault();pauseGame()}
 });
-showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()});
+if(!restoreGameProgress())showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()});
 </script>
 <script>
 (function(){

@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Тести до теми 3. Саморегуляція та емоційна стійкість особистості</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:980px; margin:0 auto; padding:18px 18px 70px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+.hud-bar b{color:var(--ink); font-size:14px;}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:34px 32px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px; position:relative;}
+header.hero h1{position:relative; font-size:clamp(21px,3.8vw,34px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent;}
+header.hero p.sub{position:relative; color:var(--ink-soft); max-width:720px; font-size:18px; margin:6px 0 16px;}
+.hero-meta{position:relative; display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:20px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+.idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.setup{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:10px;}
+@media(max-width:700px){.setup{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:24px 18px;}}
+.fld label.l{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px;}
+select.txt,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15.5px; background:var(--bg-panel); color:var(--ink);}
+select.txt:disabled{cursor:not-allowed;opacity:.65;}
+select.txt:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.modes{display:flex; flex-direction:column; gap:8px;}
+.mode{display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border:1px solid var(--line); border-radius:10px; background:var(--bg-soft); cursor:pointer;}
+.mode input{margin-top:4px; accent-color:var(--cyan-deep); width:18px; height:18px; flex:none;}
+.mode.on{background:rgba(0,184,196,.1); border-color:var(--cyan);}
+.mode b{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12.5px;}
+.mode span{font-size:14px; color:var(--ink-soft);}
+.chk{display:flex; align-items:center; gap:8px; margin-top:12px; cursor:pointer; font-family:'Share Tech Mono',monospace; font-size:13px; color:var(--ink-soft);}
+.chk input{accent-color:var(--cyan-deep); width:18px; height:18px;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:10px 18px; border-radius:8px; transition:.15s;}
+.btn:hover:not(:disabled){background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn:disabled{opacity:.4; cursor:default;}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover:not(:disabled){border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 24px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btn:focus-visible,.opt:focus-visible,.nv button:focus-visible{outline:3px solid rgba(0,184,196,.55); outline-offset:2px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0 0; align-items:center;}
+.btnrow .sp{flex:1;}
+#finBtn.shake{animation:finish-shake .34s ease-in-out;}
+@keyframes finish-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.finish-warning{flex-basis:100%; margin:2px 0 0; font-size:14px;}
+.finish-warning[hidden]{display:none;}
+.finish-dialog{width:min(420px,calc(100% - 32px));max-width:none;padding:24px;
+ border:1px solid var(--line);border-left:5px solid var(--amber);border-radius:14px;
+ background:var(--bg-panel);color:var(--ink);box-shadow:var(--shadow);}
+.finish-dialog::backdrop{background:rgba(8,15,24,.72);}
+.finish-dialog h2{margin:0 0 10px;font:700 17px 'Orbitron','Segoe UI',sans-serif;color:var(--ink);}
+.finish-dialog p{margin:0;line-height:1.5;color:var(--ink-soft);}
+.finish-dialog .btnrow{justify-content:flex-end;margin-top:22px;}
+@media (prefers-reduced-motion:reduce){#finBtn.shake{animation:none;}}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 12px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--ink-soft);}
+.nv{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px; margin:10px 0 18px;}
+.nv button{height:36px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; color:var(--ink);}
+.nv button:hover{border-color:var(--cyan);}
+.nv button.done{background:var(--bg-soft); border-color:var(--cyan-deep); color:var(--cyan-deep); font-weight:700;}
+.nv button.ok{background:rgba(10,155,92,.16); border-color:var(--ok); color:var(--ok); font-weight:700;}
+.nv button.bad{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--magenta); font-weight:700;}
+.nv button.cur{box-shadow:0 0 0 3px rgba(0,184,196,.45); border-color:var(--cyan);}
+h3.qtext{font-size:clamp(16px,2.6vw,20px); line-height:1.45; color:var(--ink); margin:0 0 16px; min-height:2.9em;}
+.opt{display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; margin-bottom:9px; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:16.5px; color:var(--ink); transition:.15s;}
+.opt:hover:not(.locked){border-color:var(--cyan); background:rgba(0,184,196,.05);}
+.opt .k{flex:none; width:28px; height:28px; border-radius:7px; background:var(--bg-soft); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-size:13px; font-weight:700;}
+.opt.sel{background:var(--solid); color:#fff; border-color:var(--ink);} .opt.sel .k{background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.3); color:#fff;}
+.opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700; color:var(--ink);} .opt.correct .k{background:var(--ok); border-color:var(--ok); color:#fff;}
+.opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--ink);} .opt.wrong .k{background:var(--magenta); border-color:var(--magenta); color:#fff;}
+.opt.locked{cursor:default;}
+#fb{display:none;} #fb.show{display:block;}
+.big{font-family:'Orbitron','Segoe UI',sans-serif;}
+.score{font-size:68px; font-weight:900; line-height:1; background:linear-gradient(90deg,var(--ink) 30%,var(--cyan-deep)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.rs{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;}
+.rs div{background:var(--bg-soft); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.rs b{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:20px; color:var(--ink);}
+.mist{border:1px solid var(--line); border-left:5px solid var(--magenta); border-radius:10px; padding:12px 16px; margin-bottom:10px; background:var(--bg-soft);}
+.mist h4{font-size:13.5px; line-height:1.45; margin-bottom:6px;}
+.mist p{margin:0 0 3px; font-size:15px;}
+.mist .y{color:var(--magenta);} .mist .r{color:var(--ok); font-weight:700;}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / TEST-CORE — ОНЛАЙН</span><span>ТЕСТИ ДО ТЕМИ 3 · <span id="hudTime" class="mono">ЧАС: <b>00:00</b></span></span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// TEST_SUITE_03 · SELF_REGULATION.RESILIENCE</span>
+    <h1>Тести до теми 3. Саморегуляція та емоційна стійкість особистості</h1>
+    <p class="sub">30 тестових завдань для самоперевірки: поняття та компоненти саморегуляції, методи управління емоціями, стресостійкість і психологічна резильєнтність, саморегуляція в діяльності керівника.</p>
+    <div class="hero-meta">
+      <span class="chip">❓ 30 питань</span>
+      <span class="chip">🔠 4 варіанти (а–г)</span>
+      <span class="chip">🎯 тренування / екзамен</span>
+      <span class="chip">📄 результат у .docx</span>
+    </div>
+  </header>
+
+  <!-- СТАРТ -->
+  <section class="panel active" id="p-setup">
+    <h2><span class="idx">SET</span> Налаштування тесту</h2>
+    <p class="lede">Оберіть режим і кількість питань. У кожному питанні лише одна правильна відповідь.</p>
+    <div class="setup">
+      <div class="fld"><label class="l">Режим</label>
+        <div class="modes">
+          <label class="mode on"><input type="radio" name="mode" value="train" checked><div><b>Тренування</b><span>Миттєва перевірка після кожної відповіді; відповідь змінити не можна.</span></div></label>
+          <label class="mode"><input type="radio" name="mode" value="exam"><div><b>Екзамен</b><span>Результат лише наприкінці; відповіді можна змінювати до завершення.</span></div></label>
+        </div>
+      </div>
+      <div class="fld"><label class="l" for="cnt">Кількість питань</label>
+        <select class="txt" id="cnt"><option value="10">10 (випадкові)</option><option value="20">20 (випадкові)</option><option value="30" selected>30 (усі)</option></select>
+        <label class="chk"><input type="checkbox" id="shuf"> Перемішати порядок питань</label>
+        <div class="callout advice" style="margin-top:14px"><b class="lbl">Порада</b>Під час проходження працюють клавіші: 1–4 — вибір варіанта, ←/→ — перехід між питаннями.</div>
+      </div>
+    </div>
+    <div class="btnrow"><button class="btn big" id="startBtn">▶ Розпочати тест</button></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="p-test">
+    <div class="qhead"><span id="qcount">Питання 1 / 30</span><span id="modeTag"></span><span id="answeredTag">Відповідей: 0</span></div>
+    <div class="progress"><i id="pbar"></i></div>
+    <div class="nv" id="nv"></div>
+    <h3 class="qtext" id="qtext"></h3>
+    <div id="opts"></div>
+    <div class="callout" id="fb"></div>
+    <div class="btnrow">
+      <button class="btn ghost" id="prevBtn">← Назад</button>
+      <button class="btn ghost" id="nextBtn">Далі →</button>
+      <span class="sp"></span>
+      <button class="btn" id="finBtn">Завершити тест</button>
+      <div id="finishWarning" class="callout attention finish-warning" role="alert" hidden></div>
+    </div>
+  </section>
+
+  <!-- РЕЗУЛЬТАТ -->
+  <dialog id="finishDialog" class="finish-dialog" aria-labelledby="finishDialogTitle" aria-describedby="finishDialogText">
+    <h2 id="finishDialogTitle">Завершити тест?</h2>
+    <p id="finishDialogText"></p>
+    <div class="btnrow">
+      <button type="button" class="btn ghost" id="cancelFinish">Продовжити тест</button>
+      <button type="button" class="btn" id="confirmFinish">Завершити</button>
+    </div>
+  </dialog>
+
+  <section class="panel" id="p-result">
+    <h2><span class="idx">END</span> Результат</h2>
+    <div class="score" id="rScore">0/0</div>
+    <div class="rs" id="rStats"></div>
+    <div class="progress"><i id="rBar"></i></div>
+    <p id="rMsg" class="lede"></p>
+    <h3 style="font-size:16px;color:var(--cyan-deep)">Звіт у файлі Word</h3>
+    <div class="setup">
+      <div class="fld"><label class="l" for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" required placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label class="l" for="rep_group">Група</label><input class="txt" id="rep_group" required placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити результат (.docx)</button>
+      <button class="btn" id="againBtn">Пройти знову</button>
+      <button class="btn ghost" id="errBtn">Повторити лише помилки</button>
+    </div>
+    <div id="repMsg" role="status" aria-live="polite" class="mono" style="font-size:12.5px;color:var(--ink-soft);margin-top:6px"></div>
+    <h3 style="font-size:16px;color:var(--cyan-deep);margin-top:24px">Розбір помилок</h3>
+    <div id="mistakes"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Тести до теми 3 · Саморегуляція та емоційна стійкість особистості</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var L=['а','б','в','г'];
+var Q=[
+["Саморегуляція особистості це:", ["Уникнення складних ситуацій", "Здатність керувати власними психічними станами та поведінкою", "Підпорядкування вимогам оточення", "Контроль поведінки інших людей"], 1],
+["Основною метою саморегуляції є:", ["Пригнічення всіх емоцій", "Досягнення ефективної поведінки в різних ситуаціях", "Уникнення конфліктів", "Зменшення соціальних контактів"], 1],
+["Який компонент є важливим елементом саморегуляції?", ["Самоусвідомлення", "Плітки", "Конкуренція", "Навіювання"], 0],
+["До методів управління емоціями належить:", ["Когнітивна переоцінка", "Маніпулювання людьми", "Ізоляція від суспільства", "Ігнорування проблем"], 0],
+["Когнітивна переоцінка передбачає:", ["Зміну інтерпретації ситуації для зниження емоційної напруги", "Приховування емоцій", "Уникнення емоційних подій", "Зосередження лише на негативному досвіді"], 0],
+["Прикладом когнітивної переоцінки є твердження:", ["«Я нічого не можу змінити»", "«Ця помилка дає мені можливість навчитися новому»", "«Усі винні, крім мене»", "«Потрібно просто забути про проблему»"], 1],
+["Дихальні техніки використовуються для:", ["Збільшення рівня тривоги", "Зниження фізіологічного напруження", "Пригнічення пам'яті", "Розвитку інтелекту"], 1],
+["Яка з технік належить до дихальних?", ["SWOT-аналіз", "Квадратне дихання", "Мозковий штурм", "Контент-аналіз"], 1],
+["Резильєнтність це:", ["Здатність уникати труднощів", "Психологічна стійкість та здатність відновлюватися після стресу", "Високий рівень інтелекту", "Схильність до ризику"], 1],
+["Стресостійкість означає:", ["Здатність ефективно діяти в умовах стресу", "Відсутність негативних емоцій", "Ігнорування проблем", "Небажання приймати рішення"], 0],
+["До особистісних ресурсів резильєнтності належать:", ["Оптимізм і впевненість у собі", "Заробітна плата", "Технічні навички", "Посадова інструкція"], 0],
+["Який із чинників підвищує резильєнтність?", ["Соціальна підтримка", "Хронічний стрес", "Постійна ізоляція", "Емоційне виснаження"], 0],
+["До конструктивних способів подолання стресу належить:", ["Зловживання алкоголем", "Уникнення відповідальності", "Планування дій і пошук підтримки", "Агресивна поведінка"], 2],
+["Однією з ознак високої резильєнтності є:", ["Безпорадність", "Гнучкість у реагуванні на зміни", "Імпульсивність", "Конфліктність"], 1],
+["Яке поняття означає здатність контролювати прояви власних емоцій?", ["Саморегуляція", "Інтуїція", "Навіювання", "Адаптація"], 0],
+["Основною ознакою емоційної зрілості є:", ["Усвідомлене управління власними емоціями", "Уникнення відповідальності", "Приховування почуттів", "Відсутність переживань"], 0],
+["Найбільш ефективним способом профілактики емоційного виснаження є:", ["Ігнорування відпочинку", "Баланс між працею та відновленням ресурсів", "Збільшення навантаження", "Скорочення комунікацій"], 1],
+["До психологічних ресурсів особистості належить:", ["Самоефективність", "Посада", "Робочий кабінет", "Розмір організації"], 0],
+["Індивідуальний план розвитку резильєнтності повинен містити:", ["Лише перелік проблем", "Цілі, ресурси та конкретні заходи розвитку", "Лише оцінку ризиків", "Опис особистих якостей"], 1],
+["Саморегуляція керівника найбільшою мірою впливає на:", ["Емоційний клімат колективу", "Рівень інфляції", "Розташування офісу", "Технічні характеристики обладнання"], 0],
+["Емоційно компетентний керівник у конфліктній ситуації:", ["Реагує імпульсивно", "Демонструє самоконтроль і конструктивну комунікацію", "Ігнорує проблему", "Перекладає відповідальність"], 1],
+["Яка поведінка керівника свідчить про низький рівень саморегуляції?", ["Виважене ухвалення рішень", "Публічна агресивна критика працівників", "Активне слухання", "Підтримка персоналу"], 1],
+["Однією з функцій саморегуляції керівника є:", ["Управління власними емоційними реакціями", "Контроль погоди", "Визначення особистого життя працівників", "Підвищення конкуренції між працівниками"], 0],
+["Уміння зберігати спокій у кризових ситуаціях характеризує:", ["Резильєнтність", "Перфекціонізм", "Конформізм", "Ригідність"], 0],
+["Яке з наведених тверджень характеризує стресостійку особистість?", ["Легко впадає у паніку", "Швидко відновлюється після труднощів", "Уникає прийняття рішень", "Часто втрачає контроль над емоціями"], 1],
+["До методів емоційного контролю належить:", ["Усвідомлення та називання власних емоцій", "Ігнорування проблемної ситуації", "Уникнення спілкування", "Приписування провини іншим"], 0],
+["Який фактор найбільше сприяє професійній стійкості керівника?", ["Емоційний інтелект", "Авторитарність", "Жорсткість поведінки", "Формальна влада"], 0],
+["Метою аналізу ресурсів особистості є:", ["Виявлення сильних сторін та резервів розвитку", "Контроль інших людей", "Порівняння доходів працівників", "Аналіз виробничих процесів"], 0],
+["Психологічна резильєнтність допомагає:", ["Збільшувати емоційну вразливість", "Ефективніше адаптуватися до змін і криз", "Уникати відповідальності", "Зменшувати комунікацію"], 1],
+["Високий рівень саморегуляції керівника сприяє:", ["Зростанню довіри та ефективності команди", "Посиленню конфліктності", "Зниженню мотивації персоналу", "Погіршенню психологічного клімату"], 0]
+];
+var mode='train',order=[],pos=0,ans={},finished=false,t0=0,tId=null,tEnd=0;
+var progressKey='pei-test-progress:'+location.pathname;
+
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t}return a}
+function mmss(s){var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r}
+function show(id){$$('section.panel').forEach(function(p){p.classList.remove('active')});$('#'+id).classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+function tick(){var s=Math.floor((Date.now()-t0)/1000);$('#hudTime').innerHTML='ЧАС: <b>'+mmss(s)+'</b>';}
+
+function saveProgress(){
+ if(finished||!order.length)return;
+ try{sessionStorage.setItem(progressKey,JSON.stringify({
+  v:1,mode:mode,order:order,pos:pos,ans:ans,t0:t0,trainCount:trainCount
+ }));}catch(e){}
+}
+function clearProgress(){try{sessionStorage.removeItem(progressKey)}catch(e){}}
+function validProgress(data){
+ if(!data||data.v!==1||(data.mode!=='train'&&data.mode!=='exam')||
+    !Array.isArray(data.order)||!data.order.length||data.order.length>Q.length||
+    !Number.isInteger(data.pos)||data.pos<0||data.pos>=data.order.length||
+    !Number.isFinite(data.t0)||data.t0<=0||
+    !data.ans||Array.isArray(data.ans)||typeof data.ans!=='object'||
+    !$$('#cnt option').some(function(o){return o.value===data.trainCount}))return false;
+ if(data.mode==='exam'&&data.order.length!==Q.length)return false;
+ var seen={};
+ for(var i=0;i<data.order.length;i++){
+  var q=data.order[i];
+  if(!Number.isInteger(q)||q<0||q>=Q.length||seen[q])return false;
+  seen[q]=true;
+ }
+ return Object.keys(data.ans).every(function(key){
+  var q=+key,a=data.ans[key];
+  return String(q)===key&&seen[q]&&Number.isInteger(a)&&a>=0&&a<Q[q][1].length;
+ });
+}
+function restoreProgress(){
+ var data;
+ try{data=JSON.parse(sessionStorage.getItem(progressKey)||'null')}catch(e){clearProgress();return}
+ if(!data)return;
+ if(!validProgress(data)){clearProgress();return}
+ mode=data.mode;order=data.order;pos=data.pos;ans=data.ans;t0=data.t0;finished=false;
+ trainCount=data.trainCount;
+ $('input[name=mode][value='+mode+']').checked=true;
+ syncModeControls();
+ clearFinishWarning();
+ setModeTag();tick();clearInterval(tId);tId=setInterval(tick,1000);
+ show('p-test');render();
+}
+function setModeTag(){
+ $('#modeTag').textContent=mode==='train'?'РЕЖИМ: ТРЕНУВАННЯ':'РЕЖИМ: ЕКЗАМЕН';
+}
+
+var trainCount=$('#cnt').value;
+function syncModeControls(){
+ var exam=$('input[name=mode]:checked').value==='exam',count=$('#cnt');
+ count.value=exam?String(Q.length):trainCount;
+ count.disabled=exam;
+ $$('.mode').forEach(function(m){m.classList.toggle('on',$('input',m).checked);});
+}
+$('#cnt').addEventListener('change',function(){trainCount=this.value;});
+$$('input[name=mode]').forEach(function(r){r.addEventListener('change',function(){
+ if(this.value==='exam')trainCount=$('#cnt').value;
+ syncModeControls();
+});});
+syncModeControls();
+
+function begin(list,m){
+ mode=m;order=list;pos=0;ans={};finished=false;clearFinishWarning();
+ clearInterval(tId);t0=Date.now();tick();tId=setInterval(tick,1000);
+ setModeTag();
+ show('p-test');render();
+}
+$('#startBtn').addEventListener('click',function(){
+ var n=$('input[name=mode]:checked').value==='exam'?Q.length:+$('#cnt').value,idx=[];for(var i=0;i<Q.length;i++)idx.push(i);
+ if(n<Q.length)idx=shuffle(idx).slice(0,n);
+ if($('#shuf').checked||n<Q.length)idx=shuffle(idx);
+ begin(idx,$('input[name=mode]:checked').value);
+});
+
+function render(){
+ var qi=order[pos],q=Q[qi],a=ans[qi];
+ $('#qcount').textContent='Питання '+(pos+1)+' / '+order.length;
+ var n=Object.keys(ans).length;$('#answeredTag').textContent='Відповідей: '+n+' / '+order.length;
+ $('#pbar').style.width=(n/order.length*100)+'%';
+ $('#nv').innerHTML=order.map(function(x,p){var s=ans[x],c='';
+  if(s!==undefined){c=mode==='train'?(s===Q[x][2]?'ok':'bad'):'done';}
+  return '<button type="button" data-p="'+p+'" class="'+c+(p===pos?' cur':'')+'" aria-label="Питання '+(p+1)+'">'+(p+1)+'</button>';}).join('');
+ $$('#nv button').forEach(function(b){b.addEventListener('click',function(){pos=+b.dataset.p;render();});});
+ $('#qtext').textContent=(pos+1)+'. '+q[0];
+ var locked=mode==='train'&&a!==undefined;
+ $('#opts').innerHTML=q[1].map(function(t,i){var c='opt';
+  if(locked){c+=' locked';if(i===q[2])c+=' correct';else if(i===a)c+=' wrong';}
+  else if(a===i)c+=' sel';
+  return '<button type="button" class="'+c+'" data-i="'+i+'"><span class="k">'+L[i]+'</span><span>'+t+'</span></button>';}).join('');
+ $$('#opts .opt').forEach(function(b){b.addEventListener('click',function(){choose(+b.dataset.i);});});
+ var fb=$('#fb');
+ if(locked){var ok=a===q[2];fb.className='callout show '+(ok?'advice':'important');
+  fb.innerHTML='<b class="lbl">'+(ok?'Правильно':'Неправильно')+'</b>'+(ok?'Ваша відповідь вірна.':'Правильна відповідь: <b>'+L[q[2]]+') '+q[1][q[2]]+'</b>');}
+ else{fb.className='callout';fb.innerHTML='';}
+ $('#prevBtn').disabled=pos===0;$('#nextBtn').disabled=pos===order.length-1;
+ saveProgress();
+}
+function choose(i){
+ var qi=order[pos];
+ if(mode==='train'&&ans[qi]!==undefined)return;
+ ans[qi]=i;clearFinishWarning();render();
+}
+$('#prevBtn').addEventListener('click',function(){if(pos>0){pos--;render();}});
+$('#nextBtn').addEventListener('click',function(){if(pos<order.length-1){pos++;render();}});
+document.addEventListener('keydown',function(e){
+ if($('#finishDialog').open||!$('#p-test').classList.contains('active')||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;
+ if(e.key>='1'&&e.key<='4'){choose(+e.key-1);}
+ else if(e.key==='ArrowRight'&&pos<order.length-1){pos++;render();}
+ else if(e.key==='ArrowLeft'&&pos>0){pos--;render();}
+});
+function clearFinishWarning(){
+ $('#finishWarning').hidden=true;
+ $('#finBtn').classList.remove('shake');
+}
+$('#finBtn').addEventListener('animationend',function(){this.classList.remove('shake');});
+$('#finBtn').addEventListener('click',function(){
+ var left=order.length-Object.keys(ans).length;
+ if(mode==='exam'&&left>0){
+  var warning=$('#finishWarning');
+  warning.textContent='Ви відповіли не на всі запитання. Без відповіді залишилося: '+left+'. Щоб завершити екзамен, дайте відповідь на кожне запитання.';
+  warning.hidden=false;
+  this.classList.remove('shake');
+  void this.offsetWidth;
+  this.classList.add('shake');
+  warning.scrollIntoView({block:'nearest',behavior:'smooth'});
+  return;
+ }
+ if(mode==='train'&&left>0){
+  $('#finishDialogText').textContent='Без відповіді залишилося питань: '+left+'. Завершити тест зараз?';
+  $('#finishDialog').showModal();
+  $('#cancelFinish').focus();
+  return;
+ }
+ finish();
+});
+
+$('#cancelFinish').addEventListener('click',function(){$('#finishDialog').close();});
+$('#confirmFinish').addEventListener('click',function(){$('#finishDialog').close();finish();});
+
+function finish(){
+ finished=true;clearProgress();clearInterval(tId);tEnd=Math.floor((Date.now()-t0)/1000);
+ var ok=0,bad=0,skip=0;order.forEach(function(x){var a=ans[x];if(a===undefined)skip++;else if(a===Q[x][2])ok++;else bad++;});
+ var pct=Math.round(ok/order.length*100);
+ $('#rScore').textContent=ok+'/'+order.length;
+ $('#rStats').innerHTML='<div>Правильних<b>'+ok+'</b></div><div>Помилок<b>'+bad+'</b></div><div>Без відповіді<b>'+skip+'</b></div><div>Відсоток<b>'+pct+'%</b></div><div>Час<b>'+mmss(tEnd)+'</b></div>';
+ $('#rBar').style.width=pct+'%';
+ $('#rMsg').textContent=pct>=90?'Відмінний результат! Матеріал засвоєно впевнено.':pct>=70?'Добрий результат. Перегляньте розбір помилок, щоб закріпити тему.':pct>=50?'Є прогалини. Повторіть лекцію й пройдіть тест ще раз.':'Потрібно повторити тему. Скористайтеся розбором помилок і конспектом лекції.';
+ var miss=order.filter(function(x){return ans[x]!==Q[x][2]});
+ $('#errBtn').style.display=miss.length?'':'none';
+ $('#mistakes').innerHTML=miss.length?miss.map(function(x){var q=Q[x],a=ans[x];
+  return '<div class="mist"><h4>'+(x+1)+'. '+q[0]+'</h4><p class="y">Ваша відповідь: '+(a===undefined?'— без відповіді —':L[a]+') '+q[1][a])+'</p><p class="r">Правильно: '+L[q[2]]+') '+q[1][q[2]]+'</p></div>';}).join(''):'<div class="callout advice"><b class="lbl">Без помилок</b>Усі відповіді правильні — розбирати нічого.</div>';
+ show('p-result');
+}
+$('#againBtn').addEventListener('click',function(){show('p-setup');$('#hudTime').innerHTML='ЧАС: <b>00:00</b>';});
+$('#errBtn').addEventListener('click',function(){
+ var miss=order.filter(function(x){return ans[x]!==Q[x][2]});
+ if(miss.length)begin(shuffle(miss),'train');
+});
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws,colors){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){var hd=ri===0||ci===0;var col=(!hd&&ci===4&&colors)?colors[ri-1]:undefined;return cell(ws[ci],para(c,{b:hd||ci===4,s:20,sa:40,c:col}),hd)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function buildDoc(){
+ var n=$('#rep_name').value.trim(),g=$('#rep_group').value.trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var ok=0;order.forEach(function(q){if(ans[q]===Q[q][2])ok++});
+ x+=para('РЕЗУЛЬТАТИ ТЕСТУВАННЯ',{b:1,s:36,al:'center',sa:60})+para('Тести до теми 3. Саморегуляція та емоційна стійкість особистості',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d)+para('Режим: '+(mode==='train'?'тренування':'екзамен'))+para('Час проходження: '+mmss(tEnd))+para('Результат: '+ok+' з '+order.length+' ('+Math.round(ok/order.length*100)+'%)',{b:1,sa:200});
+ var rows=[['№','Питання','Відповідь студента','Правильна відповідь','Результат']],colors=[];
+ order.forEach(function(x2,i){var q=Q[x2],a=ans[x2],good=a===q[2];
+  rows.push([String(x2+1),q[0],a===undefined?'— без відповіді —':L[a]+') '+q[1][a],L[q[2]]+') '+q[1][q[2]],good?'правильно':(a===undefined?'пропущено':'неправильно')]);
+  colors.push(good?'0A9B5C':'D6006E');});
+ x+=table(rows,[560,3200,2300,2300,1278],colors);
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var reportName=$('#rep_name').value.trim(),reportGroup=$('#rep_group').value.trim();
+ if(!reportName||!reportGroup){
+  $('#repMsg').textContent=!reportName&&!reportGroup?'Вкажіть ПІБ і групу, щоб завантажити документ.':!reportName?'Вкажіть ПІБ, щоб завантажити документ.':'Вкажіть групу, щоб завантажити документ.';
+  (!reportName?$('#rep_name'):$('#rep_group')).focus();
+  return;
+ }
+
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=$('#rep_name').value.trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Тест_тема3_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent='Файл сформовано. Перевірте папку «Завантаження».';});
+restoreProgress();
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+</body>
+</html>
