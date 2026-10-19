@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Лекція 5. Емоційний інтелект лідера та командна взаємодія</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+p{margin:0 0 12px;}
+/* accordion */
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+/* grids & cards */
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+@media(max-width:480px){.grid4{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+/* flip cards */
+.flip{perspective:900px; height:210px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front .n{font-family:'Share Tech Mono',monospace; color:#fff; background:var(--magenta); border-radius:6px; padding:1px 9px; font-size:12px; margin-bottom:8px;}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; color:var(--ink);}
+/* tooltips */
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+/* callouts */
+.callout{border-radius:10px; padding:12px 16px 12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+/* steps / timeline */
+.steps{counter-reset:step;}
+.step{position:relative; padding:10px 10px 10px 44px; border-left:2px solid var(--line); margin-left:14px;}
+.step::before{counter-increment:step; content:counter(step); position:absolute; left:-15px; top:8px; width:28px; height:28px; border-radius:50%;
+  background:var(--cyan); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-weight:700;
+  box-shadow:0 0 0 4px var(--bg-panel);}
+.step b.yr{font-family:'Share Tech Mono',monospace; color:var(--magenta);}
+/* checklist */
+.check{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 14px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+/* buttons */
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+/* code block */
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px 16px 14px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:80px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+/* quiz */
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;}
+.quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / EQ‑CORE — ОНЛАЙН</span><span>ЛЕКЦІЯ: 05</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// LECTURE_05 · LEADERSHIP.TEAM_DYNAMICS</span>
+    <h1>Емоційний інтелект лідера та командна взаємодія</h1>
+    <p class="sub">Інтерактивний конспект лекції: емоційне лідерство, харизматичне та резонансне лідерство, емоційний клімат організації та групова емоційна компетентність.</p>
+    <div class="hero-meta">
+      <span class="chip">📘 4 розділи теорії</span>
+      <span class="chip">🃏 4 картки-терміни</span>
+      <span class="chip">✅ 6 кроків практики</span>
+      <span class="chip">❓ 3 питання тесту</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Емоційне лідерство</button>
+    <button data-t="t-2">02 · Резонанс</button>
+    <button data-t="t-3">03 · Клімат</button>
+    <button data-t="t-4">04 · Команда</button>
+    <button data-t="t-prac">✅ Практика</button>
+    <button data-t="t-quiz">❓ Самоперевірка</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Загальна карта лекції</h2>
+    <p class="lede">Емоційний інтелект — важлива основа сучасного лідерства та ефективної командної взаємодії. Ефективність керівника визначають не лише знання та управлінські навички, а й здатність розуміти, регулювати й конструктивно використовувати емоції в управлінні людьми.</p>
+    <div class="grid2">
+      <div class="card"><h4>01 · Емоційне лідерство</h4>Вплив через емоції, п'ять складових ЕІ за Гоулманом, лідер у кризі.</div>
+      <div class="card"><h4>02 · Резонанс</h4>Харизма за М. Вебером, резонансне лідерство, його стилі та дисонанс.</div>
+      <div class="card"><h4>03 · Клімат</h4>Сприятливий і негативний емоційний клімат, роль керівника, емоційне зараження.</div>
+      <div class="card"><h4>04 · Команда</h4>Групова емоційна компетентність за Друскат і Вольфом: три рівні.</div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Наводьте курсор (або торкайтеся) на слова з пунктирним підкресленням — з'явиться коротке визначення. Картки у розділі 02 можна перевертати.</div>
+    <h3>Висновки</h3>
+    <div class="acc-item"><button class="acc-head">Ключові висновки лекції <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Емоційне лідерство передбачає здатність керівника усвідомлювати та регулювати емоції, впливаючи на мотивацію й поведінку працівників. Харизматичне та резонансне лідерство демонструють важливість <b>емоційного впливу</b> та формування спільного бачення.</p>
+      <p>Емоційний клімат визначає психологічний комфорт, згуртованість і задоволеність працівників, а групова емоційна компетентність забезпечує конструктивну взаємодію, вирішення конфліктів і високі результати команди.</p></div></div>
+  </section>
+
+  <!-- 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Емоційне лідерство</h2>
+    <p class="lede">Емоційне лідерство — здатність керівника впливати на поведінку, мотивацію та результати підлеглих через усвідомлене управління власними емоціями та емоційними станами інших людей. Його основа — емоційний інтелект.</p>
+    <div class="acc-item open"><button class="acc-head">Від раціонального управління до емоційної компетентності <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Традиційні управлінські концепції орієнтувалися переважно на раціональні аспекти діяльності керівника. Сучасні дослідження доводять: ефективність лідера значною мірою визначається його <b>емоційною компетентністю</b>, адже він щодня взаємодіє з людьми з різними потребами, цінностями, мотивацією та емоційними реакціями.</p></div></div>
+    <h3>П'ять складових ЕІ за Д. Гоулманом</h3>
+    <div class="steps">
+      <div class="step"><b class="yr">Самоусвідомлення</b> — розуміння власних емоцій, їх причин і впливу.</div>
+      <div class="step"><b class="yr">Саморегуляція</b> — контроль і конструктивне управління власними реакціями.</div>
+      <div class="step"><b class="yr">Мотивація</b> — внутрішнє прагнення до досягнення цілей.</div>
+      <div class="step"><b class="yr">Емпатія</b> — розуміння емоцій і потреб інших людей.</div>
+      <div class="step"><b class="yr">Соціальні навички</b> — вміння будувати стосунки та впливати на людей.</div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Саме ці п'ять характеристик, за Гоулманом, становлять <b>фундамент ефективного лідерства</b>.</div>
+    <div class="acc-item"><button class="acc-head">Позитивна атмосфера та емоційне зараження <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Настрій керівника впливає на стан підлеглих через механізми соціального наслідування та <span class="tip" tabindex="0" data-tip="Емоційне зараження — несвідоме перейняття людьми емоційних станів одне одного в процесі взаємодії.">емоційного зараження</span>. Оптимістичний, врівноважений керівник підтримує мотивацію працівників навіть у складних умовах.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Лідер у кризі <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>У періоди криз, невизначеності та змін працівники потребують не лише рішень, а й психологічної підтримки, впевненості та стабільності. Спокійний лідер, який контролює ситуацію й розуміє потреби колективу, знижує тривожність і підвищує <span class="tip" tabindex="0" data-tip="Організаційна стійкість — здатність організації зберігати функціонування та адаптуватися в умовах криз і змін.">організаційну стійкість</span>.</p></div></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Запам'ятайте п'ять складових як ланцюжок «від себе до інших»: самоусвідомлення → саморегуляція → мотивація → емпатія → соціальні навички.</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Харизматичне та резонансне лідерство</h2>
+    <p class="lede">Обидві концепції безпосередньо пов'язані з емоційним інтелектом керівника та його здатністю впливати на людей через емоційну взаємодію.</p>
+    <div class="acc-item open"><button class="acc-head">Харизматичне лідерство (М. Вебер) <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Поняття бере початок у працях німецького соціолога Макса Вебера. <span class="tip" tabindex="0" data-tip="Харизма — особлива якість особистості, що дає змогу впливати на людей завдяки впевненості, переконливості й натхненності.">Харизма</span> дозволяє впливати на людей завдяки впевненості, переконливості, натхненності та здатності об'єднувати навколо спільної мети.</p>
+      <p>Харизматичний лідер має високу емоційну експресивність, формулює привабливе бачення майбутнього й надихає на складні цілі, створюючи відчуття значущості спільної діяльності.</p></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Однієї харизми недостатньо для ефективного управління — тому поширилася концепція резонансного лідерства Д. Гоулмана, Р. Бояциса та Е. Маккі.</div>
+    <div class="acc-item"><button class="acc-head">Резонансне лідерство <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Ґрунтується на здатності створювати позитивний емоційний <b>резонанс</b> — налаштування людей на спільну хвилю співробітництва, взаємної підтримки та залученості.</p>
+      <p>Основа — емоційна усвідомленість, емпатія, саморегуляція та соціальна компетентність. Резонансний лідер не лише надихає, а й уважний до потреб, емоційного стану та розвитку людей.</p></div></div>
+    <h3>Стилі резонансного лідерства (натисніть на картку)</h3>
+    <div class="grid4" style="margin-bottom:14px">
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: візіонерський стиль"><div class="flip-in">
+        <div class="face front"><span class="n">1</span><h4>Візіонерський</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Лідер формулює привабливе бачення майбутнього й веде людей до спільної мети.</div></div></div>
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: наставницький стиль"><div class="flip-in">
+        <div class="face front"><span class="n">2</span><h4>Наставницький</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Лідер підтримує особистісний розвиток працівників, пов'язуючи їхні цілі з цілями організації.</div></div></div>
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: демократичний стиль"><div class="flip-in">
+        <div class="face front"><span class="n">3</span><h4>Демократичний</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Лідер залучає людей до ухвалення рішень, цінує їхню думку й формує відданість через участь.</div></div></div>
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: афіліативний стиль"><div class="flip-in">
+        <div class="face front"><span class="n">4</span><h4>Афіліативний</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Лідер зосереджений на гармонії стосунків, підтримці та емоційному зв'язку між людьми.</div></div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><h4>Резонансне лідерство</h4>Позитивний емоційний вплив, сприятливий психологічний клімат, довгострокова ефективність.</div>
+      <div class="card"><h4>Дисонансне лідерство</h4>Напруження, страх, недовіра, емоційне виснаження; можливий короткостроковий результат, але шкода в довгостроковій перспективі.</div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Харизматичне та резонансне лідерство підтверджують зростаючу роль ЕІ в управлінні та важливість <b>емоційного впливу</b> як інструменту сучасного менеджменту.</div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Емоційний клімат організації</h2>
+    <p class="lede">Емоційний клімат — сукупність домінуючих емоційних станів, переживань, настроїв і ставлень, що характеризують соціально-психологічну атмосферу колективу.</p>
+    <div class="acc-item open"><button class="acc-head">Чинники формування <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Клімат формується під впливом управлінського стилю, <span class="tip" tabindex="0" data-tip="Організаційна культура — спільні цінності, норми, традиції та способи поведінки, прийняті в організації.">організаційної культури</span>, особливостей комунікації та взаємовідносин між працівниками. Він визначає характер взаємин, психологічний комфорт, мотивацію та результативність.</p></div></div>
+    <div class="grid2">
+      <div class="card"><h4>Сприятливий клімат</h4>Довіра, повага, підтримка, відкритість, взаємодопомога → вища задоволеність і залученість, краща командна взаємодія.</div>
+      <div class="card"><h4>Негативний клімат</h4>Конфліктність, напруженість, недовіра, страх помилок, виснаження → нижча продуктивність, плинність кадрів, вигорання.</div>
+    </div>
+    <div class="acc-item"><button class="acc-head">Роль керівника <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Керівник задає стандарти комунікації, визначає характер взаємодії та впливає на емоційний фон організації. Через механізм емоційного зараження його стани часто поширюються на інших працівників.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Переваги позитивного клімату <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Розвиток довіри, готовність до інновацій, командна згуртованість і професійне зростання персоналу. Тому організації дедалі більше уваги приділяють корпоративній культурі, психологічному благополуччю та програмам підтримки працівників.</p></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>В умовах криз, невизначеності та значного психологічного навантаження позитивний емоційний клімат стає складовою <b>організаційної стійкості та конкурентоспроможності</b>.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Емоційний клімат — соціально-психологічний ресурс організації, що істотно впливає на ефективність персоналу та якість командної взаємодії.</div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Групова емоційна компетентність</h2>
+    <p class="lede">Групова емоційна компетентність — здатність членів колективу усвідомлювати, розуміти та регулювати емоційні процеси в груповій взаємодії. Вона відображає рівень емоційної зрілості команди.</p>
+    <div class="acc-item open"><button class="acc-head">Концепція В. Друскат і С. Вольфа <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Ванесса Друскат і Стівен Вольф довели, що успішність команди залежить не лише від професійних знань її членів, а й від здатності підтримувати конструктивну емоційну взаємодію.</p></div></div>
+    <h3>Три рівні</h3>
+    <div class="steps">
+      <div class="step"><b class="yr">Індивідуальний</b> — самосвідомість, саморегуляція та відповідальність кожного члена колективу.</div>
+      <div class="step"><b class="yr">Груповий</b> — довіра, відкрита комунікація, підтримка, взаємоповага, готовність до колективного вирішення проблем.</div>
+      <div class="step"><b class="yr">Міжгруповий</b> — співпраця з іншими підрозділами, конструктивне врегулювання конфліктів, партнерські відносини.</div>
+    </div>
+    <div class="acc-item"><button class="acc-head">Як проявляється <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Команда своєчасно виявляє емоційне напруження, відкрито обговорює проблеми, конструктивно вирішує конфлікти та зберігає згуртованість навіть у складних ситуаціях.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Коли особливо важлива <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Під час роботи над складними проєктами, організаційних змін, кризового управління та діяльності в умовах невизначеності. Такі команди більш <span class="tip" tabindex="0" data-tip="Адаптивність — здатність швидко пристосовуватися до нових умов і змін.">адаптивні</span>, ефективніше використовують внутрішні ресурси та швидше досягають цілей.</p></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для керівника розвиток групової емоційної компетентності — важливий напрям управлінської діяльності: вона забезпечує довгострокову ефективність команди та позитивну організаційну культуру.</div>
+  </section>
+
+  <!-- ПРАКТИКА -->
+  <section class="panel" id="t-prac">
+    <h2><span class="idx">PR</span> Практичне завдання: аналіз емоційного клімату команди</h2>
+    <p class="lede">У лекції немає окремої практичної частини, тому це завдання складено на основі концепцій емоційного клімату та групової емоційної компетентності. Виконуйте кроки по черзі та відзначайте їх.</p>
+    <div class="progress"><i id="progBar"></i></div>
+    <div class="mono" id="progTxt" style="font-size:12px;margin-bottom:10px">Виконано: 0 / 6</div>
+    <div id="checklist">
+      <label class="check"><input type="checkbox"><span><b>Крок 1.</b> Оберіть колектив, до якого належите (навчальна група, робоча команда, волонтерський осередок).</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 2 (клімат).</b> Визначте, ознаки якого клімату переважають — сприятливого чи негативного; наведіть 2–3 приклади.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 3 (лідер).</b> Опишіть, як поведінка та настрій керівника (старости, лідера) впливають на емоційний фон групи.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 4 (стиль).</b> Визначте, до якого стилю — резонансного (візіонерський, наставницький, демократичний, афіліативний) чи дисонансного — найближчий цей лідер.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 5 (рівні).</b> Оцініть групову емоційну компетентність на індивідуальному, груповому та міжгруповому рівнях.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 6.</b> Запропонуйте два конкретні кроки, які покращили б емоційний клімат колективу.</span></label>
+    </div>
+    <div class="btnrow"><button class="btn ghost small" id="resetChecks">Скинути чек-лист</button></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Записуйте відповіді у формі нижче й копіюйте її, щоб вставити у власний щоденник.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre id="tpl">Колектив: ...
+1. Тип клімату та приклади: ...
+2. Вплив лідера на емоційний фон: ...
+3. Стиль лідерства: ...
+4. Групова ЕК — індивідуальний / груповий / міжгруповий рівень: ...
+5. Пропозиції щодо покращення клімату: ...</pre></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Самоперевірка</h2>
+    <p class="lede">Оберіть варіант відповіді — результат і пояснення з'являться одразу.</p>
+    <div class="quiz-q" data-ok="2">
+      <h4>1. Хто розробив концепцію резонансного лідерства?</h4>
+      <button class="quiz-opt">Макс Вебер</button>
+      <button class="quiz-opt">Ванесса Друскат і Стівен Вольф</button>
+      <button class="quiz-opt">Д. Гоулман, Р. Бояцис та Е. Маккі</button>
+      <div class="quiz-fb">Резонансне лідерство розробили Гоулман, Бояцис і Маккі. Вебер — автор поняття харизматичного лідерства, Друскат і Вольф — концепції групової емоційної компетентності.</div>
+    </div>
+    <div class="quiz-q" data-ok="0">
+      <h4>2. Через який механізм настрій керівника поширюється на працівників?</h4>
+      <button class="quiz-opt">Емоційне зараження та соціальне наслідування</button>
+      <button class="quiz-opt">Когнітивна переоцінка</button>
+      <button class="quiz-opt">Адміністративний контроль</button>
+      <div class="quiz-fb">Емоційні стани лідера поширюються на колектив через соціальне наслідування та емоційне зараження, тому керівник значною мірою визначає емоційний клімат.</div>
+    </div>
+    <div class="quiz-q" data-ok="1">
+      <h4>3. Що характерно для дисонансного лідерства?</h4>
+      <button class="quiz-opt">Позитивний емоційний резонанс і залученість персоналу</button>
+      <button class="quiz-opt">Напруження, страх і недовіра; шкода в довгостроковій перспективі</button>
+      <button class="quiz-opt">Наставництво й підтримка розвитку працівників</button>
+      <div class="quiz-fb">Дисонансний лідер провокує напруження, страх, недовіру й виснаження; результат може бути короткостроковим, але згодом ефективність організації знижується.</div>
+    </div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 3</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Лекція 5 · Емоційний інтелект лідера та командна взаємодія</footer>
+</div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  // Вкладки
+  $$('#tabsNav button').forEach(function(b){
+    b.addEventListener('click',function(){
+      $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});
+      $$('section.panel').forEach(function(p){p.classList.remove('active')});
+      b.classList.add('active'); $('#'+b.dataset.t).classList.add('active');
+      $$('.acc-item.open .acc-body',$('#'+b.dataset.t)).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+
+  // Акордеони
+  function setAcc(item,open){
+    var body=$('.acc-body',item); item.classList.toggle('open',open);
+    body.style.maxHeight=open?body.scrollHeight+'px':'0px';
+  }
+  $$('.acc-item').forEach(function(item){
+    $('.acc-head',item).addEventListener('click',function(){setAcc(item,!item.classList.contains('open'))});
+  });
+  function initAcc(){ $$('.acc-item.open').forEach(function(i){setAcc(i,true)}); }
+  initAcc(); window.addEventListener('resize',initAcc);
+
+  // Картки, що перевертаються
+  $$('.flip').forEach(function(f){
+    f.addEventListener('click',function(){f.classList.toggle('on')});
+    f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});
+  });
+
+  // Підказки: на дотик
+  $$('.tip').forEach(function(t){
+    t.addEventListener('click',function(){t.focus()});
+  });
+
+  // Чек-лист
+  var boxes=$$('#checklist input');
+  function upd(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    boxes.forEach(function(b){b.parentNode.classList.toggle('done',b.checked)});
+    $('#progBar').style.width=(n/boxes.length*100)+'%';
+    $('#progTxt').textContent='Виконано: '+n+' / '+boxes.length+(n===boxes.length?' — чудово, завдання завершено! 🎉':'');
+  }
+  boxes.forEach(function(b){b.addEventListener('change',upd)});
+  $('#resetChecks').addEventListener('click',function(){boxes.forEach(function(b){b.checked=false});upd()});
+
+  // Копіювання
+  $$('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var txt=$('pre',btn.parentNode).textContent;
+      function ok(){var o=btn.textContent;btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+      function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(ta)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else{fallback()}
+    });
+  });
+
+  // Тест
+  var score=0, answered=0, qs=$$('.quiz-q');
+  qs.forEach(function(q){
+    var opts=$$('.quiz-opt',q), ok=+q.dataset.ok;
+    opts.forEach(function(o,i){
+      o.addEventListener('click',function(){
+        if(q.classList.contains('locked'))return;
+        q.classList.add('locked'); answered++;
+        if(i===ok){o.classList.add('correct'); o.textContent='✔ Правильно! '+o.textContent; score++;}
+        else{o.classList.add('wrong'); o.textContent='✘ Неправильно. '+o.textContent; opts[ok].classList.add('correct');}
+        $('.quiz-fb',q).classList.add('show');
+        $('#quizScore').textContent='Результат: '+score+' / '+qs.length+(answered===qs.length?' — тест завершено':'');
+      });
+    });
+  });
+  $('#quizReset').addEventListener('click',function(){
+    score=0;answered=0;
+    qs.forEach(function(q){
+      q.classList.remove('locked');
+      $$('.quiz-opt',q).forEach(function(o){o.classList.remove('correct','wrong');o.textContent=o.textContent.replace(/^(✔ Правильно! |✘ Неправильно\. )/,'')});
+      $('.quiz-fb',q).classList.remove('show');
+    });
+    $('#quizScore').textContent='Результат: 0 / '+qs.length;
+  });
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+</body>
+</html>

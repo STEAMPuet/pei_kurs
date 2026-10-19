@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Лекція 6. Емоційний інтелект і психологічне благополуччя персоналу</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+p{margin:0 0 12px;}
+/* accordion */
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+/* grids & cards */
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+@media(max-width:480px){.grid4{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+/* flip cards */
+.flip{perspective:900px; height:210px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front .n{font-family:'Share Tech Mono',monospace; color:#fff; background:var(--magenta); border-radius:6px; padding:1px 9px; font-size:12px; margin-bottom:8px;}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; color:var(--ink);}
+/* tooltips */
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+/* callouts */
+.callout{border-radius:10px; padding:12px 16px 12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+/* steps / timeline */
+.steps{counter-reset:step;}
+.step{position:relative; padding:10px 10px 10px 44px; border-left:2px solid var(--line); margin-left:14px;}
+.step::before{counter-increment:step; content:counter(step); position:absolute; left:-15px; top:8px; width:28px; height:28px; border-radius:50%;
+  background:var(--cyan); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-weight:700;
+  box-shadow:0 0 0 4px var(--bg-panel);}
+.step b.yr{font-family:'Share Tech Mono',monospace; color:var(--magenta);}
+/* checklist */
+.check{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 14px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+/* buttons */
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+/* code block */
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px 16px 14px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:80px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+/* quiz */
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;}
+.quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / EQ‑CORE — ОНЛАЙН</span><span>ЛЕКЦІЯ: 06</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// LECTURE_06 · WELL_BEING.EI_DIAGNOSTICS</span>
+    <h1>Емоційний інтелект і психологічне благополуччя персоналу. Діагностика та розвиток EI</h1>
+    <p class="sub">Інтерактивний конспект лекції: професійне вигорання та його профілактика, емоційне здоров'я персоналу, well-being і психологічна безпека, методи діагностики й розвитку емоційного інтелекту.</p>
+    <div class="hero-meta">
+      <span class="chip">📘 4 розділи теорії</span>
+      <span class="chip">🃏 4 картки-терміни</span>
+      <span class="chip">✅ 6 кроків практики</span>
+      <span class="chip">❓ 3 питання тесту</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Вигорання</button>
+    <button data-t="t-2">02 · Емоційне здоров'я</button>
+    <button data-t="t-3">03 · Well-being</button>
+    <button data-t="t-4">04 · Діагностика EI</button>
+    <button data-t="t-prac">✅ Практика</button>
+    <button data-t="t-quiz">❓ Самоперевірка</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Загальна карта лекції</h2>
+    <p class="lede">Емоційний інтелект — важливий психологічний ресурс психологічного благополуччя персоналу та ефективності організації. Його розвиток сприяє профілактиці вигорання, підтриманню емоційного здоров'я та підвищенню психологічної стійкості.</p>
+    <div class="grid2">
+      <div class="card"><h4>01 · Вигорання</h4>Фрейденбергер і Маслач, три компоненти синдрому, індивідуальна та організаційна профілактика.</div>
+      <div class="card"><h4>02 · Емоційне здоров'я</h4>Позитивна психологія, ознаки емоційного здоров'я, індивідуальні та організаційні чинники.</div>
+      <div class="card"><h4>03 · Well-being</h4>Модель PERMA М. Селігмана та психологічна безпека за Е. Едмондсон.</div>
+      <div class="card"><h4>04 · Діагностика EI</h4>MSCEIT, опитувальники самооцінки та напрями розвитку емоційного інтелекту.</div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Наводьте курсор (або торкайтеся) на слова з пунктирним підкресленням — з'явиться коротке визначення. Картки у розділі 04 можна перевертати.</div>
+    <h3>Висновки</h3>
+    <div class="acc-item"><button class="acc-head">Ключові висновки лекції <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Сучасні підходи до управління персоналом орієнтуються на створення умов для <b>well-being</b> працівників і формування <b>психологічно безпечного</b> середовища. Важливий інструмент цього — розвиток ЕІ через психодіагностику, тренінги, рефлексивні практики та технології емоційного навчання.</p>
+      <p>Для майбутніх психологів ЕІ — не лише професійна компетентність, а й необхідна умова ефективної взаємодії, надання допомоги та збереження власного психологічного здоров'я.</p></div></div>
+  </section>
+
+  <!-- 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Професійне вигорання та його профілактика</h2>
+    <p class="lede">Динамічне середовище, конкуренція, інформаційне перевантаження, дефіцит ресурсів і постійне емоційне залучення підвищують ризик виснаження персоналу — особливо в <span class="tip" tabindex="0" data-tip="Соціономічні професії — професії типу «людина — людина», де основним предметом праці є інша людина (психолог, лікар, педагог).">професіях соціономічного типу</span>.</p>
+    <h3>Становлення поняття</h3>
+    <div class="steps">
+      <div class="step"><b class="yr">1974</b> — американський психіатр Герберт Фрейденбергер увів термін «професійне вигорання» для опису фізичного й психологічного виснаження внаслідок тривалого професійного стресу.</div>
+      <div class="step"><b class="yr">Далі</b> — Крістіна Маслач розглянула вигорання як синдром із трьох взаємопов'язаних компонентів.</div>
+    </div>
+    <h3>Три компоненти вигорання за К. Маслач</h3>
+    <div class="acc-item open"><button class="acc-head">Емоційне виснаження <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Відчуття втоми, енергетичного спустошення та нездатності повноцінно виконувати професійні обов'язки.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Деперсоналізація <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Байдуже, формальне або навіть негативне ставлення до клієнтів, колег чи підлеглих.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Зниження професійних досягнень <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Відчуття власної некомпетентності та незадоволеність результатами праці.</p></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Люди з високим рівнем емоційної компетентності краще розпізнають ознаки виснаження, ефективніше управляють стресом і краще адаптуються до навантажень — тому ЕІ розглядається як <b>ресурс профілактики вигорання</b>.</div>
+    <h3>Профілактика</h3>
+    <div class="grid2">
+      <div class="card"><h4>Індивідуальний рівень</h4>Саморегуляція, позитивне ставлення до праці, оптимальний режим праці й відпочинку, здоровий спосіб життя, соціальна підтримка, розвиток емоційної компетентності.</div>
+      <div class="card"><h4>Організаційний рівень</h4>Сприятливий психологічний клімат, баланс професійного й особистого життя, справедлива система винагород, визнання досягнень.</div>
+    </div>
+    <div class="callout advice"><b class="lbl">Порада</b>Запам'ятайте три компоненти як «виснаження → байдужість → знецінення себе».</div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Емоційне здоров'я персоналу</h2>
+    <p class="lede">Емоційне здоров'я — складова психічного здоров'я, що відображає здатність людини адекватно переживати, усвідомлювати, виражати та регулювати власні емоції.</p>
+    <div class="acc-item open"><button class="acc-head">Погляд позитивної психології <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Традиційний підхід зосереджувався на порушеннях і дезадаптації, а <span class="tip" tabindex="0" data-tip="Позитивна психологія — напрям, що вивчає сильні сторони, ресурси та благополуччя людини, а не лише порушення.">позитивна психологія</span> акцентує увагу на розвитку особистісних ресурсів. У цьому контексті емоційне здоров'я — важливий ресурс особистості.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Портрет емоційно здорової людини <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Усвідомлює свої почуття, приймає переживання як природну частину життя, конструктивно реагує на труднощі. Такі працівники мають вищу працездатність, відповідальність, задоволеність працею та підтримують позитивні взаємини з колегами.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Ознаки емоційного здоров'я <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Емоційна стабільність, самоприйняття, розвинена <span class="tip" tabindex="0" data-tip="Рефлексія — здатність аналізувати власні думки, переживання та дії.">рефлексія</span>, емоційна гнучкість, стресостійкість, ефективна комунікація, а також <b>баланс позитивних і негативних емоцій</b>.</p></div></div>
+    <h3>Чинники впливу</h3>
+    <div class="grid2">
+      <div class="card"><h4>Індивідуальні</h4>Рівень емоційного інтелекту, темперамент, життєвий досвід, самооцінка, навички саморегуляції.</div>
+      <div class="card"><h4>Організаційні</h4>Стиль керівництва, умови праці, міжособистісні відносини в колективі, рівень соціальної підтримки.</div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Дедалі більше підприємств упроваджують програми психологічної підтримки персоналу, тренінги розвитку ЕІ, профілактику стресу та програми підтримки психічного благополуччя.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Емоційне здоров'я персоналу — умова професійної ефективності, особистісного розвитку та формування стійких і продуктивних колективів.</div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Well-being та психологічна безпека організації</h2>
+    <p class="lede">Well-being — благополуччя, добробут, суб'єктивне відчуття життєвої задоволеності. Це значно більше, ніж відсутність стресу: поняття охоплює фізичний, емоційний, соціальний, професійний та особистісний добробут.</p>
+    <h3>Модель PERMA (М. Селігман)</h3>
+    <div class="steps">
+      <div class="step"><b class="yr">P</b> · Positive emotions — позитивні емоції.</div>
+      <div class="step"><b class="yr">E</b> · Engagement — залученість у діяльність.</div>
+      <div class="step"><b class="yr">R</b> · Relationships — якісні міжособистісні взаємини.</div>
+      <div class="step"><b class="yr">M</b> · Meaning — усвідомлення сенсу життя.</div>
+      <div class="step"><b class="yr">A</b> · Accomplishment — досягнення.</div>
+    </div>
+    <div class="acc-item"><button class="acc-head">Well-being в організації <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Створення умов для психічного здоров'я працівників, розвитку їхнього потенціалу та задоволеності працею. Високий рівень благополуччя позитивно впливає на мотивацію, продуктивність, творчість та <span class="tip" tabindex="0" data-tip="Організаційна відданість — емоційна прив'язаність працівника до організації та бажання залишатися її частиною.">організаційну відданість</span>.</p></div></div>
+    <div class="acc-item open"><button class="acc-head">Психологічна безпека (Е. Едмондсон) <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Спільне переконання членів команди, що середовище безпечне для висловлення думки, пропонування ідей, <b>визнання помилок</b> і відкритого обговорення проблем.</p>
+      <p>Таке середовище характеризується довірою, відкритістю, взаємною повагою та підтримкою — працівники не бояться проявляти ініціативу та брати відповідальність.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Роль емоційного інтелекту <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Керівники з високою емоційною компетентністю підтримують конструктивний зворотний зв'язок, враховують емоційні потреби працівників і формують атмосферу взаємодовіри.</p></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Не плутайте: PERMA — модель <b>благополуччя</b> Селігмана, а психологічна безпека — концепція Едмондсон про <b>командне середовище</b>.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Забезпечення well-being і психологічної безпеки — стратегічне завдання організацій, що створює передумови для розвитку людського потенціалу та довгострокової стійкості.</div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Діагностика і розвиток емоційного інтелекту</h2>
+    <p class="lede">Ефективний розвиток емоційної компетентності неможливий без науково обґрунтованої діагностики. Підходи до оцінювання залежать від того, як розуміють сам феномен ЕІ.</p>
+    <h3>Інструменти діагностики (натисніть на картку)</h3>
+    <div class="grid4" style="margin-bottom:14px">
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: MSCEIT"><div class="flip-in">
+        <div class="face front"><span class="n">1</span><h4>MSCEIT</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Тест Маєра–Саловея–Карузо на основі моделі здібностей: оцінює здатність розпізнавати, розуміти, використовувати та регулювати емоції.</div></div></div>
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: методика Бар-Она"><div class="flip-in">
+        <div class="face front"><span class="n">2</span><h4>Методика Р. Бар-Она</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Опитувальник самооцінки емоційних і соціальних компетентностей особистості.</div></div></div>
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: методика Холла"><div class="flip-in">
+        <div class="face front"><span class="n">3</span><h4>Методика Н. Холла</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Опитувальник самооцінки здатності розуміти емоції й керувати ними, рівня емпатії та саморегуляції.</div></div></div>
+      <div class="flip" tabindex="0" role="button" aria-label="Картка: методика Петридеса"><div class="flip-in">
+        <div class="face front"><span class="n">4</span><h4>Методика К. Петридеса</h4><small>натисни, щоб перевернути</small></div>
+        <div class="face back">Опитувальник самооцінки, що розглядає ЕІ як сукупність особистісних рис і компетентностей.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>MSCEIT вимірює <b>здібності</b> (завдання з правильними відповідями), а опитувальники Бар-Она, Холла, Петридеса — <b>самооцінку</b> емоційних компетентностей.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Діагностика не є самоціллю — значно важливіше <b>розвиток</b> ЕІ як складової професійної компетентності фахівця.</div>
+    <h3>Розвиток емоційного інтелекту</h3>
+    <div class="acc-item open"><button class="acc-head">Що розвивати <span class="arrow">▶</span></button><div class="acc-body"><p>Систематичне формування навичок емоційної усвідомленості, саморегуляції, емпатії та соціальної компетентності.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Напрями та методи <span class="arrow">▶</span></button><div class="acc-body"><p>Рефлексивні практики, тренінги емоційної компетентності, <span class="tip" tabindex="0" data-tip="Коучинг — форма супроводу, що допомагає людині ставити цілі та знаходити власні шляхи їх досягнення.">коучинг</span>, психологічне консультування, розвиток навичок ефективної комунікації.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Тренінгові програми в організаціях <span class="arrow">▶</span></button><div class="acc-body"><p>Мета — підвищити емоційну свідомість працівників, удосконалити навички міжособистісної взаємодії та запобігти професійному вигоранню.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Значення для психолога <span class="arrow">▶</span></button><div class="acc-body"><p>Розвиток ЕІ — не лише самовдосконалення, а й обов'язкова умова ефективного консультування: рівень емоційної компетентності визначає здатність формувати довіру з клієнтами, розуміти їхні переживання та надавати якісну допомогу.</p></div></div>
+  </section>
+
+  <!-- ПРАКТИКА -->
+  <section class="panel" id="t-prac">
+    <h2><span class="idx">PR</span> Практичне завдання: самоаналіз благополуччя та ризиків вигорання</h2>
+    <p class="lede">У лекції немає окремої практичної частини, тому це завдання складено на основі моделі вигорання К. Маслач та моделі PERMA. Виконуйте кроки по черзі та відзначайте їх.</p>
+    <div class="progress"><i id="progBar"></i></div>
+    <div class="mono" id="progTxt" style="font-size:12px;margin-bottom:10px">Виконано: 0 / 6</div>
+    <div id="checklist">
+      <label class="check"><input type="checkbox"><span><b>Крок 1 (виснаження).</b> Оцініть за шкалою 1–10, наскільки часто останнім часом відчуваєте втому та енергетичне спустошення.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 2 (деперсоналізація).</b> Чи помічаєте байдужість або роздратування щодо людей, з якими взаємодієте? Наведіть приклад.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 3 (досягнення).</b> Запишіть три свої досягнення за останній місяць, щоб оцінити відчуття власної ефективності.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 4 (PERMA).</b> Оцініть кожен елемент — емоції, залученість, взаємини, сенс, досягнення — за шкалою 1–10.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 5 (ресурси).</b> Визначте найслабший елемент PERMA та один спосіб його посилити цього тижня.</span></label>
+      <label class="check"><input type="checkbox"><span><b>Крок 6 (профілактика).</b> Складіть особистий план профілактики вигорання з трьох пунктів (режим, саморегуляція, соціальна підтримка).</span></label>
+    </div>
+    <div class="btnrow"><button class="btn ghost small" id="resetChecks">Скинути чек-лист</button></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Записуйте відповіді у формі нижче й копіюйте її, щоб вставити у власний щоденник.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre id="tpl">Виснаження (1–10): ...
+Деперсоналізація (приклад): ...
+Мої досягнення: 1) ... 2) ... 3) ...
+PERMA — P: .. E: .. R: .. M: .. A: ..
+Найслабший елемент і спосіб посилити: ...
+План профілактики: 1) ... 2) ... 3) ...</pre></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Самоперевірка</h2>
+    <p class="lede">Оберіть варіант відповіді — результат і пояснення з'являться одразу.</p>
+    <div class="quiz-q" data-ok="1">
+      <h4>1. Які три компоненти включає синдром вигорання за К. Маслач?</h4>
+      <button class="quiz-opt">Стрес, тривога, депресія</button>
+      <button class="quiz-opt">Емоційне виснаження, деперсоналізація, зниження професійних досягнень</button>
+      <button class="quiz-opt">Самоусвідомлення, саморегуляція, мотивація</button>
+      <div class="quiz-fb">За Маслач вигорання — це емоційне виснаження, деперсоналізація та зниження професійних досягнень. Сам термін увів Г. Фрейденбергер у 1974 р.</div>
+    </div>
+    <div class="quiz-q" data-ok="2">
+      <h4>2. Що означає літера «M» у моделі PERMA М. Селігмана?</h4>
+      <button class="quiz-opt">Мотивація</button>
+      <button class="quiz-opt">Майндфулнес</button>
+      <button class="quiz-opt">Сенс (Meaning)</button>
+      <div class="quiz-fb">PERMA: позитивні емоції, залученість, взаємини, сенс (Meaning) та досягнення.</div>
+    </div>
+    <div class="quiz-q" data-ok="0">
+      <h4>3. Як Е. Едмондсон визначає психологічну безпеку?</h4>
+      <button class="quiz-opt">Спільне переконання команди, що можна висловлювати думки й визнавати помилки без ризику</button>
+      <button class="quiz-opt">Відсутність стресу на робочому місці</button>
+      <button class="quiz-opt">Справедлива система винагород</button>
+      <div class="quiz-fb">Психологічна безпека — спільне переконання, що середовище безпечне для висловлення думки, нових ідей, визнання помилок і відкритого обговорення проблем.</div>
+    </div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 3</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Лекція 6 · Емоційний інтелект і психологічне благополуччя персоналу. Діагностика та розвиток EI</footer>
+</div>
+
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+
+  // Вкладки
+  $$('#tabsNav button').forEach(function(b){
+    b.addEventListener('click',function(){
+      $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});
+      $$('section.panel').forEach(function(p){p.classList.remove('active')});
+      b.classList.add('active'); $('#'+b.dataset.t).classList.add('active');
+      $$('.acc-item.open .acc-body',$('#'+b.dataset.t)).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+
+  // Акордеони
+  function setAcc(item,open){
+    var body=$('.acc-body',item); item.classList.toggle('open',open);
+    body.style.maxHeight=open?body.scrollHeight+'px':'0px';
+  }
+  $$('.acc-item').forEach(function(item){
+    $('.acc-head',item).addEventListener('click',function(){setAcc(item,!item.classList.contains('open'))});
+  });
+  function initAcc(){ $$('.acc-item.open').forEach(function(i){setAcc(i,true)}); }
+  initAcc(); window.addEventListener('resize',initAcc);
+
+  // Картки, що перевертаються
+  $$('.flip').forEach(function(f){
+    f.addEventListener('click',function(){f.classList.toggle('on')});
+    f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});
+  });
+
+  // Підказки: на дотик
+  $$('.tip').forEach(function(t){
+    t.addEventListener('click',function(){t.focus()});
+  });
+
+  // Чек-лист
+  var boxes=$$('#checklist input');
+  function upd(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    boxes.forEach(function(b){b.parentNode.classList.toggle('done',b.checked)});
+    $('#progBar').style.width=(n/boxes.length*100)+'%';
+    $('#progTxt').textContent='Виконано: '+n+' / '+boxes.length+(n===boxes.length?' — чудово, завдання завершено! 🎉':'');
+  }
+  boxes.forEach(function(b){b.addEventListener('change',upd)});
+  $('#resetChecks').addEventListener('click',function(){boxes.forEach(function(b){b.checked=false});upd()});
+
+  // Копіювання
+  $$('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var txt=$('pre',btn.parentNode).textContent;
+      function ok(){var o=btn.textContent;btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+      function fallback(){var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(ta)}
+      if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fallback)}else{fallback()}
+    });
+  });
+
+  // Тест
+  var score=0, answered=0, qs=$$('.quiz-q');
+  qs.forEach(function(q){
+    var opts=$$('.quiz-opt',q), ok=+q.dataset.ok;
+    opts.forEach(function(o,i){
+      o.addEventListener('click',function(){
+        if(q.classList.contains('locked'))return;
+        q.classList.add('locked'); answered++;
+        if(i===ok){o.classList.add('correct'); o.textContent='✔ Правильно! '+o.textContent; score++;}
+        else{o.classList.add('wrong'); o.textContent='✘ Неправильно. '+o.textContent; opts[ok].classList.add('correct');}
+        $('.quiz-fb',q).classList.add('show');
+        $('#quizScore').textContent='Результат: '+score+' / '+qs.length+(answered===qs.length?' — тест завершено':'');
+      });
+    });
+  });
+  $('#quizReset').addEventListener('click',function(){
+    score=0;answered=0;
+    qs.forEach(function(q){
+      q.classList.remove('locked');
+      $$('.quiz-opt',q).forEach(function(o){o.classList.remove('correct','wrong');o.textContent=o.textContent.replace(/^(✔ Правильно! |✘ Неправильно\. )/,'')});
+      $('.quiz-fb',q).classList.remove('show');
+    });
+    $('#quizScore').textContent='Результат: 0 / '+qs.length;
+  });
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+</body>
+</html>
