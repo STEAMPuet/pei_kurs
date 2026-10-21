@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Самостійна робота 4. Мистецтво порозуміння: від теорії емпатії до професійного консультування</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+@media(max-width:480px){.grid4{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:210px; cursor:pointer; outline:none;}
+.flip.sm{height:190px;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front .em{font-size:26px; margin-bottom:4px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.bignum{text-align:center;} .bignum .n{font-family:'Orbitron','Segoe UI',sans-serif; font-size:38px; font-weight:900; color:var(--magenta); line-height:1.1;}
+.bignum small{display:block; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep); margin-bottom:8px;}
+.bignum p{font-size:14px; text-align:left; margin:0;}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:6px;} .crit .fld label{color:var(--ink-soft);}
+.qbox{border-top:2px dashed var(--line); margin-top:22px; padding-top:16px;}
+.qbox .tag{font-family:'Share Tech Mono',monospace; font-size:12px; color:#fff; background:var(--cyan-deep); padding:2px 9px; border-radius:6px; display:inline-block; margin-bottom:8px;}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<style>
+.chain{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chain button{flex:1 1 170px;font-family:'Orbitron','Segoe UI',sans-serif;font-size:12px;font-weight:600;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 10px;cursor:pointer;transition:.15s;text-align:center;}
+.chain button small{display:block;font-family:'Share Tech Mono',monospace;font-weight:400;font-size:10.5px;color:var(--cyan-deep);margin-bottom:4px;}
+.chain button:hover{border-color:var(--cyan);}
+.chain button.active{background:var(--solid);color:#fff;border-color:var(--ink);box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.chain button.active small{color:#9fe8ee;}
+.chain .ar{align-self:center;color:var(--magenta);font-weight:700;}
+@media(max-width:800px){.chain .ar{display:none;}}
+.imsg{font-family:'Share Tech Mono',monospace;font-size:12px;margin-top:-2px;margin-bottom:6px;}
+</style>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / SELF-STUDY — ОНЛАЙН</span><span>САМОСТІЙНА РОБОТА: 04</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// SELF_STUDY_04 · EMPATHY.COUNSELING + REPORT.DOCX</span>
+    <h1>Мистецтво порозуміння: від теорії емпатії до професійного консультування</h1>
+    <p class="sub">Глибоке розуміння іншої людини — це не лише природний дар, а й свідомо розвинута навичка. Теорія емпатії К. Роджерса, невербальні сигнали, техніки активного слухання та емоційні бар'єри у фаховому середовищі. Вивчайте матеріал, відповідайте на питання й завдання, а потім завантажте звіт у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">📚 4 частини</span>
+      <span class="chip">✍️ питання й 4 завдання</span>
+      <span class="chip">❓ 6 питань тесту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Роджерс</button>
+    <button data-t="t-2">02 · Невербаліка</button>
+    <button data-t="t-3">03 · Активне слухання</button>
+    <button data-t="t-4">04 · Бар'єри</button>
+    <button data-t="t-work">✍ Завдання</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Карта самостійної роботи</h2>
+    <p class="lede">Матеріал досліджує чотири ключові виміри професійної комунікації: як глибоко зрозуміти іншу людину, як читати й контролювати невербальні сигнали, як структурувати слухання та як долати емоційні бар'єри.</p>
+    <div class="callout important"><b class="lbl">Важливо</b>Відповіді автоматично зберігаються в цьому браузері (якщо він дозволяє) і потраплять у звіт. На іншому пристрої поля будуть порожні — завантажте звіт до завершення роботи.</div>
+    <h3>Чотири опорні точки (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>1. Теорія емпатії Роджерса</h4><small>натисни, щоб перевернути</small></div><div class="face back">Емпатія як спосіб буття та цілюща сила у стосунках.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>2. Невербальна комунікація</h4><small>натисни, щоб перевернути</small></div><div class="face back">Мова тіла, емоційний шум та нейтральність консультанта.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>3. Активне слухання</h4><small>натисни, щоб перевернути</small></div><div class="face back">Рівні вербалізації та управління діалогом.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>4. Емоційні бар'єри</h4><small>натисни, щоб перевернути</small></div><div class="face back">Причини виникнення та стратегії подолання.</div></div></div>
+    </div>
+    <h3>Чек-лист вивчення</h3>
+    <div class="cl" data-id="cl0"></div>
+    <div class="callout advice"><b class="lbl">Порада</b>У кінці кожної частини є питання для відповіді. Пишіть своїми словами, а не переписуйте тези: звіт має показувати ваше розуміння.</div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що саме потрібно здати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Питання до частин 1–4:</b> короткі письмові відповіді.</p><p><b>Завдання 1:</b> тренажер рівнів вербалізації (результат фіксується автоматично).</p><p><b>Завдання 2:</b> практикум «Я-повідомлення».</p><p><b>Завдання 3:</b> самоспостереження за невербальними каналами.</p><p><b>Завдання 4:</b> аналіз консультативного кейсу.</p><p><b>Додатково:</b> обрані стратегії подолання бар'єрів і результат тесту.</p></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Теорія емпатії Карла Роджерса</h2>
+    <p class="lede">Карл Роджерс — основоположник гуманістичного підходу в психотерапії та консультуванні. Його концепція емпатії перемістила фокус терапевтичних стосунків із діагностики та інтерпретацій на глибоке, безумовне прийняття та справжній контакт між двома людьми.</p>
+    <h3>Три грані емпатії (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🫶</div><h4>Емпатія як спосіб буття</h4><small>натисни</small></div><div class="face back">Не техніка, а фундаментальне ставлення: сприймати внутрішній світ клієнта так, ніби ти сам є цією людиною, але зберігаючи умову «начебто». Ця межа захищає від злиття та вигорання.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🔄</div><h4>Від стану до процесу</h4><small>натисни</small></div><div class="face back">У пізніх роботах емпатія — не статична риса, а безперервний процес: консультант перевіряє враження, уточнює, коригує, прислухається до відтінків, не нав'язуючи свого бачення.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🌱</div><h4>Цілюща сила емпатії</h4><small>натисни</small></div><div class="face back">Сам факт, що тебе глибоко почули, — терапевтичний. Емпатія звільняє від самотності в болі, повертає безпеку, значущість і гідність; з цього простору починається зміна.</div></div></div>
+    </div>
+    <div class="acc-item" style="margin-top:14px"><button class="acc-head">Умова «начебто» <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Консультант входить у світ клієнта <b>«начебто»</b> він був цією людиною, але не втрачає себе. Без цієї межі емпатія перетворюється на <span class="tip" tabindex="0" data-tip="Емоційне злиття — стан, коли фахівець переживає емоції клієнта як власні й втрачає професійну позицію.">емоційне злиття</span>: консультант переймає тривогу клієнта, втрачає ясність і швидше вигорає.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Безумовне прийняття та конгруентність <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Разом з емпатією Роджерс описував ще дві умови ефективної допомоги: <b>безумовне позитивне прийняття</b> (повага до людини без оцінювання) та <b>конгруентність</b> (щирість, відповідність внутрішнього й зовнішнього). Про конгруентність детальніше — у частині 2.</p></div></div>
+    <div class="result-box"><i>«Бути почутим — це дивовижний досвід. Після того, як нас дійсно вислухали, ми здатні по-новому сприйняти власний світ і рухатися вперед.»</i> — Карл Роджерс</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Емпатія за Роджерсом — не прийом, а спосіб бути з людиною. Техніки активного слухання (частина 3) лише допомагають цей спосіб виразити.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 1</span><div id="q1"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Невербальна комунікація та емоції</h2>
+    <p class="lede">Слухати треба всім тілом: очима, увагою до дихання, до пауз, до того, як змінюється постава клієнта в момент розмови про болючу тему.</p>
+    <h3>Чому це важливо (за матеріалами презентації)</h3>
+    <div class="grid3">
+      <div class="card bignum"><small>МОВА ТІЛА</small><div class="n">55%</div><p>частка інформації, що передається через мову тіла (за А. Мерабяном).</p></div>
+      <div class="card bignum"><small>ТОН І ІНТОНАЦІЯ</small><div class="n">38%</div><p>частка, що передається через тон та інтонацію голосу.</p></div>
+      <div class="card bignum"><small>ЗМІСТ СЛІВ</small><div class="n">7%</div><p>частка, що передається безпосередньо змістом слів.</p></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Правило «7–38–55» часто цитують як універсальне, але сам А. Мерабян отримав ці дані в експериментах, де слова й інтонація <b>суперечили одне одному</b> і йшлося про почуття та ставлення. Це не означає, що в будь-якій розмові слова важать лише 7%. Висновок для консультанта інший: коли слова й невербаліка розходяться, люди більше довіряють невербаліці.</div>
+    <h3>Ключові канали невербальної комунікації (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🙂</div><h4>Міміка</h4></div><div class="face back">Найінформативніший канал; <span class="tip" tabindex="0" data-tip="Мікровирази — дуже короткі мимовільні вирази обличчя, що відображають справжню емоцію.">мікровирази</span> тривають менше секунди, але видають справжні емоції.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🙌</div><h4>Жести та пози</h4></div><div class="face back">Відкрита поза — готовність до діалогу; схрещені руки чи відхилення назад — закритість або захист.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">👁</div><h4>Зоровий контакт</h4></div><div class="face back">Помірний і стабільний контакт очима створює відчуття уваги та поваги без тиску.</div></div></div>
+      <div class="flip sm" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🎙</div><h4>Інтонація і темп</h4></div><div class="face back">Прискорення темпу чи підвищення тону часто виражає тривогу; рівна, спокійна інтонація заспокоює.</div></div></div>
+    </div>
+    <h3>Три принципи для консультанта</h3>
+    <div class="grid3">
+      <div class="card"><h4>Емоційний шум</h4>Схвильованість чи тривога одного з учасників спотворює смислове поле розмови. Консультант із власним дискомфортом може перебивати, уникати погляду чи хибно тлумачити сигнали. Усвідомлення свого стану — перший крок до регуляції.</div>
+      <div class="card"><h4>Нейтральність як інструмент</h4>Нейтральний вираз обличчя — не байдужість, а свідомо створений простір. Коли клієнт не бачить засудження чи здивування, він вільніше говорить про сором, провину чи страх.</div>
+      <div class="card"><h4>Конгруентність</h4>Відповідність внутрішнього стану консультанта тому, що він виражає. Слова підтримки з напруженою позою підривають довіру, навіть якщо клієнт не усвідомлює суперечності.</div>
+    </div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 2</span><div id="q2"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Активне слухання в організаційному консультуванні</h2>
+    <p class="lede">Активне слухання — не пасивне мовчання, а цілеспрямована, структурована взаємодія, що вимагає повної присутності, інтелектуального залучення та емоційної чуйності. В організаційному контексті консультант працює з людьми, які несуть подвійний тягар — професійних ролей та особистих переживань.</p>
+    <h3>Рівні вербалізації (натисніть на рівень)</h3>
+    <div class="chain" id="chain"></div>
+    <div class="result-box" id="chainBox"></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Інтерпретацію завжди подавайте як <b>гіпотезу</b>, а не як висновок: «Мені здається… Чи відгукується це вам?» Клієнт має право не погодитися.</div>
+    <div class="acc-item"><button class="acc-head">Управління розмовою <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Ефективний консультант не лише слухає, а й тактовно спрямовує діалог: шанобливо перериває монологи, що відхиляються від теми; підсумовує ключові думки для збереження фокусу; ставить відкриті запитання, що відкривають нові пласти теми. <b>Управління — це не контроль, а турбота про продуктивність простору між людьми.</b></p></div></div>
+    <div class="acc-item"><button class="acc-head">Безпечний простір та відкриті запитання <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Запитання на кшталт «Що ви при цьому відчуваєте?» чи «Як це впливає на вас у щоденній роботі?» запрошують до глибшого самодослідження. Вони не передбачають «правильної» відповіді, не тиснуть і не оцінюють — розчиняють захисні бар'єри та дають дозвіл говорити про те, що насправді болить.</p></div></div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 3</span><div id="q3"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Емоційні бар'єри: причини та подолання</h2>
+    <p class="lede">Емоційні бар'єри — психологічні перешкоди, що унеможливлюють або значно ускладнюють обмін справжніми думками й почуттями. Вони з'являються непомітно, накопичуються з часом і врешті руйнують навіть формально продуктивні робочі стосунки.</p>
+    <h3>Чотири причини бар'єрів (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">⚖️</div><h4>Критика та оцінювання</h4><small>натисни</small></div><div class="face back">Коли слова чи дії систематично оцінюють і знецінюють, людина самоцензурується: говорить лише «безпечне», а справжні проблеми замовчуються.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">📱</div><h4>Відсутність інтересу</h4><small>натисни</small></div><div class="face back">Блукаючий погляд, телефон, формальні відповіді кажуть: «це не має значення». Керівники, що не слухають, отримують лише «зручну» інформацію.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🌡</div><h4>Емоційне напруження</h4><small>натисни</small></div><div class="face back">Тривога чи роздратування звужують сприйняття: поверхневе слухання, хибні інтерпретації, імпульсивні реакції — і нейтральна розмова стає конфронтацією.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🙅</div><h4>Невербальна закритість</h4><small>натисни</small></div><div class="face back">Схрещені руки, відвернутий погляд, дистанція, напружена поза зчитуються підсвідомо й підривають довіру навіть за словесної готовності до діалогу.</div></div></div>
+    </div>
+    <h3>Стратегії подолання (позначте ті, які практикуватимете)</h3>
+    <div class="cl" data-id="cl2"></div>
+    <div class="callout important"><b class="lbl">Висновок: свідомий вибір присутності</b>Професійне консультування — це свідомий вибір бути по-справжньому присутнім у розмові: чути більше, ніж сказано вголос, — між рядками, у паузах, у тому, що людина не наважується назвати. Інтегруючи емпатію Роджерса, невербальну чутливість, активне слухання та розуміння бар'єрів, консультант перетворює напруження й конфлікт на конструктивний діалог.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 4</span><div id="q4"></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ -->
+  <section class="panel" id="t-work">
+    <h2><span class="idx">TASK</span> Завдання для самостійної роботи</h2>
+    <p class="lede">Завдання 1–4 спираються на матеріал частин 1–4. Виконуйте їх у відкритих полях: усе потрапить у звіт.</p>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl1"></div>
+
+    <h3>Завдання 1. Тренажер рівнів вербалізації</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Прочитайте висловлювання клієнта й відповідь консультанта. Визначте, який це рівень вербалізації — або що це взагалі не активне слухання. Результат автоматично потрапить у звіт.</div>
+    <div id="trainBox"></div>
+    <div class="result-box mono" id="trainScore" style="font-size:13px;"></div>
+    <div id="t1fields"></div>
+
+    <h3>Завдання 2. Практикум «Я-повідомлення»</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Переформулюйте кожне «ти-повідомлення» на «я-повідомлення». Сторінка підкаже, чи містить ваша фраза ключові елементи формули.</div>
+    <div class="callout advice"><b class="lbl">Порада</b>Формула та приклад — нижче, їх можна скопіювати.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Формула: Я відчуваю [емоція], коли [конкретна поведінка/ситуація], тому що [чому це важливо для мене]. Мені хотілося б [прохання].
+Приклад: «Ти знову зірвав дедлайн!» →
+«Я відчуваю тривогу, коли звіт надходить пізніше домовленого терміну, тому що мені треба встигнути передати його клієнту. Мені хотілося б, щоб ти попереджав про затримку заздалегідь.»</pre></div>
+    <div id="t2fields"></div>
+
+    <h3>Завдання 3. Самоспостереження за невербальними каналами</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Протягом кількох днів поспостерігайте за собою у важливих розмовах (навчання, робота, волонтерство). Для кожного каналу запишіть, як він проявляється у вас, чи був він конгруентним вашим словам і що варто змінити.</div>
+    <div id="t3fields"></div>
+
+    <h3>Завдання 4. Кейс: консультування в організації</h3>
+    <div class="result-box"><b>Ситуація.</b> До організаційного психолога звернулася працівниця IT-компанії. Її керівник регулярно критикує її роботу при всій команді, і вона перестала висловлювати ідеї на нарадах. Під час консультації вона сидить зі схрещеними руками, говорить швидко, уникає погляду й кілька разів повторює: «Та все нормально, просто трохи втомилася».</div>
+    <div id="t4fields"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Оберіть відповідь — одразу з'явиться «правильно/неправильно» та пояснення. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 6</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані студента та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" required data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" required data-save placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Самостійна робота 4 · Мистецтво порозуміння: від теорії емпатії до професійного консультування</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var LEV=[
+ {n:'Рівень А: Цитування',d:'Найбуквальніша форма вербалізації: консультант дослівно або майже дослівно повторює слова клієнта. Демонструє, що кожне слово почуте; використовується для підтвердження ключових висловлювань, особливо в моменти емоційного піку.',ex:'«Ви сказали, що почуваєтесь повністю ігнорованим командою».'},
+ {n:'Рівень Б: Перефразування',d:'Консультант формулює почуте власними словами, зберігаючи суть та емоційний зміст. Клієнт бачить ситуацію з певної дистанції й відчуває, що його зрозуміли глибинно; також це спосіб перевірити розуміння.',ex:'«Тобто вам здається, що ваші пропозиції в команді не беруть до уваги, і це вас засмучує?»'},
+ {n:'Рівень В: Інтерпретація',d:'Найглибший рівень: консультант пропонує власне бачення прихованих смислів, мотивів чи патернів, які клієнт ще не сформулював. Вимагає обережності — подається як гіпотеза, а не висновок.',ex:'«Мені здається, за цією ситуацією може стояти страх втрати контролю. Чи відгукується це вам?»'}];
+var OPT=['Рівень А: Цитування','Рівень Б: Перефразування','Рівень В: Інтерпретація','Не активне слухання (порада, оцінка, зміна теми)'];
+var TR=[
+ {c:'«Я вже третій місяць працюю без вихідних, і ніхто цього не помічає».',r:'«Ніхто не помічає, що ви третій місяць працюєте без вихідних».',ok:0},
+ {c:'«На нарадах я вже просто мовчу — все одно все вирішують без мене».',r:'«Схоже, ви відчуваєте, що ваша думка нічого не змінює, і тому вирішили не витрачати сили на висловлювання».',ok:1},
+ {c:'«Я постійно перевіряю роботу підлеглих, бо якщо щось піде не так — відповідати мені».',r:'«Можливо, за цією потребою все перевіряти стоїть страх, що помилка підлеглого буде сприйнята як ваш особистий провал. Як вам таке припущення?»',ok:2},
+ {c:'«Мене дратує, що колега постійно запізнюється на спільні зустрічі».',r:'«Не переймайтеся так, просто поговоріть із ним і все владнається».',ok:3},
+ {c:'«Після реорганізації я не розумію, що від мене тепер чекають».',r:'«Тобто нові вимоги для вас поки що незрозумілі, і це створює невизначеність у роботі?»',ok:1},
+ {c:'«Я відчуваю, що вигораю».',r:'«Ви відчуваєте, що вигораєте».',ok:0}];
+var YOU=['«Ти ніколи мене не слухаєш!»','«Ви завжди даєте завдання в останній момент!»','«Ти знову все зіпсував у звіті!»','«Ви мене постійно перебиваєте на нарадах!»'];
+var CH=[{k:'face',l:'Міміка'},{k:'pose',l:'Жести та пози'},{k:'eye',l:'Зоровий контакт'},{k:'voice',l:'Інтонація і темп мовлення'}];
+var CCOL=[{k:'me',l:'Як проявляється у мене'},{k:'cong',l:'Чи був канал конгруентним моїм словам (приклад)'},{k:'chg',l:'Що варто змінити'}];
+var PQ=[
+ {id:'q1',l:'Що означає умова «начебто» в розумінні емпатії Роджерса і чому вона захищає консультанта?',r:5},
+ {id:'q2',l:'Що таке конгруентність і як невербальна неконгруентність консультанта впливає на довіру клієнта?',r:5},
+ {id:'q3',l:'Чим відрізняються три рівні вербалізації? Чому інтерпретацію слід подавати як гіпотезу?',r:5},
+ {id:'q4',l:'Який з емоційних бар\'єрів найчастіше трапляється у вашому досвіді спілкування? Як його подолати?',r:5}];
+var T1=[{id:'t1_con',l:'Висновок: який рівень вербалізації вам найлегше, а який найважче застосовувати і чому',r:4}];
+var T2=[],T3=[],T4=[{id:'t4_a1',l:'1. Які невербальні сигнали клієнтки ви помічаєте? Чи конгруентні вони її словам «все нормально»?',r:5},{id:'t4_a2',l:'2. Які емоційні бар\'єри виникли в команді клієнтки та чому?',r:5},{id:'t4_a3',l:'3. Сформулюйте три відповіді консультанта: на рівні цитування, перефразування та інтерпретації',r:6},{id:'t4_a4',l:'4. Які відкриті запитання ви поставите та які рекомендації дасте для подолання бар\'єрів?',r:6}];
+var CL={cl0:['Опрацьовано частину 1 (емпатія Роджерса).','Опрацьовано частину 2 (невербальна комунікація).','Опрацьовано частину 3 (активне слухання).','Опрацьовано частину 4 (емоційні бар\'єри).'],
+ cl1:['Дайте відповіді на питання до частин 1–4.','Пройдіть тренажер рівнів вербалізації (завдання 1).','Переформулюйте «ти-повідомлення» (завдання 2).','Проведіть самоспостереження за невербальними каналами (завдання 3).','Проаналізуйте кейс (завдання 4).','Пройдіть тест і завантажте звіт.'],
+ cl2:['Відмова від звинувачень: переформулювання «ти-повідомлень» на «я-повідомлення».','Щирий інтерес: ставити запитання з реальним бажанням почути відповідь.','Управління власними емоціями: пауза, дихання та рефлексія перед відповіддю.','Усвідомлена невербальність: відкрита поза, стабільний контакт очима, спокійна інтонація.']};
+var QZ=[
+ {q:'Як Роджерс розумів емпатію?',o:['Як набір технік для швидкої діагностики','Як спосіб буття: сприймати світ клієнта «начебто» зсередини, не втрачаючи себе','Як повне злиття з переживаннями клієнта'],ok:1,e:'Емпатія — фундаментальне ставлення до людини, а умова «начебто» захищає від злиття та вигорання.'},
+ {q:'Що таке конгруентність консультанта?',o:['Відповідність між тим, що він відчуває всередині, і тим, що виражає назовні','Повна відсутність емоцій під час сесії','Згода з усім, що каже клієнт'],ok:0,e:'Невербальна непослідовність (слова підтримки з напруженою позою) підриває довіру, навіть якщо клієнт її не усвідомлює.'},
+ {q:'До яких ситуацій насправді стосуються дані А. Мерабяна «7–38–55»?',o:['До будь-якої ділової комунікації','До ситуацій, коли слова й невербальні сигнали суперечать одне одному в повідомленні про почуття та ставлення','Лише до телефонних розмов'],ok:1,e:'Правило отримане в специфічних експериментах і часто поширюється надто широко. Головний висновок: при розбіжності люди більше довіряють невербаліці.'},
+ {q:'«Тобто вам здається, що вашу роботу не цінують?» — який це рівень вербалізації?',o:['Цитування','Перефразування','Інтерпретація'],ok:1,e:'Консультант передає суть і емоційний зміст власними словами — це перефразування.'},
+ {q:'Як правильно подавати інтерпретацію?',o:['Як остаточний висновок фахівця','Як гіпотезу, з можливістю для клієнта погодитися чи ні','Не використовувати ніколи'],ok:1,e:'Наприклад: «Мені здається, за цим може стояти страх втрати контролю. Чи відгукується це вам?»'},
+ {q:'Яка стратегія допомагає подолати бар\'єр «критика та оцінювання»?',o:['Переформулювання «ти-повідомлень» на «я-повідомлення»','Підвищення тону, щоб тебе почули','Уникнення будь-якого зворотного зв\'язку'],ok:0,e:'«Я-повідомлення» описують власні почуття й конкретну поведінку замість звинувачень і знижують захисну реакцію.'}];
+
+function mk(id,l,r,ph){return '<div class="fld"><label for="'+id+'">'+l+'</label><textarea id="'+id+'" data-save data-wc rows="'+r+'" placeholder="'+(ph||'Введіть відповідь…')+'"></textarea><div class="wc"></div></div>';}
+PQ.forEach(function(f){$('#'+f.id).innerHTML=mk('f_'+f.id,f.l,f.r);f.id='f_'+f.id;});
+
+/* рівні вербалізації */
+$('#chain').innerHTML=LEV.map(function(g,i){return (i?'<span class="ar">→</span>':'')+'<button data-g="'+i+'"><small>глибина '+(i+1)+' / 3</small>'+g.n+'</button>'}).join('');
+function showG(i){$$('#chain button').forEach(function(b){b.classList.toggle('active',+b.dataset.g===i)});var g=LEV[i];
+ $('#chainBox').innerHTML='<b>'+g.n+'</b><br>'+g.d+'<br><span class="mono" style="font-size:12.5px;color:var(--cyan-deep)">Приклад:</span> '+g.ex;}
+$$('#chain button').forEach(function(b){b.addEventListener('click',function(){showG(+b.dataset.g)})});showG(0);
+
+/* тренажер */
+var tr=[];
+$('#trainBox').innerHTML=TR.map(function(x,i){return '<div class="quiz-q" data-t="'+i+'"><h4>Ситуація '+(i+1)+'.<br>Клієнт: '+x.c+'<br>Консультант: '+x.r+'</h4>'+OPT.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+var TRE=['Консультант дослівно повторює слова клієнта — це цитування.','Консультант передає суть і почуття власними словами — це перефразування.','Консультант пропонує гіпотезу про прихований мотив і перевіряє її — це інтерпретація.','Порада й знецінення почуттів («не переймайтеся») — це не активне слухання.'];
+function trScore(){var n=tr.filter(Boolean).length,c=tr.filter(function(x){return x&&x.ok}).length;$('#trainScore').textContent='Тренажер: '+c+' правильних із '+TR.length+' (відповідей: '+n+')'+(n===TR.length?' — завершено':'');}
+$$('#trainBox .quiz-q').forEach(function(q){var i=+q.dataset.t,x=TR[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;tr[i]={ch:OPT[j],ok:good};o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+OPT[j];
+  if(!good)opts[x.ok].classList.add('correct');var f=$('.quiz-fb',q);f.textContent=TRE[x.ok];f.classList.add('show');trScore();});});});
+trScore();
+$('#t1fields').innerHTML='<div class="btnrow"><button class="btn ghost small" id="trReset">Пройти тренажер знову</button></div>'+T1.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$('#trReset').addEventListener('click',function(){tr=[];$$('#trainBox .quiz-q').forEach(function(q){q.classList.remove('locked');$$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=OPT[j]});$('.quiz-fb',q).classList.remove('show');});trScore();});
+
+/* я-повідомлення */
+var h='';YOU.forEach(function(y,i){h+='<div class="crit"><h4>«Ти-повідомлення» '+(i+1)+': '+y+'</h4>'+mk('t2_'+i,'Моє «я-повідомлення»',3,'Я відчуваю …, коли …, тому що … Мені хотілося б …')+'<div class="imsg" id="im_'+i+'"></div></div>';T2.push({id:'t2_'+i});});
+T2.push({id:'t2_con'});h+=mk('t2_con','Висновок: що змінюється в розмові, коли ми переходимо від «ти» до «я»',4);
+$('#t2fields').innerHTML=h;
+function imCheck(i){var t=$('#t2_'+i).value.toLowerCase(),el=$('#im_'+i);if(!t.trim()){el.textContent='';return null;}
+ var parts=[['я-позиція',/(^|[\s«"(])(я|мені|мене|мною)(?=$|[\s,.!?;:»")])/i.test(t)],['почуття',/(відчува|почува|хвилю|засмуч|тривож|дратує|прикро|важко|непокої|ображ|сумно|злюсь|злюся)/.test(t)],['конкретна ситуація',/(коли|якщо|у ситуації)/.test(t)],['прохання',/(хотіло?с?я б|прошу|давай|чи могли б|чи міг би|чи могла б|пропоную)/.test(t)]],
+ blame=/(ти завжди|ти ніколи|ви завжди|ви ніколи|знову ти|знову ви)/.test(t),ok=parts.filter(function(p){return p[1]}).length;
+ el.innerHTML=parts.map(function(p){return '<span style="color:'+(p[1]?'var(--ok)':'var(--magenta)')+'">'+(p[1]?'✓ ':'✗ ')+p[0]+'</span>'}).join(' · ')+(blame?' · <span style="color:var(--magenta)">⚠ залишилися узагальнення «завжди/ніколи»</span>':'');return {ok:ok,blame:blame};}
+
+h='';CH.forEach(function(c,i){h+='<div class="crit"><h4>'+(i+1)+'. '+c.l+'</h4><div class="grid3">';CCOL.forEach(function(cc){var id='t3_'+c.k+'_'+cc.k;T3.push({id:id});h+=mk(id,cc.l,3);});h+='</div></div>';});
+T3.push({id:'t3_con'});h+=mk('t3_con','Висновок: який канал я контролюю найкраще, а над яким варто попрацювати',4);
+$('#t3fields').innerHTML=h;
+$('#t4fields').innerHTML=T4.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='sr4_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ el.addEventListener(el.type==='checkbox'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();var m=k.match(/^t2_(\d)$/);if(m)imCheck(+m[1]);});});
+clProg();YOU.forEach(function(y,i){imCheck(i)});
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+var ans=[],score=0;
+$$('#quizBox .quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('#quizBox .quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function filled(a){return a.filter(function(f){return $('#'+f.id).value.trim()}).length}
+function stats(){var rows=[['Питання до частин',filled(PQ),PQ.length],['Завдання 1',tr.filter(Boolean).length+filled(T1),TR.length+T1.length],['Завдання 2',filled(T2),T2.length],['Завдання 3',filled(T3),T3.length],['Завдання 4',filled(T4),T4.length],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('із самостійної роботи 4. Мистецтво порозуміння: від теорії емпатії до професійного консультування',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:240});
+ x+=H('Питання до частин 1–4');
+ PQ.forEach(function(f,i){x+=S((i+1)+'. '+f.l)+paras(v(f.id));});
+ x+=H('Завдання 1. Тренажер рівнів вербалізації');
+ var c=tr.filter(function(t){return t&&t.ok}).length;x+=para('Результат: '+c+' правильних із '+TR.length+' (відповідей: '+tr.filter(Boolean).length+')',{b:1});
+ var rows=[['Відповідь консультанта','Відповідь студента','Правильно']];TR.forEach(function(t,i){var a=tr[i];rows.push([(i+1)+'. '+t.r,a?a.ch+(a.ok?' ✔':' ✘'):'— без відповіді —',OPT[t.ok]])});
+ x+=table(rows,[4638,2500,2500])+S('Висновок')+paras(v('t1_con'));
+ x+=H('Завдання 2. Практикум «Я-повідомлення»');
+ var r2=[['«Ти-повідомлення»','Моє «я-повідомлення»','Елементи формули']];YOU.forEach(function(y,i){var ck=imCheck(i);r2.push([y,v('t2_'+i),ck?ck.ok+' з 4'+(ck.blame?'; є узагальнення':''):''])});
+ x+=table(r2,[2638,5200,1800])+S('Висновок')+paras(v('t2_con'));
+ x+=H('Завдання 3. Самоспостереження за невербальними каналами');
+ var r3=[['Канал'].concat(CCOL.map(function(cc){return cc.l}))];CH.forEach(function(ch){r3.push([ch.l].concat(CCOL.map(function(cc){return v('t3_'+ch.k+'_'+cc.k)})))});
+ x+=table(r3,[1900,2580,2580,2578])+S('Висновок')+paras(v('t3_con'));
+ x+=H('Завдання 4. Кейс: консультування в організації');
+ x+=para('До організаційного психолога звернулася працівниця IT-компанії. Її керівник регулярно критикує її роботу при всій команді, і вона перестала висловлювати ідеї на нарадах. Під час консультації вона сидить зі схрещеними руками, говорить швидко, уникає погляду й кілька разів повторює: «Та все нормально, просто трохи втомилася».',{i:1});
+ T4.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var st=CL.cl2.filter(function(t,i){return $('#cl2_'+i).checked});
+ x+=H('Стратегії подолання бар\'єрів, які я практикуватиму')+(st.length?st.map(function(t){return para('• '+t)}).join(''):para('— не обрано —',{i:1,c:'888888'}));
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var reportName=$('#rep_name').value.trim(),reportGroup=$('#rep_group').value.trim();
+ if(!reportName||!reportGroup){
+  $('#repMsg').textContent=!reportName&&!reportGroup?'Вкажіть ПІБ і групу, щоб завантажити документ.':!reportName?'Вкажіть ПІБ, щоб завантажити документ.':'Вкажіть групу, щоб завантажити документ.';
+  (!reportName?$('#rep_name'):$('#rep_group')).focus();
+  return;
+ }
+
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_СР4_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, чек-листи та дані студента?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clProg();YOU.forEach(function(y,i){imCheck(i)});stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+<script>
+(function(){
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('#tabsNav button[data-t]'));
+  var questions=Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var checks=Array.prototype.slice.call(document.querySelectorAll('#checklist input'));
+  var flips=Array.prototype.slice.call(document.querySelectorAll('.flip'));
+  var accordions=Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  var signature=questions.map(function(q){return q.querySelector('h4').textContent.trim()});
+  var key='pei-page-progress:'+location.pathname;
+  var answers=questions.map(function(){return null}),restoring=false;
+  function save(){
+    if(restoring)return;
+    var active=document.querySelector('#tabsNav button.active');
+    try{sessionStorage.setItem(key,JSON.stringify({
+      v:1,questions:signature,tab:active?active.dataset.t:null,answers:answers,
+      checks:checks.map(function(x){return x.checked}),
+      flips:flips.map(function(x){return x.classList.contains('on')}),
+      accordions:accordions.map(function(x){return x.classList.contains('open')})
+    }))}catch(e){}
+  }
+  function valid(data){
+    if(!data||data.v!==1||JSON.stringify(data.questions)!==JSON.stringify(signature)||
+       !Array.isArray(data.answers)||data.answers.length!==questions.length||
+       !Array.isArray(data.checks)||data.checks.length!==checks.length||
+       !Array.isArray(data.flips)||data.flips.length!==flips.length||
+       !Array.isArray(data.accordions)||data.accordions.length!==accordions.length||
+       (data.tab!==null&&!tabs.some(function(t){return t.dataset.t===data.tab})))return false;
+    return data.answers.every(function(a,i){return a===null||(Number.isInteger(a)&&a>=0&&a<questions[i].querySelectorAll('.quiz-opt').length)})&&
+      data.checks.every(function(x){return typeof x==='boolean'})&&
+      data.flips.every(function(x){return typeof x==='boolean'})&&
+      data.accordions.every(function(x){return typeof x==='boolean'});
+  }
+  tabs.forEach(function(tab){tab.addEventListener('click',save)});
+  questions.forEach(function(q,i){
+    Array.prototype.slice.call(q.querySelectorAll('.quiz-opt')).forEach(function(option,j){
+      option.addEventListener('click',function(){
+        if(!restoring&&answers[i]===null&&q.classList.contains('locked')){answers[i]=j;save()}
+      });
+    });
+  });
+  function resetAnswersIn(container){
+    questions.forEach(function(q,i){if(container.contains(q))answers[i]=null});
+    save();
+  }
+  var quizReset=document.getElementById('quizReset');
+  if(quizReset)quizReset.addEventListener('click',function(){resetAnswersIn(document.getElementById('quizBox'))});
+  var trainReset=document.getElementById('trReset');
+  if(trainReset)trainReset.addEventListener('click',function(){resetAnswersIn(document.getElementById('trainBox'))});
+  checks.forEach(function(box){box.addEventListener('change',save)});
+  var resetChecks=document.getElementById('resetChecks');
+  if(resetChecks)resetChecks.addEventListener('click',save);
+  flips.forEach(function(flip){
+    flip.addEventListener('click',save);
+    flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')save()});
+  });
+  accordions.forEach(function(item){item.querySelector('.acc-head').addEventListener('click',save)});
+  var data;
+  try{data=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){data=null}
+  if(!data)return;
+  if(!valid(data)){try{sessionStorage.removeItem(key)}catch(e){}return}
+  restoring=true;
+  try{
+    data.answers.forEach(function(answer,i){
+      if(answer!==null)questions[i].querySelectorAll('.quiz-opt')[answer].click();
+    });
+    checks.forEach(function(box,i){
+      if(box.checked!==data.checks[i]){
+        box.checked=data.checks[i];
+        box.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    flips.forEach(function(flip,i){flip.classList.toggle('on',data.flips[i])});
+    accordions.forEach(function(item,i){
+      if(item.classList.contains('open')!==data.accordions[i])item.querySelector('.acc-head').click();
+    });
+    if(data.tab)tabs.filter(function(t){return t.dataset.t===data.tab})[0].click();
+    answers=data.answers.slice();
+  }finally{restoring=false}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Комплексне завдання до теми 5. Груповий проєкт «Емоційне лідерство та ефективна команда»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px; position:relative;}
+header.hero h1{position:relative; font-size:clamp(22px,4vw,36px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:900px;}
+header.hero p.sub{position:relative; color:var(--ink-soft); max-width:780px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{position:relative; display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.acc-body ul{margin:0 0 12px; padding-left:20px;} .acc-body li{margin-bottom:4px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.gridf{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:230px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front .n{font-family:'Share Tech Mono',monospace; color:#fff; background:var(--magenta); border-radius:6px; padding:1px 9px; font-size:12px; margin-bottom:8px;}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt,select.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus,select.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:8px;} .crit .fld label{color:var(--ink-soft);}
+.slrow{display:grid; grid-template-columns:44px 1fr 1.6fr; gap:12px; align-items:start; border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:10px; background:var(--bg-soft);}
+.slrow .num{font-family:'Share Tech Mono',monospace; font-size:18px; font-weight:700; color:#fff; background:var(--magenta); border-radius:8px; text-align:center; padding:6px 0;}
+.slrow .fld{margin-bottom:0;}
+@media(max-width:700px){.slrow{grid-template-columns:1fr;} .slrow .num{width:44px;}}
+.bank{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 14px;}
+.bank button{font-family:'Rajdhani','Segoe UI',sans-serif; font-size:14.5px; font-weight:600; background:var(--bg-soft); border:1px solid var(--line); border-radius:20px; padding:4px 12px; cursor:pointer; color:var(--ink);}
+.bank button:hover{border-color:var(--cyan); background:rgba(0,184,196,.1);}
+.sc{display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap;}
+.sc button{flex:0 0 46px; height:40px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:14px; cursor:pointer; color:var(--ink);}
+.sc button:hover{border-color:var(--cyan);}
+.sc button.on{background:var(--solid); color:#fff; border-color:var(--cyan); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.timer{font-family:'Orbitron','Segoe UI',sans-serif; font-size:42px; font-weight:700; color:var(--ink); letter-spacing:.05em; text-align:center;}
+.timer.low{color:var(--magenta);}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / GROUP-PROJECT — ОНЛАЙН</span><span>КОМПЛЕКСНЕ ЗАВДАННЯ · ТЕМА 5</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// TOPIC_05 · EMOTIONAL.LEADERSHIP.TEAM + REPORT.DOCX</span>
+    <h1>Комплексне завдання до теми 5. Груповий проєкт «Емоційне лідерство та ефективна команда»</h1>
+    <p class="sub">Робочий зошит проєктної групи: проаналізуйте стиль лідерства, емоційний клімат, конфлікти й психологічну безпеку команди, розробіть програму розвитку емоційного лідерства та заходи з формування групової емоційної компетентності. Матеріали збираються в аналітичний звіт, який можна завантажити у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">👥 груповий проєкт</span>
+      <span class="chip">📑 аналітичний звіт 7–10 с.</span>
+      <span class="chip">⏱ таймер захисту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Завдання</button>
+    <button data-t="t-1">01 · Лідерство</button>
+    <button data-t="t-2">02 · Клімат</button>
+    <button data-t="t-3">03 · Конфлікти</button>
+    <button data-t="t-4">04 · Психбезпека</button>
+    <button data-t="t-5">05 · Програма</button>
+    <button data-t="t-6">06 · Групова ЕК</button>
+    <button data-t="t-7">07 · Рекомендації й слайди</button>
+    <button data-t="t-8">08 · Захист</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ЗАВДАННЯ -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">TASK</span> Умови комплексного завдання</h2>
+    <div class="result-box"><b>На прикладі реальної або умовної організації:</b><br>1) проаналізуйте стиль лідерства керівника; 2) оцініть рівень емоційного клімату колективу; 3) визначте основні джерела міжособистісних конфліктів; 4) дослідіть рівень психологічної безпеки команди; 5) розробіть програму розвитку емоційного лідерства керівників; 6) запропонуйте заходи щодо формування групової емоційної компетентності.<br><b>Форма контролю:</b> аналітичний звіт (7–10 сторінок) та презентація результатів із захистом рекомендацій для підвищення ефективності командної взаємодії в організації.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Це груповий проєкт: домовтеся, хто веде спільний звіт, і внесіть склад групи та ролі на вкладці «Звіт». Звіт, який формує сторінка, — основа аналітичного звіту: перевірте його обсяг і за потреби доопрацюйте текст у Word. Відповіді зберігаються в цьому браузері (якщо він дозволяє) — завантажте звіт до завершення роботи.</div>
+    <h3>Орієнтири якості проєкту (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Глибина аналізу</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: стиль лідерства, клімат, конфлікти й психологічна безпека проаналізовані на конкретних прикладах і пов'язані між собою.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Коректність діагностики</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: методи названо точно, обмеження даних визнано, висновки не виходять за межі отриманих результатів.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Обґрунтованість рекомендацій</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: програма й заходи відповідають виявленим проблемам, спираються на наукові моделі та є здійсненними.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">4</span><h4>Звіт, презентація й захист</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: звіт 7–10 сторінок із логічною структурою, рівномірна участь членів групи, аргументовані відповіді.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Умови не містять окремих критеріїв оцінювання, кількості слайдів і тривалості захисту — це орієнтири для самоперевірки. Регламент уточнюйте у викладача.</div>
+    <div class="callout advice"><b class="lbl">Порада</b>Логіка проєкту: діагностика (01–04) → рішення (05–06) → рекомендації (07). Кожна рекомендація має спиратися на конкретний результат аналізу.</div>
+    <h3>Чек-лист етапів проєкту</h3>
+    <div class="cl" data-id="cl0"></div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що містить звіт <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li>Склад проєктної групи та ролі;</li><li>аналіз стилю лідерства керівника (профіль стилів за Д. Гоулманом);</li><li>оцінка емоційного клімату колективу;</li><li>джерела міжособистісних конфліктів (таблиця);</li><li>рівень психологічної безпеки команди;</li><li>програма розвитку емоційного лідерства та опис однієї вправи;</li><li>заходи з формування групової емоційної компетентності;</li><li>рекомендації, висновки, джерела та план слайдів;</li><li>підготовка до захисту, самооцінка й результат тесту.</li></ul></div></div>
+  </section>
+
+  <!-- 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Аналіз стилю лідерства керівника</h2>
+    <p class="lede">Опишіть організацію й керівника та оцініть, наскільки в його поведінці виражені стилі лідерства за Д. Гоулманом.</p>
+    <div class="acc-item open"><button class="acc-head">Підказка: шість стилів лідерства (Д. Гоулман) <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li><b>Візіонерський</b> — веде до спільного бачення;</li><li><b>Коучинговий</b> — розвиває людей;</li><li><b>Афіліативний</b> — будує гармонію та емоційні зв'язки;</li><li><b>Демократичний</b> — залучає до ухвалення рішень;</li><li><b>Той, що задає темп</b> — висока планка й власний приклад;</li><li><b>Директивний (командний)</b> — вимагає негайного виконання.</li></ul><p>За Гоулманом, перші чотири стилі зазвичай позитивно впливають на клімат, а два останні доречні лише в окремих ситуаціях і при надмірному використанні погіршують клімат.</p></div></div>
+    <div id="f1"></div>
+    <h3>Профіль стилів керівника (1 — не виражений, 5 — домінує)</h3>
+    <div id="lsBox"></div>
+    <div class="result-box" id="lsSum"></div>
+    <div id="f1b"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Оцінка рівня емоційного клімату колективу</h2>
+    <p class="lede">Оберіть до трьох методів і опишіть отримані (або змодельовані для умовної організації) результати.</p>
+    <p>Банк методів (клік додає назву в перше порожнє поле «Метод / методика»):</p>
+    <div class="bank" id="bank2"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: що таке емоційний клімат <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><span class="tip" tabindex="0" data-tip="Емоційний клімат — відносно стійкий емоційний настрій колективу: переважні емоції, рівень довіри, підтримки, напруженості.">Емоційний клімат</span> — переважний емоційний настрій колективу: довіра чи напруга, підтримка чи байдужість, оптимізм чи тривога. Поєднуйте опитувальники зі спостереженням (наради, неформальне спілкування) та організаційними показниками (плинність, лікарняні).</p></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для умовної організації чітко позначайте, що результати змодельовані. Для реальної — гарантуйте анонімність і добровільність.</div>
+    <div id="f2"></div>
+    <div id="f2b"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Основні джерела міжособистісних конфліктів</h2>
+    <p class="lede">Визначте до чотирьох джерел конфліктів: як вони проявляються, кого стосуються та до чого призводять.</p>
+    <p>Банк джерел (клік додає назву в перше порожнє поле «Джерело конфлікту»):</p>
+    <div class="bank" id="bank3"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: як виявляти джерела конфліктів <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Розрізняйте <b>предмет</b> конфлікту (ресурси, ролі, цілі, цінності) та <b>емоційний</b> складник (образи, недовіра). Для оцінки стратегій поведінки в конфлікті можна використати методику К. Томаса (адаптація Н. Гришиної), для збору фактів — інтерв'ю та аналіз конфліктних ситуацій.</p></div></div>
+    <div id="f3"></div>
+    <div id="f3b"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Рівень психологічної безпеки команди</h2>
+    <p class="lede">Дослідіть, наскільки безпечно в команді ставити питання, визнавати помилки й висловлювати незгоду.</p>
+    <div class="acc-item open"><button class="acc-head">Підказка: психологічна безпека за Е. Едмондсон <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><span class="tip" tabindex="0" data-tip="Психологічна безпека (Е. Едмондсон, 1999) — спільне переконання членів команди, що в ній безпечно ризикувати в міжособистісному плані.">Психологічна безпека</span> — спільне переконання, що в команді безпечно ризикувати в міжособистісному плані. Для вимірювання Е. Едмондсон запропонувала короткий опитувальник командного рівня (7 тверджень); доповніть його спостереженням за нарадами та аналізом того, як команда реагує на помилки.</p></div></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Пов'яжіть результати з 01: стиль керівника — один із ключових чинників психологічної безпеки.</div>
+    <div id="f4"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="panel" id="t-5">
+    <h2><span class="idx">05</span> Програма розвитку емоційного лідерства керівників</h2>
+    <p class="lede">Сформулюйте мету й формат програми, сплануйте до чотирьох модулів і детально опишіть одну вправу.</p>
+    <div id="f5"></div>
+    <p>Банк ідей (клік додає назву в перше порожнє поле «Модуль»):</p>
+    <div class="bank" id="bank5"></div>
+    <div id="f5m"></div>
+    <h3>Детальний опис однієї вправи</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Опис має дозволяти іншому фахівцеві провести вправу: ціль, учасники, тривалість, кроки, питання для обговорення, спосіб оцінки.</div>
+    <p>Скопіюйте шаблон і заповніть поля нижче:</p>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Назва вправи: ...
+Ціль (яку компетенцію емоційного лідерства розвиває): ...
+Учасники та розмір групи: ...
+Тривалість: ... хв
+Кроки (1, 2, 3 ...): ...
+Питання для обговорення: ...
+Очікуваний результат і спосіб оцінки: ...</pre></div>
+    <div id="f5b"></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="panel" id="t-6">
+    <h2><span class="idx">06</span> Заходи щодо формування групової емоційної компетентності</h2>
+    <p class="lede">Запропонуйте до чотирьох заходів, які змінять не окремих людей, а норми роботи команди з емоціями.</p>
+    <div class="acc-item open"><button class="acc-head">Підказка: групова емоційна компетентність <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>За В. Друскат і С. Вольфом, групова емоційна компетентність — це <b>групові норми</b>, що допомагають команді усвідомлювати та регулювати емоції на трьох рівнях: <b>окремих членів</b>, <b>команди в цілому</b> та <b>зовнішніх стосунків</b> (з іншими командами, клієнтами). Тому заходи мають закріплювати нові норми, а не лише навчати окремих людей.</p></div></div>
+    <p>Банк ідей (клік додає назву в перше порожнє поле «Захід»):</p>
+    <div class="bank" id="bank6"></div>
+    <div id="f6"></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="panel" id="t-7">
+    <h2><span class="idx">07</span> Рекомендації та план презентації</h2>
+    <p class="lede">Сформулюйте рекомендації для підвищення ефективності командної взаємодії, які ви захищатимете, і складіть план слайдів.</p>
+    <div id="f7"></div>
+    <h3>План презентації по слайдах</h3>
+    <div class="grid2">
+      <div class="fld"><label for="slcnt">Кількість слайдів</label><select class="txt" id="slcnt" data-save><option value="8">8</option><option value="9">9</option><option value="10" selected>10</option></select></div>
+      <div class="fld"><label>Допомога</label><button class="btn ghost" id="recBtn" type="button">✨ Підставити рекомендовані заголовки в порожні поля</button></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Кількість слайдів у завданні не визначена — 8–10 є орієнтиром. Уточніть вимоги у викладача.</div>
+    <div id="slides"></div>
+    <div id="slStatus" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="panel" id="t-8">
+    <h2><span class="idx">08</span> Підготовка до захисту і самооцінка</h2>
+    <p class="lede">Розподіліть виступ між членами групи, потренуйтеся з таймером і заздалегідь підготуйте відповіді на питання.</p>
+    <div class="result-box"><div class="fld" style="max-width:260px;margin:0 auto 8px"><label for="tdur">Тривалість виступу</label><select class="txt" id="tdur" data-save><option value="5">5 хв</option><option value="7">7 хв</option><option value="10" selected>10 хв</option></select></div><div class="timer" id="timer">10:00</div>
+      <div class="btnrow" style="justify-content:center"><button class="btn" id="tStart">▶ Старт</button><button class="btn ghost" id="tReset">Скинути</button></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Тривалість захисту в умовах не вказана — оберіть ту, яку визначить викладач.</div>
+    <div id="f8"></div>
+    <h3>Самооцінка за орієнтирами якості</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Це самооцінка групи за шкалою 1–5, а не оцінка викладача. Вона допоможе побачити слабке місце до захисту.</div>
+    <div id="selfa"></div>
+    <div class="result-box" id="selfSum"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Перевірте, чи правильно ви зрозуміли вимоги до завдання. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 4</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість і обсяг, вкажіть дані групи та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента (хто подає звіт)</label><input class="txt" id="rep_name" required data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" required data-save placeholder="Наприклад, ПС-61м"></div>
+    </div>
+    <div class="fld"><label for="rep_team">Склад проєктної групи та ролі</label><textarea id="rep_team" data-save data-wc rows="4" placeholder="Прізвище І. — роль (напр., аналіз лідерства, клімат і конфлікти, програма, презентація)…"></textarea><div class="wc"></div></div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="result-box" id="volBox"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається. Презентацію подавайте окремо.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Комплексне завдання до теми 5 · Груповий проєкт «Емоційне лідерство та ефективна команда»</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var F1=[{id:'l_org',l:'Організація (реальна чи умовна) та команда: сфера, розмір, завдання',r:4},{id:'l_lead',l:'Керівник: посада, досвід, типові ситуації взаємодії з командою',r:4},{id:'l_meth',l:'Як аналізували стиль (спостереження, інтерв\'ю, опитування команди, методики)',r:3}];
+var LS=['Візіонерський','Коучинговий','Афіліативний','Демократичний','Той, що задає темп','Директивний'];
+var F1B=[{id:'l_concl',l:'Висновок: як стиль лідерства впливає на емоційний стан і роботу команди',r:5}];
+var DG=3,DIDEAS=['Оцінка психологічної атмосфери в колективі (А. Фідлер)','Експрес-методика вивчення соціально-психологічного клімату (О. Шмельов)','Соціометрія (Дж. Морено)','Індекс групової згуртованості (К. Сішор)','шкала позитивного й негативного афекту (PANAS) на рівні команди','анкета емоційного клімату','спостереження за нарадами','фокус-група'];
+var F2B=[{id:'c_concl',l:'Висновок: рівень і особливості емоційного клімату колективу',r:5},{id:'c_lim',l:'Обмеження оцінки (вибірка, змодельовані дані, самозвіт)',r:3}];
+var CS=4,CIDEAS=['розподіл ресурсів і навантаження','нечіткі ролі та зони відповідальності','несправедливе оцінювання й винагорода','відмінності цінностей і поглядів','комунікаційні збої','стиль керівника','особистісна несумісність','конкуренція між підрозділами','зміни та невизначеність'];
+var F3B=[{id:'k_str',l:'Переважні стратегії поведінки в конфліктах (напр., за методикою К. Томаса)',r:4},{id:'k_concl',l:'Висновок: які джерела конфліктів найсуттєвіші та чому',r:4}];
+var F4=[{id:'p_meth',l:'Методи дослідження психологічної безпеки',r:3},{id:'p_res',l:'Результати: наскільки безпечно ставити питання, визнавати помилки, висловлювати незгоду',r:5},{id:'p_fac',l:'Чинники, що підвищують або знижують психологічну безпеку в цій команді',r:4},{id:'p_concl',l:'Висновок щодо рівня психологічної безпеки',r:3}];
+var F5=[{id:'g_goal',l:'Мета та завдання програми розвитку емоційного лідерства',r:4},{id:'g_fmt',l:'Учасники, формат і тривалість програми',r:3}];
+var PM=4,PIDEAS=['самоусвідомлення лідера та зворотний зв\'язок 360°','саморегуляція в стресових ситуаціях','емпатія та активне слухання','коучинговий стиль розмов','надихаюча комунікація та бачення','управління емоціями команди на змінах','конструктивне вирішення конфліктів','створення психологічної безпеки'];
+var F5B=[{id:'ex_name',l:'Назва вправи',t:'in'},{id:'ex_goal',l:'Ціль: яку компетенцію емоційного лідерства розвиває',r:3},{id:'ex_aud',l:'Учасники та розмір групи',t:'in'},{id:'ex_time',l:'Тривалість',t:'in',ph:'напр., 60 хв'},{id:'ex_steps',l:'Покрокова інструкція',r:8},{id:'ex_debr',l:'Питання для обговорення',r:4},{id:'ex_res',l:'Очікуваний результат і спосіб оцінки',r:4}];
+var GM=4,GIDEAS=['емоційний check-in на початку нарад','командні ретроспективи','правила роботи з конфліктами','норма «питати, а не припускати»','визнання та подяка в команді','аналіз помилок без пошуку винних','обмін зворотним зв\'язком між командами','командний тренінг групової ЕК','спільні неформальні активності'];
+var F7=[{id:'r_main',l:'Рекомендації для підвищення ефективності командної взаємодії (3–5 пунктів)',r:6},{id:'r_plan',l:'План упровадження: етапи, терміни, відповідальні',r:4},{id:'r_crit',l:'Критерії ефективності: як і коли перевірите результат',r:4},{id:'r_concl',l:'Висновки аналітичного звіту',r:5},{id:'r_src',l:'Список джерел (автор, назва, рік)',r:4}];
+var SL=10,REC={8:['Титул: тема та склад групи','Організація та стиль лідерства керівника','Емоційний клімат колективу','Джерела конфліктів і психологічна безпека','Програма розвитку емоційного лідерства','Заходи з групової емоційної компетентності','Рекомендації','Висновки'],
+ 9:['Титул: тема та склад групи','Організація та стиль лідерства керівника','Емоційний клімат колективу','Джерела міжособистісних конфліктів','Психологічна безпека команди','Програма розвитку емоційного лідерства','Заходи з групової емоційної компетентності','Рекомендації','Висновки'],
+ 10:['Титул: тема та склад групи','Організація та стиль лідерства керівника','Емоційний клімат колективу','Джерела міжособистісних конфліктів','Психологічна безпека команди','Програма розвитку емоційного лідерства','Приклад вправи','Заходи з групової емоційної компетентності','Рекомендації та критерії ефективності','Висновки та джерела']};
+var F8=[{id:'d_roles',l:'Хто з групи яку частину презентує',r:4},{id:'d_key',l:'Головна думка захисту: чому рекомендації підвищать ефективність команди',r:3},{id:'d_q',l:'Три питання, які можуть поставити на захисті',r:4},{id:'d_a',l:'Ваші короткі відповіді на ці питання',r:5}];
+var CRIT=['Глибина аналізу','Коректність діагностики','Обґрунтованість рекомендацій','Звіт, презентація й захист'];
+var CL={cl0:['Сформувати групу, розподілити ролі та обрати організацію.','Проаналізувати стиль лідерства керівника (01).','Оцінити емоційний клімат колективу (02).','Визначити джерела конфліктів (03).','Дослідити психологічну безпеку команди (04).','Розробити програму емоційного лідерства й описати вправу (05).','Запропонувати заходи з групової емоційної компетентності (06).','Сформулювати рекомендації, завантажити звіт і довести його до 7–10 сторінок (07).','Створити презентацію, прорепетирувати захист і зробити самооцінку (08).']};
+var QZ=[
+ {q:'Який обсяг аналітичного звіту передбачено завданням?',o:['3–5 сторінок','7–10 сторінок','15–20 сторінок'],ok:1,e:'Форма контролю — аналітичний звіт обсягом 7–10 сторінок та презентація результатів.'},
+ {q:'Що з переліченого потрібно дослідити в команді?',o:['Рівень психологічної безпеки','Рівень IQ працівників','Фінансові показники команди'],ok:0,e:'Четвертий пункт завдання — дослідити рівень психологічної безпеки команди.'},
+ {q:'Для кого розробляється програма розвитку емоційного лідерства?',o:['Для клієнтів організації','Для керівників','Для студентів'],ok:1,e:'П\'ятий пункт: розробити програму розвитку емоційного лідерства керівників.'},
+ {q:'Що захищають під час презентації результатів?',o:['Рекомендації для підвищення ефективності командної взаємодії','Бізнес-план організації','Лише результати тестування'],ok:0,e:'Форма контролю передбачає захист рекомендацій для підвищення ефективності командної взаємодії в організації.'}];
+
+function mk(f){if(f.t==='in')return '<div class="fld"><label for="'+f.id+'">'+f.l+'</label><input class="txt" id="'+f.id+'" data-save placeholder="'+(f.ph||'Введіть відповідь…')+'"></div>';
+ return '<div class="fld"><label for="'+f.id+'">'+f.l+'</label><textarea id="'+f.id+'" data-save data-wc rows="'+f.r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+function mkTA(id,l,r){return mk({id:id,l:l,r:r});}
+[['#f1',F1],['#f1b',F1B],['#f2b',F2B],['#f3b',F3B],['#f4',F4],['#f5',F5],['#f5b',F5B],['#f7',F7],['#f8',F8]].forEach(function(a){$(a[0]).innerHTML=a[1].map(mk).join('');});
+function blocks(sel,n,pref,title,flds){var h='',ids=[];for(var i=0;i<n;i++){var p=pref+i+'_';h+='<div class="crit"><h4>'+title+' '+(i+1)+'</h4><div class="grid2">';
+  flds.forEach(function(f,j){ids.push(p+f[0]);var o={id:p+f[0],l:f[1]};if(f[2])o.r=f[2];else o.t='in';
+   if(j===2)h+='</div>';h+=mk(o);});if(flds.length<3)h+='</div>';h+='</div>';}
+ $(sel).innerHTML=h;return ids;}
+var DF=blocks('#f2',DG,'dg','Метод оцінки',[['n','Метод / методика'],['w','Що вимірює'],['h','Хто, як і коли проводить',3],['u','Результати (або змодельовані результати)',3]]);
+var KF=blocks('#f3',CS,'cs','Джерело',[['n','Джерело конфлікту'],['p','Хто залучений'],['s','Як проявляється',3],['r','Наслідки для команди',3]]);
+var MF=blocks('#f5m',PM,'pm','Модуль',[['n','Модуль'],['f','Формат і тривалість'],['c','Зміст і ключові вправи',4],['e','Очікуваний результат',2]]);
+var GF=blocks('#f6',GM,'gm','Захід',[['n','Захід'],['l','Рівень (член команди / команда / зовнішні стосунки)'],['c','Як упроваджується та закріплюється як норма',4],['e','Очікуваний ефект',2]]);
+function bank(sel,ideas,pref,n){$(sel).innerHTML=ideas.map(function(w){return '<button type="button">'+w+'</button>'}).join('');
+ $$(sel+' button').forEach(function(b){b.addEventListener('click',function(){for(var i=0;i<n;i++){var el=$('#'+pref+i+'_n');if(!el.value.trim()){el.value=b.textContent;el.dispatchEvent(new Event('input',{bubbles:true}));return;}}});});}
+bank('#bank2',DIDEAS,'dg',DG);bank('#bank3',CIDEAS,'cs',CS);bank('#bank5',PIDEAS,'pm',PM);bank('#bank6',GIDEAS,'gm',GM);
+function scRow(cls,i,title,extra){var b='';for(var k=1;k<=5;k++)b+='<button type="button" data-v="'+k+'">'+k+'</button>';return '<div class="crit"><h4>'+title+'</h4><div class="sc '+cls+'" data-i="'+i+'">'+b+'</div>'+(extra||'')+'</div>';}
+$('#lsBox').innerHTML=LS.map(function(c,i){return scRow('ls',i,c,mk({id:'ls'+i+'_c',l:'Приклад поведінки керівника',t:'in'}));}).join('');
+var sh='';for(var s=0;s<SL;s++){sh+='<div class="slrow" data-s="'+s+'"><div class="num">'+(s+1)+'</div>'+mk({id:'sl'+s+'_t',l:'Заголовок слайда',t:'in'})+mkTA('sl'+s+'_m','Ключове повідомлення (1 речення)',2)+'</div>';}
+$('#slides').innerHTML=sh;
+$('#selfa').innerHTML=CRIT.map(function(c,i){return scRow('sa',i,(i+1)+'. '+c,mkTA('sa'+i+'_c','Коротке обґрунтування оцінки',3));}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='topic5_emotional_leadership',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+function slN(){return +$('#slcnt').value||10}
+function slVis(){var n=slN(),f=0;$$('.slrow').forEach(function(r){r.style.display=(+r.dataset.s<n)?'':'none';});
+ for(var s=0;s<n;s++)if($('#sl'+s+'_t').value.trim())f++;
+ $('#slStatus').textContent='Заповнено заголовків: '+f+' з '+n;}
+function sv(p,i){return typeof store[p+i]==='number'?store[p+i]:null}
+function sa(i){return sv('sa',i)}
+function scSync(){$$('.sc').forEach(function(r){var p=r.classList.contains('ls')?'ls':'sa',v=sv(p,+r.dataset.i);$$('button',r).forEach(function(b){b.classList.toggle('on',+b.dataset.v===v)});});
+ var n=LS.filter(function(c,i){return sv('ls',i)!==null}).length;
+ if(!n){$('#lsSum').innerHTML='Оцініть стилі, щоб побачити профіль керівника.';}
+ else{var mx=-1,top=[];LS.forEach(function(c,i){var x=sv('ls',i);if(x===null)return;if(x>mx){mx=x;top=[c]}else if(x===mx)top.push(c);});
+  var pos=[0,1,2,3].reduce(function(a,i){return a+(sv('ls',i)||0)},0),neg=[4,5].reduce(function(a,i){return a+(sv('ls',i)||0)},0);
+  $('#lsSum').innerHTML='<b>Оцінено стилів:</b> '+n+' з 6<br><b>Найбільш виражений:</b> '+top.join(', ')+' ('+mx+')'+(n===6?'<br><b>Співвідношення:</b> середній бал «резонансних» стилів (перші чотири) — '+(pos/4).toFixed(1)+', «дисонансних» за надмірного використання (задає темп, директивний) — '+(neg/2).toFixed(1)+'. Це лише орієнтир для аналізу, а не діагноз.':'');}
+ var all=CRIT.every(function(c,i){return sa(i)!==null});
+ if(!all){$('#selfSum').innerHTML='Оцініть усі чотири орієнтири, щоб побачити підсумок самооцінки.';return;}
+ var sum=0,mn=0;CRIT.forEach(function(c,i){sum+=sa(i);if(sa(i)<sa(mn))mn=i;});
+ $('#selfSum').innerHTML='<b>Середній бал самооцінки:</b> '+(sum/4).toFixed(1)+' / 5<br><b>Слабке місце за вашою оцінкою:</b> '+CRIT[mn]+' ('+sa(mn)+'). Приділіть йому більше уваги перед захистом.';}
+function tDur(){return (+$('#tdur').value||10)*60}
+var tLeft=0,tId=null;
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ var fn=function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();slVis();if(k==='tdur'&&!tId){tLeft=tDur();tShow();}};
+ el.addEventListener(el.type==='checkbox'?'change':'input',fn);if(el.tagName==='SELECT')el.addEventListener('change',fn);});
+clProg();slVis();
+$$('.sc').forEach(function(r){var p=r.classList.contains('ls')?'ls':'sa';$$('button',r).forEach(function(b){b.addEventListener('click',function(){store[p+r.dataset.i]=+b.dataset.v;persist();scSync();});});});
+scSync();
+$('#recBtn').addEventListener('click',function(){var n=slN(),arr=REC[n]||REC[10];
+ for(var s=0;s<n;s++){var el=$('#sl'+s+'_t');if(!el.value.trim()){el.value=arr[s];el.dispatchEvent(new Event('input',{bubbles:true}));}}});
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+tLeft=tDur();
+function tShow(){var m=Math.floor(tLeft/60),s=tLeft%60;$('#timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;$('#timer').classList.toggle('low',tLeft<=60);}
+$('#tStart').addEventListener('click',function(){
+ if(tId){clearInterval(tId);tId=null;this.textContent='▶ Продовжити';return;}
+ if(tLeft<=0)tLeft=tDur();this.textContent='⏸ Пауза';var btn=this;
+ tId=setInterval(function(){tLeft--;tShow();if(tLeft<=0){clearInterval(tId);tId=null;btn.textContent='▶ Старт';$('#timer').textContent='Час вийшов!';}},1000);});
+$('#tReset').addEventListener('click',function(){clearInterval(tId);tId=null;tLeft=tDur();$('#tStart').textContent='▶ Старт';tShow();});
+tShow();
+
+var ans=[],score=0;
+$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('.quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function fl(ids){return ids.filter(function(id){return $('#'+id).value.trim()}).length}
+function ids(a){return a.map(function(f){return f.id})}
+var LC=LS.map(function(c,i){return 'ls'+i+'_c'});
+function repIds(){return ids(F1).concat(LC,ids(F1B),DF,ids(F2B),KF,ids(F3B),ids(F4),ids(F5),MF,ids(F5B),GF,ids(F7));}
+function stats(){var n=slN(),sl=[],i;for(i=0;i<n;i++)sl.push('sl'+i+'_t','sl'+i+'_m');
+ var sac=[];for(i=0;i<4;i++)sac.push('sa'+i+'_c');var saN=CRIT.filter(function(c,k){return sa(k)!==null}).length,lsN=LS.filter(function(c,k){return sv('ls',k)!==null}).length;
+ var rows=[['01 Лідерство',fl(ids(F1))+fl(LC)+fl(ids(F1B))+lsN,F1.length+LC.length+F1B.length+LS.length],['02 Клімат',fl(DF)+fl(ids(F2B)),DF.length+F2B.length],['03 Конфлікти',fl(KF)+fl(ids(F3B)),KF.length+F3B.length],['04 Психбезпека',fl(ids(F4)),F4.length],['05 Програма',fl(ids(F5))+fl(MF)+fl(ids(F5B)),F5.length+MF.length+F5B.length],['06 Групова ЕК',fl(GF),GF.length],['07 Рекомендації',fl(ids(F7)),F7.length],['07 Слайди',fl(sl),sl.length],['08 Захист',fl(ids(F8)),F8.length],['Самооцінка',fl(sac)+saN,8],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');
+ var w=0;repIds().forEach(function(id){w+=words($('#'+id).value)});var pg=w/350;
+ $('#volBox').innerHTML='<b>Обсяг аналітичної частини:</b> '+w+' слів ≈ '+pg.toFixed(1)+' с. (орієнтовно, з розрахунку ~350 слів на сторінку)<br>'+(pg<7?'Для звіту на 7–10 сторінок потрібно приблизно 2450–3500 слів — розширте аналіз або доопрацюйте текст у Word.':pg>10?'Обсяг перевищує 10 сторінок — подумайте, що можна скоротити.':'Обсяг відповідає вимозі 7–10 сторінок.');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function tbl(pref,n,keys,hd,ws){var r=[['№'].concat(hd)];for(var i=0;i<n;i++)r.push([String(i+1)].concat(keys.map(function(k){return v(pref+i+'_'+k)})));return table(r,ws);}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('АНАЛІТИЧНИЙ ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('Комплексне завдання до теми 5. Груповий проєкт «Емоційне лідерство та ефективна команда»',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент (подає звіт): '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:120});
+ x+=S('Склад проєктної групи та ролі')+paras(v('rep_team'));
+ x+=H('1. Аналіз стилю лідерства керівника');F1.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var lr=[['Стиль (Д. Гоулман)','Вираженість (1–5)','Приклад поведінки']];LS.forEach(function(c,i){lr.push([c,sv('ls',i)!==null?String(sv('ls',i)):'—',v('ls'+i+'_c')]);});
+ x+=S('Профіль стилів керівника')+table(lr,[2800,1600,5238]);F1B.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('2. Оцінка рівня емоційного клімату колективу')+tbl('dg',DG,['n','w','h','u'],['Метод / методика','Що вимірює','Хто, як і коли','Результати'],[500,2100,1900,2369,2769]);
+ F2B.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('3. Основні джерела міжособистісних конфліктів')+tbl('cs',CS,['n','p','s','r'],['Джерело','Хто залучений','Прояви','Наслідки'],[500,2100,1900,2569,2569]);
+ F3B.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('4. Рівень психологічної безпеки команди');F4.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('5. Програма розвитку емоційного лідерства керівників');F5.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=tbl('pm',PM,['n','f','c','e'],['Модуль','Формат і тривалість','Зміст і вправи','Очікуваний результат'],[500,2100,1800,3238,2000]);
+ x+=S('Детальний опис вправи')+table([['Параметр','Опис']].concat(F5B.map(function(f){return [f.l,v(f.id)]})),[2800,6838]);
+ x+=H('6. Заходи щодо формування групової емоційної компетентності')+tbl('gm',GM,['n','l','c','e'],['Захід','Рівень','Упровадження й закріплення','Очікуваний ефект'],[500,2100,1800,3238,2000]);
+ x+=H('7. Рекомендації та висновки');F7.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var N=slN();x+=H('План презентації ('+N+' слайдів)');
+ var sr=[['№','Заголовок слайда','Ключове повідомлення']];for(var s=0;s<N;s++)sr.push([String(s+1),v('sl'+s+'_t'),v('sl'+s+'_m')]);
+ x+=table(sr,[600,3400,5638]);
+ x+=H('Підготовка до захисту (тривалість виступу: '+v('tdur')+' хв)');F8.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('Самооцінка за орієнтирами якості');
+ var cr=[['Орієнтир','Оцінка (1–5)','Обґрунтування']];CRIT.forEach(function(c,k){cr.push([c,sa(k)!==null?String(sa(k)):'—',v('sa'+k+'_c')]);});
+ x+=table(cr,[3200,1400,5038]);
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var reportName=$('#rep_name').value.trim(),reportGroup=$('#rep_group').value.trim();
+ if(!reportName||!reportGroup){
+  $('#repMsg').textContent=!reportName&&!reportGroup?'Вкажіть ПІБ і групу, щоб завантажити документ.':!reportName?'Вкажіть ПІБ, щоб завантажити документ.':'Вкажіть групу, щоб завантажити документ.';
+  (!reportName?$('#rep_name'):$('#rep_group')).focus();
+  return;
+ }
+
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_груповий_проєкт_тема5_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, профіль стилів, план слайдів, самооцінку, чек-лист і дані групи?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else if(el.id==='slcnt')el.value='10';else if(el.id==='tdur')el.value='10';else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clearInterval(tId);tId=null;tLeft=tDur();$('#tStart').textContent='▶ Старт';tShow();
+ clProg();slVis();scSync();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+<script>
+(function(){
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('#tabsNav button[data-t]'));
+  var questions=Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var checks=Array.prototype.slice.call(document.querySelectorAll('#checklist input'));
+  var flips=Array.prototype.slice.call(document.querySelectorAll('.flip'));
+  var accordions=Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  var signature=questions.map(function(q){return q.querySelector('h4').textContent.trim()});
+  var key='pei-page-progress:'+location.pathname;
+  var answers=questions.map(function(){return null}),restoring=false;
+  function save(){
+    if(restoring)return;
+    var active=document.querySelector('#tabsNav button.active');
+    try{sessionStorage.setItem(key,JSON.stringify({
+      v:1,questions:signature,tab:active?active.dataset.t:null,answers:answers,
+      checks:checks.map(function(x){return x.checked}),
+      flips:flips.map(function(x){return x.classList.contains('on')}),
+      accordions:accordions.map(function(x){return x.classList.contains('open')})
+    }))}catch(e){}
+  }
+  function valid(data){
+    if(!data||data.v!==1||JSON.stringify(data.questions)!==JSON.stringify(signature)||
+       !Array.isArray(data.answers)||data.answers.length!==questions.length||
+       !Array.isArray(data.checks)||data.checks.length!==checks.length||
+       !Array.isArray(data.flips)||data.flips.length!==flips.length||
+       !Array.isArray(data.accordions)||data.accordions.length!==accordions.length||
+       (data.tab!==null&&!tabs.some(function(t){return t.dataset.t===data.tab})))return false;
+    return data.answers.every(function(a,i){return a===null||(Number.isInteger(a)&&a>=0&&a<questions[i].querySelectorAll('.quiz-opt').length)})&&
+      data.checks.every(function(x){return typeof x==='boolean'})&&
+      data.flips.every(function(x){return typeof x==='boolean'})&&
+      data.accordions.every(function(x){return typeof x==='boolean'});
+  }
+  tabs.forEach(function(tab){tab.addEventListener('click',save)});
+  questions.forEach(function(q,i){
+    Array.prototype.slice.call(q.querySelectorAll('.quiz-opt')).forEach(function(option,j){
+      option.addEventListener('click',function(){
+        if(!restoring&&answers[i]===null&&q.classList.contains('locked')){answers[i]=j;save()}
+      });
+    });
+  });
+  var quizReset=document.getElementById('quizReset');
+  if(quizReset)quizReset.addEventListener('click',function(){answers=questions.map(function(){return null});save()});
+  checks.forEach(function(box){box.addEventListener('change',save)});
+  var resetChecks=document.getElementById('resetChecks');
+  if(resetChecks)resetChecks.addEventListener('click',save);
+  flips.forEach(function(flip){
+    flip.addEventListener('click',save);
+    flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')save()});
+  });
+  accordions.forEach(function(item){item.querySelector('.acc-head').addEventListener('click',save)});
+  var data;
+  try{data=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){data=null}
+  if(!data)return;
+  if(!valid(data)){try{sessionStorage.removeItem(key)}catch(e){}return}
+  restoring=true;
+  try{
+    data.answers.forEach(function(answer,i){
+      if(answer!==null)questions[i].querySelectorAll('.quiz-opt')[answer].click();
+    });
+    checks.forEach(function(box,i){
+      if(box.checked!==data.checks[i]){
+        box.checked=data.checks[i];
+        box.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    flips.forEach(function(flip,i){flip.classList.toggle('on',data.flips[i])});
+    accordions.forEach(function(item,i){
+      if(item.classList.contains('open')!==data.accordions[i])item.querySelector('.acc-head').click();
+    });
+    if(data.tab)tabs.filter(function(t){return t.dataset.t===data.tab})[0].click();
+    answers=data.answers.slice();
+  }finally{restoring=false}
+})();
+</script>
+</body>
+</html>

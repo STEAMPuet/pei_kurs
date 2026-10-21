@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Самостійна робота 3. Теорії емоційного та стресового подолання</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+@media(max-width:480px){.grid4{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:210px; cursor:pointer; outline:none;}
+.flip.sm{height:190px;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front .em{font-size:26px; margin-bottom:4px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.bignum{text-align:center;} .bignum .n{font-family:'Orbitron','Segoe UI',sans-serif; font-size:38px; font-weight:900; color:var(--magenta); line-height:1.1;}
+.bignum small{display:block; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep); margin-bottom:8px;}
+.bignum p{font-size:14px; text-align:left; margin:0;}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:6px;} .crit .fld label{color:var(--ink-soft);}
+.qbox{border-top:2px dashed var(--line); margin-top:22px; padding-top:16px;}
+.qbox .tag{font-family:'Share Tech Mono',monospace; font-size:12px; color:#fff; background:var(--cyan-deep); padding:2px 9px; border-radius:6px; display:inline-block; margin-bottom:8px;}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<style>select.txt{width:100%;border:1px solid var(--line);border-radius:8px;padding:9px 11px;font-family:'Rajdhani','Segoe UI',sans-serif;font-size:15px;background:var(--bg-panel);color:var(--ink);} select.txt:focus{outline:none;border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.chain{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chain button{flex:1 1 150px;font-family:'Orbitron','Segoe UI',sans-serif;font-size:12px;font-weight:600;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 10px;cursor:pointer;transition:.15s;text-align:center;}
+.chain button small{display:block;font-family:'Share Tech Mono',monospace;font-weight:400;font-size:10.5px;color:var(--cyan-deep);margin-bottom:4px;}
+.chain button:hover{border-color:var(--cyan);}
+.chain button.active{background:var(--solid);color:#fff;border-color:var(--ink);box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.chain button.active small{color:#9fe8ee;}
+.chain .ar{align-self:center;color:var(--magenta);font-weight:700;}
+@media(max-width:800px){.chain .ar{display:none;}}
+</style>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / SELF-STUDY — ОНЛАЙН</span><span>САМОСТІЙНА РОБОТА: 03</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// SELF_STUDY_03 · COPING.RESILIENCE + REPORT.DOCX</span>
+    <h1>Теорії емоційного та стресового подолання</h1>
+    <p class="sub">Гросс, Лазарус і Фолкман, Мастен і саморегуляція керівника — чотири концептуальні рамки, що разом пояснюють, як людина може свідомо управляти своїм внутрішнім станом у складних умовах сучасного лідерства. Вивчайте матеріал, відповідайте на питання й завдання, а потім завантажте звіт у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">📚 4 частини</span>
+      <span class="chip">✍️ питання й 4 завдання</span>
+      <span class="chip">❓ 6 питань тесту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Гросс</button>
+    <button data-t="t-2">02 · Лазарус і Фолкман</button>
+    <button data-t="t-3">03 · Мастен</button>
+    <button data-t="t-4">04 · Саморегуляція</button>
+    <button data-t="t-work">✍ Завдання</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Карта самостійної роботи</h2>
+    <p class="lede">Чотири теоретичні рамки складаються в єдину логіку: як регулювати емоції (Гросс), як виникає стрес і як його долати (Лазарус і Фолкман), чому відновлення реальне (Мастен) і як усе це стає навичкою керівника (саморегуляція).</p>
+    <div class="callout important"><b class="lbl">Важливо</b>Відповіді автоматично зберігаються в цьому браузері (якщо він дозволяє) і потраплять у звіт. На іншому пристрої поля будуть порожні — завантажте звіт до завершення роботи.</div>
+    <h3>Чотири опорні точки (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>1. Гросс</h4><small>натисни, щоб перевернути</small></div><div class="face back">«Як саме регулювати емоції» — через ранні стратегії втручання в ланцюжок емоцій, особливо когнітивну переоцінку.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>2. Лазарус і Фолкман</h4><small>натисни, щоб перевернути</small></div><div class="face back">«Як виникає стрес» — через суб'єктивну оцінку загрози та ресурсів, і як свідомо обирати копінг-стратегію.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>3. Мастен</h4><small>натисни, щоб перевернути</small></div><div class="face back">«Чому відновлення реальне» — резильєнтність спирається на звичайні адаптивні системи, доступні кожній людині.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>4. Саморегуляція</h4><small>натисни, щоб перевернути</small></div><div class="face back">«Як усе це стає навичкою» — інтеграція теорій у щоденну управлінську практику через рефлексію та навчання.</div></div></div>
+    </div>
+    <h3>Чек-лист вивчення</h3>
+    <div class="cl" data-id="cl0"></div>
+    <div class="callout advice"><b class="lbl">Порада</b>У кінці кожної частини є питання для відповіді. Пишіть своїми словами, а не переписуйте тези: звіт має показувати ваше розуміння.</div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що саме потрібно здати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Питання до частин 1–4:</b> короткі письмові відповіді.</p><p><b>Завдання 1:</b> тренажер стратегій Гросса (результат фіксується автоматично).</p><p><b>Завдання 2:</b> аналіз власної стресової ситуації за моделлю Лазаруса–Фолкман.</p><p><b>Завдання 3:</b> карта захисних факторів резильєнтності за Мастен.</p><p><b>Завдання 4:</b> аналіз управлінського кейсу.</p><p><b>Додатково:</b> результат тесту самоперевірки.</p></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Джон Гросс: регуляція емоцій до їх «вибуху»</h2>
+    <p class="lede">Теорія процесуальної регуляції емоцій Джона Гросса — одна з найвпливовіших у сучасній психології. Її ключова ідея: емоції не просто «виникають» і «захльостують» нас — їх можна цілеспрямовано формувати на різних стадіях розгортання.</p>
+    <div class="acc-item open"><button class="acc-head">Процесуальна модель: від ранніх до пізніх стратегій <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Гросс виокремлює п'ять основних стратегій втручання, організованих у послідовний ланцюжок: від ранніх, <span class="tip" tabindex="0" data-tip="Антецедентні стратегії діють до того, як емоція повністю розгорнулася (від лат. antecedens — попередній).">антецедентних</span>, до пізніх, орієнтованих на реакцію.</p></div></div>
+    <h3>Ланцюжок стратегій (натисніть на етап)</h3>
+    <div class="chain" id="chain"></div>
+    <div class="result-box" id="chainBox"></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Когнітивна переоцінка — найбільш досліджена й ефективна стратегія. Пригнічення реакції менш ефективне в довгостроковій перспективі, але ситуативно необхідне в лідерстві (наприклад, не виявляти роздратування публічно).</div>
+    <div class="acc-item"><button class="acc-head">Практичне значення для керівника <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Гросс доводить: <b>чим раніше відбувається втручання в ланцюжок емоції — тим менше когнітивних і фізіологічних ресурсів воно витрачає.</b> Когнітивна переоцінка, застосована до виникнення емоційного піку, значно ефективніша за пригнічення реакції «по факту».</p><p>Керівник, який освоїв ранні стратегії, управляє не боротьбою із собою, а своєю поведінкою до точки кипіння.</p></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Емоцію можна регулювати на кожному етапі, але ранні стратегії «дешевші» для організму: краще змінити ситуацію чи її тлумачення, ніж потім стримувати вже сформовану реакцію.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 1</span><div id="q1"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Р. Лазарус і С. Фолкман: стрес як оцінка, копінг як процес</h2>
+    <p class="lede">Транзакційна модель стресу та копінгу (1984) перевернула розуміння стресу: стрес — це не стимул ззовні й не реакція організму, а результат <b>взаємодії</b> між людиною та середовищем, опосередкований когнітивною оцінкою. Один і той самий дедлайн для одного керівника є загрозою, для іншого — захопливим викликом.</p>
+    <h3>Три етапи оцінки (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">❓</div><h4>Первинна оцінка</h4><small>натисни</small></div><div class="face back">«Що ця ситуація означає для мене?» Нерелевантна, сприятлива або стресова (загроза, втрата, виклик). Тут визначається, чи запуститься стресова реакція взагалі.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🧰</div><h4>Вторинна оцінка</h4><small>натисни</small></div><div class="face back">«Що я можу з цим зробити? Чи є в мене ресурси?» Сприйнята контрольованість і наявність стратегій визначають поведінку та інтенсивність стресу.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🔄</div><h4>Переоцінка</h4><small>натисни</small></div><div class="face back">З розвитком ситуації й новою інформацією людина переглядає обидві оцінки. Копінг — не одноразова дія, а безперервна транзакція.</div></div></div>
+    </div>
+    <h3>Два типи копінгу</h3>
+    <div class="grid2">
+      <div class="card"><h4>Проблемно-орієнтований копінг</h4>Спрямований на зміну самої ситуації: планування, пошук інформації, вирішення проблем, ухвалення рішень. Ефективний, коли ситуація <b>піддається контролю</b>. Типова стратегія лідера в операційній кризі: аналіз → план → дія.</div>
+      <div class="card"><h4>Емоційно-орієнтований копінг</h4>Спрямований на регуляцію емоційного дистресу, коли ситуацію <b>змінити неможливо</b>: переосмислення, пошук соціальної підтримки, прийняття, дистанціювання. Критично важливий за невизначеності — наприклад, під час змін «згори».</div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Ключовий внесок Лазаруса і Фолкман: <span class="tip" tabindex="0" data-tip="Копінг (від англ. to cope — упоратися) — свідомі зусилля людини, спрямовані на подолання стресової ситуації.">копінг</span> — свідомий, цілеспрямований процес, а не автоматична реакція. Людина оцінює, обирає стратегію, прогнозує наслідки — тому копінгу можна навчитися й навчати інших.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 2</span><div id="q2"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Енн Мастен: резильєнтність як здатність відновлюватися</h2>
+    <p class="lede">Концепція резильєнтності — результат десятиліть <span class="tip" tabindex="0" data-tip="Лонгітюдне дослідження — тривале спостереження за тими самими людьми протягом багатьох років.">лонгітюдних</span> досліджень дітей і дорослих, що пережили екстремальні труднощі. Мастен спростовує міф про «сталеві нерви»: резильєнтність — не рідкісна надлюдська якість, а <b>«звичайна магія» (ordinary magic)</b>, що спирається на доступні більшості людей адаптивні системи.</p>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>У презентації дослідницю названо «Ганна Мастен»; в оригіналі — Ann S. Masten, в українських джерелах частіше «Енн Мастен». Це та сама авторка.</div>
+    <div class="acc-item open"><button class="acc-head">Визначення резильєнтності <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Здатність системи (людини, сім'ї, організації) <b>підтримувати або відновлювати адаптивну функцію</b> в умовах значних загроз або після них. Резильєнтність — не відсутність болю чи стресу, а процес відновлення функціонування попри них.</p></div></div>
+    <h3>Захисні фактори та ресурси</h3>
+    <div class="grid3">
+      <div class="card"><h4>Особистісні</h4>Самоефективність, регуляція емоцій, проблемно-орієнтоване мислення.</div>
+      <div class="card"><h4>Соціальні</h4>Підтримувальне оточення, наставники, команда.</div>
+      <div class="card"><h4>Системні</h4>Організаційна культура, доступ до допомоги.</div>
+    </div>
+    <p style="margin-top:10px">Жоден чинник не діє ізольовано — стійкість виникає з їх взаємодії.</p>
+    <div class="acc-item"><button class="acc-head">Резильєнтність як процес <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Резильєнтність — не риса характеру, а динамічний процес розвитку стійкості. Її можна цілеспрямовано формувати через навчання стратегіям подолання, розвиток соціальних зв'язків і побудову систем підтримки на рівні організації.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Зв'язок із копінг-стратегіями <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Ефективні копінг-стратегії — один із ключових механізмів формування стійкості. Вони знижують гостроту стресової реакції, дають змогу зберігати когнітивну ясність і підтримують психічне здоров'я в довгостроковій перспективі.</p></div></div>
+    <div class="callout advice"><b class="lbl">Чому це важливо для лідерів</b>Резильєнтний керівник — не той, хто «ніколи не ламається», а той, хто знає, як повертатися. Відновлення є ознакою сили, а не слабкості; керівник, що розуміє ці процеси, здатен цілеспрямовано розвивати резильєнтність своєї команди.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 3</span><div id="q3"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Саморегуляція керівника: як теорія стає навичкою</h2>
+    <p class="lede">Саморегуляція в управлінні — інтеграція всіх попередніх концепцій у єдину виконавчу компетентність. Вона спирається на емоційну грамотність, свідоме використання копінг-стратегій і розвинену резильєнтність.</p>
+    <div class="acc-item open"><button class="acc-head">Емоційна компетентність як основа <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Саморегуляція починається з розпізнавання власних емоцій у реальному часі — помітити роздратування, тривогу чи розгубленість до того, як вони визначать поведінку. Далі — ранні стратегії Гросса (переоцінка, вибір ситуації) замість імпульсивного реагування. Контроль імпульсів у нарадах, конфліктах чи кризах — не придушення, а усвідомлений вибір відповіді.</p></div></div>
+    <div class="acc-item"><button class="acc-head">Гнучке перемикання між копінг-стратегіями <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Найважливіша навичка — <span class="tip" tabindex="0" data-tip="Метакогнітивна гнучкість — здатність усвідомлювати власні способи мислення й реагування та свідомо змінювати їх відповідно до ситуації.">метакогнітивна гнучкість</span>: розрізнити, коли ситуація піддається змінам (діяти проблемно-орієнтовано), а коли — ні (переходити до емоційно-орієнтованого копінгу). Спроба «вирішити невирішуване» виснажує; прийняття без дії там, де дія потрібна, дезорганізує команду.</p></div></div>
+    <h3>Міні-тренажер: який копінг обрати?</h3>
+    <div class="result-box">
+      <b>Чи можете ви суттєво вплинути на ситуацію, що вас турбує?</b>
+      <div class="btnrow"><button class="btn ghost small" data-ctl="yes">Так, переважно можу</button><button class="btn ghost small" data-ctl="part">Частково</button><button class="btn ghost small" data-ctl="no">Ні, від мене майже не залежить</button></div>
+      <div id="ctlOut" style="color:var(--ink-soft)">Оберіть варіант — з'явиться рекомендація.</div>
+    </div>
+    <div class="acc-item"><button class="acc-head">Резильєнтність як стратегічний ресурс <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Резильєнтний керівник підтримує стратегічне мислення під тиском, не дозволяючи стресу звужувати горизонт до тактичних реакцій. Він усвідомлює, що відновлення після кризи — нормальна частина лідерського шляху, і закладає в організаційну культуру ресурси для відновлення команди.</p></div></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Саморегуляція — не особистісна риса, з якою народжуються, а компетентність, яку розвивають: через усвідомлену практику, зворотний зв'язок, рефлексію та системне навчання. Теорії Гросса, Лазаруса–Фолкман і Мастен дають для цього науково обґрунтований фундамент.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 4</span><div id="q4"></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ -->
+  <section class="panel" id="t-work">
+    <h2><span class="idx">TASK</span> Завдання для самостійної роботи</h2>
+    <p class="lede">Завдання 1–4 спираються на матеріал частин 1–4. Виконуйте їх у відкритих полях: усе потрапить у звіт.</p>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl1"></div>
+
+    <h3>Завдання 1. Тренажер стратегій Гросса</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для кожної управлінської ситуації визначте, яку стратегію регуляції емоцій застосовує керівник. Результат автоматично потрапить у звіт.</div>
+    <div id="trainBox"></div>
+    <div class="result-box mono" id="trainScore" style="font-size:13px;"></div>
+    <div id="t1fields"></div>
+
+    <h3>Завдання 2. Моя стресова ситуація за моделлю Лазаруса–Фолкман</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Оберіть реальну стресову ситуацію з навчання чи роботи. Оцініть її контрольованість — сторінка підкаже, який тип копінгу доцільніший.</div>
+    <div class="callout advice"><b class="lbl">Порада</b>Приклад заповнення можна скопіювати нижче.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Ситуація: за два дні до захисту курсової науковий керівник попросив переробити розділ.
+Первинна оцінка: загроза (ризик не встигнути), але водночас виклик.
+Вторинна оцінка: є вечір і вихідний, допомога одногрупника, чернетки з попередніх версій.
+Контрольованість: 7/10 — обсяг правок можна спланувати.
+Копінг: проблемно-орієнтований (план по годинах) + емоційно-орієнтований (коротка прогулянка, розмова з другом).
+Переоцінка: після першого дня роботи ситуація сприймається як посильний виклик.</pre></div>
+    <div id="t2fields"></div>
+
+    <h3>Завдання 3. Карта захисних факторів резильєнтності (за Мастен)</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для кожної групи захисних факторів запишіть, на що ви вже можете спиратися та що варто зміцнити. Оцініть кожну групу за шкалою 1–10.</div>
+    <div id="t3fields"></div>
+
+    <h3>Завдання 4. Кейс: реорганізація «згори»</h3>
+    <div class="result-box"><b>Ситуація.</b> За тиждень до запуску ключового проєкту керівник відділу дізнається, що рішенням головного офісу бюджет скорочено на 30%, а двох фахівців переводять в інший підрозділ. Команда тривожиться, з'являються чутки, керівник відчуває роздратування та безсилля.</div>
+    <div id="t4fields"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Оберіть відповідь — одразу з'явиться «правильно/неправильно» та пояснення. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 6</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані студента та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" required data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" required data-save placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Самостійна робота 3 · Теорії емоційного та стресового подолання</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var GROSS=[
+ {n:'Вибір ситуації',st:'рання',d:'Свідоме уникнення або наближення до ситуацій, що провокують небажані емоції. Керівник обирає, на яку нараду йти, з ким взаємодіяти першочергово.'},
+ {n:'Модифікація ситуації',st:'рання',d:'Зміна зовнішнього середовища для впливу на емоційний стан: переформатування порядку денного, зміна умов переговорів, делегування конфліктного завдання.'},
+ {n:'Розгортання уваги',st:'рання',d:'Спрямування уваги на різні аспекти ситуації — відволікання або концентрація. Когнітивне перефокусування без зміни зовнішніх обставин.'},
+ {n:'Когнітивна переоцінка',st:'рання',d:'Переосмислення значення події. Найбільш досліджена й ефективна стратегія: «Це не катастрофа, а виклик для зростання».'},
+ {n:'Пригнічення реакції',st:'пізня',d:'Найпізніша стратегія — пригнічення вже сформованого емоційного вираження (стримати сльози, не виявляти роздратування публічно). Менш ефективна в довгостроковій перспективі, але ситуативно необхідна в лідерстві.'}];
+var PQ=[
+ {id:'q1',l:'Чому, за Гроссом, ранні (антецедентні) стратегії ефективніші за пригнічення реакції? Наведіть приклад з управлінської практики.',r:5},
+ {id:'q2',l:'Поясніть, чому той самий дедлайн може бути загрозою для одного керівника й викликом для іншого. Яку роль тут відіграють первинна та вторинна оцінки?',r:5},
+ {id:'q3',l:'Що Мастен має на увазі під «звичайною магією» резильєнтності? Чому резильєнтність — процес, а не риса?',r:5},
+ {id:'q4',l:'Що таке метакогнітивна гнучкість керівника і чим небезпечні обидві крайнощі: «вирішувати невирішуване» та «приймати без дії»?',r:5}];
+var TR=[
+ {s:'Керівник знає, що зустріч із конфліктним постачальником виснажує його, тому доручає перший раунд переговорів досвідченому заступнику.',ok:0},
+ {s:'Перед складною нарадою керівник змінює порядок денного: спершу — досягнення команди, потім — проблемні питання.',ok:1},
+ {s:'Під час неприємної розмови з клієнтом менеджерка зосереджується на фактах і цифрах у документі, а не на різкому тоні співрозмовника.',ok:2},
+ {s:'Отримавши критику від директора, керівник говорить собі: «Це не оцінка мене як людини, а шанс покращити проєкт».',ok:3},
+ {s:'Почувши на нараді образливе зауваження, керівник зберігає спокійне обличчя й рівний голос, хоча всередині кипить.',ok:4},
+ {s:'Новий проєкт здається непосильним, але керівниця переосмислює його як можливість здобути досвід, що знадобиться для підвищення.',ok:3}];
+var APP=['Нерелевантна (не стосується мене)','Сприятлива','Стресова: загроза','Стресова: втрата','Стресова: виклик'];
+var RF=[{k:'pers',l:'Особистісні фактори',ph:'самоефективність, регуляція емоцій, проблемно-орієнтоване мислення'},{k:'soc',l:'Соціальні фактори',ph:'підтримувальне оточення, наставники, команда'},{k:'sys',l:'Системні фактори',ph:'організаційна культура, доступ до допомоги'}];
+var T1=[{id:'t1_con',l:'Висновок: які стратегії Гросса ви найчастіше використовуєте самі і які хотіли б розвинути',r:5}];
+var T2=[{id:'t2_sit',l:'Опис стресової ситуації',r:3,t:'a'},{id:'t2_prim',l:'Первинна оцінка',t:'s'},{id:'t2_primc',l:'Чому саме така оцінка',r:3,t:'a'},{id:'t2_sec',l:'Вторинна оцінка: які ресурси та можливості я маю',r:3,t:'a'},{id:'t2_ctl',l:'Наскільки я можу контролювати ситуацію (1–10)',t:'n'},{id:'t2_cope',l:'Які копінг-стратегії я застосував(-ла) і наскільки вони спрацювали',r:4,t:'a'},{id:'t2_re',l:'Переоцінка: як змінилося моє бачення ситуації з часом',r:3,t:'a'}];
+var T3=[],T4=[{id:'t4_a1',l:'1. Як може виглядати первинна та вторинна оцінка ситуації керівником? Що в ній контрольоване, а що — ні?',r:6},{id:'t4_a2',l:'2. Які стратегії Гросса доречні для керівника на різних етапах (до наради з командою, під час, після)?',r:6},{id:'t4_a3',l:'3. Які проблемно- та емоційно-орієнтовані копінг-стратегії ви порадите?',r:6},{id:'t4_a4',l:'4. Як підтримати резильєнтність команди з опорою на захисні фактори Мастен?',r:6}];
+var CL={cl0:['Опрацьовано частину 1 (Гросс).','Опрацьовано частину 2 (Лазарус і Фолкман).','Опрацьовано частину 3 (Мастен).','Опрацьовано частину 4 (саморегуляція керівника).'],
+ cl1:['Дайте відповіді на питання до частин 1–4.','Пройдіть тренажер стратегій Гросса (завдання 1).','Проаналізуйте власну стресову ситуацію (завдання 2).','Складіть карту захисних факторів (завдання 3).','Проаналізуйте кейс (завдання 4).','Пройдіть тест і завантажте звіт.']};
+var QZ=[
+ {q:'Яка стратегія є найранішою в процесуальній моделі Гросса?',o:['Когнітивна переоцінка','Вибір ситуації','Пригнічення реакції'],ok:1,e:'Ланцюжок починається з вибору ситуації, далі — модифікація ситуації, розгортання уваги, переоцінка і, наостанок, пригнічення реакції.'},
+ {q:'Яка стратегія, за Гроссом, найменш ефективна в довгостроковій перспективі?',o:['Пригнічення реакції','Когнітивна переоцінка','Модифікація ситуації'],ok:0,e:'Пригнічення діє «по факту» і витрачає більше ресурсів, хоча ситуативно буває необхідним у лідерстві.'},
+ {q:'Як Лазарус і Фолкман розуміють стрес?',o:['Як зовнішній подразник','Як фізіологічну реакцію організму','Як результат взаємодії людини та середовища, опосередкований когнітивною оцінкою'],ok:2,e:'У транзакційній моделі стрес виникає залежно від того, як людина оцінює ситуацію та власні ресурси.'},
+ {q:'Яке питання людина ставить собі під час вторинної оцінки?',o:['«Що я можу з цим зробити? Чи є в мене ресурси?»','«Чи стосується ця ситуація мене?»','«Хто винен у ситуації?»'],ok:0,e:'Первинна оцінка відповідає на «що це означає для мене», вторинна — на «що я можу зробити й які маю ресурси».'},
+ {q:'Коли доцільніший емоційно-орієнтований копінг?',o:['Коли ситуацію легко змінити власними діями','Коли ситуацію змінити неможливо або вона непідконтрольна','Ніколи — він завжди гірший за проблемно-орієнтований'],ok:1,e:'Емоційно-орієнтований копінг (переосмислення, підтримка, прийняття) критично важливий у ситуаціях невизначеності та непідконтрольності.'},
+ {q:'Що означає «звичайна магія» (ordinary magic) у концепції Мастен?',o:['Резильєнтність — рідкісний вроджений дар','Резильєнтність спирається на звичайні адаптивні системи, доступні більшості людей','Відновлення відбувається саме собою, без зусиль'],ok:1,e:'Мастен спростовує міф про «сталеві нерви»: стійкість ґрунтується на доступних ресурсах — особистісних, соціальних і системних.'}];
+
+function mk(id,l,r){return '<div class="fld"><label for="'+id+'">'+l+'</label><textarea id="'+id+'" data-save data-wc rows="'+r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+function mkIn(id,l,ph,t){return '<div class="fld"><label for="'+id+'">'+l+'</label><input class="txt" id="'+id+'" data-save placeholder="'+ph+'"'+(t?' type="'+t+'" min="1" max="10"':'')+'></div>';}
+function mkSel(id,l,opts){return '<div class="fld"><label for="'+id+'">'+l+'</label><select class="txt" id="'+id+'" data-save><option value="">— оберіть —</option>'+opts.map(function(o){return '<option>'+o+'</option>'}).join('')+'</select></div>';}
+PQ.forEach(function(f){$('#'+f.id).innerHTML=mk('f_'+f.id,f.l,f.r);f.id='f_'+f.id;});
+
+/* ланцюжок Гросса */
+$('#chain').innerHTML=GROSS.map(function(g,i){return (i?'<span class="ar">→</span>':'')+'<button data-g="'+i+'"><small>'+(i+1)+' · '+g.st+'</small>'+g.n+'</button>'}).join('');
+function showG(i){$$('#chain button').forEach(function(b){b.classList.toggle('active',+b.dataset.g===i)});var g=GROSS[i];
+ $('#chainBox').innerHTML='<b>'+(i+1)+'. '+g.n+'</b> <span class="mono" style="font-size:12px;color:'+(g.st==='пізня'?'var(--magenta)':'var(--ok)')+'">['+(g.st==='пізня'?'пізня стратегія, орієнтована на реакцію':'рання (антецедентна) стратегія')+']</span><br>'+g.d;}
+$$('#chain button').forEach(function(b){b.addEventListener('click',function(){showG(+b.dataset.g)})});showG(0);
+
+/* тренажер */
+var tr=[];
+$('#trainBox').innerHTML=TR.map(function(x,i){return '<div class="quiz-q" data-t="'+i+'"><h4>Ситуація '+(i+1)+'. '+x.s+'</h4>'+GROSS.map(function(g){return '<button class="quiz-opt">'+g.n+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+function trScore(){var n=tr.filter(Boolean).length,c=tr.filter(function(x){return x&&x.ok}).length;$('#trainScore').textContent='Тренажер: '+c+' правильних із '+TR.length+' (відповідей: '+n+')'+(n===TR.length?' — завершено':'');}
+$$('#trainBox .quiz-q').forEach(function(q){var i=+q.dataset.t,x=TR[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;tr[i]={ch:GROSS[j].n,ok:good};o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+GROSS[j].n;
+  if(!good)opts[x.ok].classList.add('correct');var f=$('.quiz-fb',q);f.textContent='Стратегія: '+GROSS[x.ok].n+'. '+GROSS[x.ok].d;f.classList.add('show');trScore();});});});
+trScore();
+$('#t1fields').innerHTML='<div class="btnrow"><button class="btn ghost small" id="trReset">Пройти тренажер знову</button></div>'+T1.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$('#trReset').addEventListener('click',function(){tr=[];$$('#trainBox .quiz-q').forEach(function(q){q.classList.remove('locked');$$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=GROSS[j].n});$('.quiz-fb',q).classList.remove('show');});trScore();});
+
+var h='';T2.forEach(function(f){h+=f.t==='s'?mkSel(f.id,f.l,APP):(f.t==='n'?mkIn(f.id,f.l,'Від 1 до 10','number'):mk(f.id,f.l,f.r));});
+h+='<div class="result-box" id="copeTip"></div>';$('#t2fields').innerHTML=h;
+h='';RF.forEach(function(r,i){h+='<div class="crit"><h4>'+(i+1)+'. '+r.l+'</h4><p class="mono" style="font-size:12px;color:var(--ink-soft);margin:0 0 8px">Приклади: '+r.ph+'</p>'+mkIn('t3_'+r.k+'_s','Наскільки цей ресурс у мене розвинений (1–10)','Від 1 до 10','number')+'<div class="grid2">'+mk('t3_'+r.k+'_have','На що я вже можу спиратися',3)+mk('t3_'+r.k+'_dev','Що варто зміцнити і як',3)+'</div></div>';T3.push({id:'t3_'+r.k+'_s'},{id:'t3_'+r.k+'_have'},{id:'t3_'+r.k+'_dev'});});
+h+='<div class="result-box" id="resTxt"></div>';$('#t3fields').innerHTML=h;
+$('#t4fields').innerHTML=T4.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+/* міні-тренажер копінгу */
+var CTL={yes:['var(--ok)','Проблемно-орієнтований копінг: проаналізуйте ситуацію, складіть план і дійте (аналіз → план → дія). Емоційні стратегії — лише як підтримка.'],
+ part:['var(--amber)','Поєднання: розділіть ситуацію на контрольовану частину (план і дії) та неконтрольовану (переосмислення, підтримка, прийняття).'],
+ no:['var(--magenta)','Емоційно-орієнтований копінг: переосмислення, пошук соціальної підтримки, прийняття, дистанціювання. Не витрачайте сили на «вирішення невирішуваного».']};
+$$('[data-ctl]').forEach(function(b){b.addEventListener('click',function(){$$('[data-ctl]').forEach(function(x){x.classList.toggle('ghost',x!==b)});var r=CTL[b.dataset.ctl];$('#ctlOut').innerHTML='<span style="color:'+r[0]+';font-weight:700">Рекомендація.</span> '+r[1];});});
+function copeRec(){var n=parseFloat($('#t2_ctl').value);if(isNaN(n))return null;return n>=7?['yes','Ситуація значною мірою контрольована — доцільний насамперед проблемно-орієнтований копінг.']:(n<=4?['no','Ситуація малоконтрольована — доцільний насамперед емоційно-орієнтований копінг.']:['part','Ситуація частково контрольована — доцільне поєднання проблемно- та емоційно-орієнтованого копінгу.']);}
+function copeShow(){var r=copeRec();$('#copeTip').innerHTML=r?'<span style="color:'+CTL[r[0]][0]+';font-weight:700">Підказка за моделлю.</span> '+r[1]:'<span style="color:var(--ink-soft)">Оцініть контрольованість ситуації — тут з\'явиться підказка щодо типу копінгу.</span>';}
+function resEx(){var f=[];RF.forEach(function(r){var n=parseFloat($('#t3_'+r.k+'_s').value);if(!isNaN(n))f.push({n:r.l,v:n});});if(!f.length)return null;
+ var mx=Math.max.apply(null,f.map(function(x){return x.v})),mn=Math.min.apply(null,f.map(function(x){return x.v}));
+ return {hi:f.filter(function(x){return x.v===mx}).map(function(x){return x.n}).join(', ')+' ('+mx+')',lo:f.filter(function(x){return x.v===mn}).map(function(x){return x.n}).join(', ')+' ('+mn+')',eq:mx===mn};}
+function resShow(){var e=resEx();$('#resTxt').innerHTML=e?(e.eq?'Усі оцінені групи мають однаковий рівень: '+e.hi:'<span style="color:var(--ok)">▲ Найміцніша опора: '+e.hi+'</span><br><span style="color:var(--magenta)">▼ Варто зміцнити насамперед: '+e.lo+'</span>'):'<span style="color:var(--ink-soft)">Оцініть групи факторів — тут з\'явиться підсумок.</span>';}
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='sr3_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ el.addEventListener(el.type==='checkbox'||el.tagName==='SELECT'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();if(k==='t2_ctl')copeShow();if(/^t3_\w+_s$/.test(k))resShow();});});
+clProg();copeShow();resShow();
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+var ans=[],score=0;
+$$('#quizBox .quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('#quizBox .quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function filled(a){return a.filter(function(f){return $('#'+f.id).value.trim()}).length}
+function stats(){var rows=[['Питання до частин',filled(PQ),PQ.length],['Завдання 1',tr.filter(Boolean).length+filled(T1),TR.length+T1.length],['Завдання 2',filled(T2),T2.length],['Завдання 3',filled(T3),T3.length],['Завдання 4',filled(T4),T4.length],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('із самостійної роботи 3. Теорії емоційного та стресового подолання',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:240});
+ x+=H('Питання до частин 1–4');
+ PQ.forEach(function(f,i){x+=S((i+1)+'. '+f.l)+paras(v(f.id));});
+ x+=H('Завдання 1. Тренажер стратегій Гросса');
+ var c=tr.filter(function(t){return t&&t.ok}).length;x+=para('Результат: '+c+' правильних із '+TR.length+' (відповідей: '+tr.filter(Boolean).length+')',{b:1});
+ var rows=[['Ситуація','Відповідь студента','Правильна стратегія']];TR.forEach(function(t,i){var a=tr[i];rows.push([(i+1)+'. '+t.s,a?a.ch+(a.ok?' ✔':' ✘'):'— без відповіді —',GROSS[t.ok].n])});
+ x+=table(rows,[5038,2300,2300])+S('Висновок')+paras(v('t1_con'));
+ x+=H('Завдання 2. Моя стресова ситуація за моделлю Лазаруса–Фолкман');
+ var r2=[['Етап аналізу','Відповідь']];T2.forEach(function(f){r2.push([f.l,v(f.id)])});x+=table(r2,[3138,6500]);
+ var cr=copeRec();x+=para('Підказка за моделлю: '+(cr?cr[1]:'— контрольованість не оцінено —'),{i:1});
+ x+=H('Завдання 3. Карта захисних факторів резильєнтності (за Мастен)');
+ var r3=[['Група факторів','Оцінка (1–10)','На що я спираюся','Що зміцнити і як']];RF.forEach(function(r){r3.push([r.l,v('t3_'+r.k+'_s'),v('t3_'+r.k+'_have'),v('t3_'+r.k+'_dev')])});
+ x+=table(r3,[2038,1400,3100,3100]);var e=resEx();
+ x+=para('Найміцніша опора: '+(e?e.hi:'— не визначено —'),{b:1,c:'0A9B5C'})+para('Варто зміцнити насамперед: '+(e?e.lo:'— не визначено —'),{b:1,c:'D6006E'});
+ x+=H('Завдання 4. Кейс: реорганізація «згори»');
+ x+=para('За тиждень до запуску ключового проєкту керівник відділу дізнається, що рішенням головного офісу бюджет скорочено на 30%, а двох фахівців переводять в інший підрозділ. Команда тривожиться, з\'являються чутки, керівник відчуває роздратування та безсилля.',{i:1});
+ T4.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var reportName=$('#rep_name').value.trim(),reportGroup=$('#rep_group').value.trim();
+ if(!reportName||!reportGroup){
+  $('#repMsg').textContent=!reportName&&!reportGroup?'Вкажіть ПІБ і групу, щоб завантажити документ.':!reportName?'Вкажіть ПІБ, щоб завантажити документ.':'Вкажіть групу, щоб завантажити документ.';
+  (!reportName?$('#rep_name'):$('#rep_group')).focus();
+  return;
+ }
+
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_СР3_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, чек-листи та дані студента?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clProg();copeShow();resShow();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+<script>
+(function(){
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('#tabsNav button[data-t]'));
+  var questions=Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var checks=Array.prototype.slice.call(document.querySelectorAll('#checklist input'));
+  var flips=Array.prototype.slice.call(document.querySelectorAll('.flip'));
+  var accordions=Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  var signature=questions.map(function(q){return q.querySelector('h4').textContent.trim()});
+  var key='pei-page-progress:'+location.pathname;
+  var answers=questions.map(function(){return null}),restoring=false;
+  function save(){
+    if(restoring)return;
+    var active=document.querySelector('#tabsNav button.active');
+    try{sessionStorage.setItem(key,JSON.stringify({
+      v:1,questions:signature,tab:active?active.dataset.t:null,answers:answers,
+      checks:checks.map(function(x){return x.checked}),
+      flips:flips.map(function(x){return x.classList.contains('on')}),
+      accordions:accordions.map(function(x){return x.classList.contains('open')})
+    }))}catch(e){}
+  }
+  function valid(data){
+    if(!data||data.v!==1||JSON.stringify(data.questions)!==JSON.stringify(signature)||
+       !Array.isArray(data.answers)||data.answers.length!==questions.length||
+       !Array.isArray(data.checks)||data.checks.length!==checks.length||
+       !Array.isArray(data.flips)||data.flips.length!==flips.length||
+       !Array.isArray(data.accordions)||data.accordions.length!==accordions.length||
+       (data.tab!==null&&!tabs.some(function(t){return t.dataset.t===data.tab})))return false;
+    return data.answers.every(function(a,i){return a===null||(Number.isInteger(a)&&a>=0&&a<questions[i].querySelectorAll('.quiz-opt').length)})&&
+      data.checks.every(function(x){return typeof x==='boolean'})&&
+      data.flips.every(function(x){return typeof x==='boolean'})&&
+      data.accordions.every(function(x){return typeof x==='boolean'});
+  }
+  tabs.forEach(function(tab){tab.addEventListener('click',save)});
+  questions.forEach(function(q,i){
+    Array.prototype.slice.call(q.querySelectorAll('.quiz-opt')).forEach(function(option,j){
+      option.addEventListener('click',function(){
+        if(!restoring&&answers[i]===null&&q.classList.contains('locked')){answers[i]=j;save()}
+      });
+    });
+  });
+  function resetAnswersIn(container){
+    questions.forEach(function(q,i){if(container.contains(q))answers[i]=null});
+    save();
+  }
+  var quizReset=document.getElementById('quizReset');
+  if(quizReset)quizReset.addEventListener('click',function(){resetAnswersIn(document.getElementById('quizBox'))});
+  var trainReset=document.getElementById('trReset');
+  if(trainReset)trainReset.addEventListener('click',function(){resetAnswersIn(document.getElementById('trainBox'))});
+  checks.forEach(function(box){box.addEventListener('change',save)});
+  var resetChecks=document.getElementById('resetChecks');
+  if(resetChecks)resetChecks.addEventListener('click',save);
+  flips.forEach(function(flip){
+    flip.addEventListener('click',save);
+    flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')save()});
+  });
+  accordions.forEach(function(item){item.querySelector('.acc-head').addEventListener('click',save)});
+  var data;
+  try{data=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){data=null}
+  if(!data)return;
+  if(!valid(data)){try{sessionStorage.removeItem(key)}catch(e){}return}
+  restoring=true;
+  try{
+    data.answers.forEach(function(answer,i){
+      if(answer!==null)questions[i].querySelectorAll('.quiz-opt')[answer].click();
+    });
+    checks.forEach(function(box,i){
+      if(box.checked!==data.checks[i]){
+        box.checked=data.checks[i];
+        box.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    flips.forEach(function(flip,i){flip.classList.toggle('on',data.flips[i])});
+    accordions.forEach(function(item,i){
+      if(item.classList.contains('open')!==data.accordions[i])item.querySelector('.acc-head').click();
+    });
+    if(data.tab)tabs.filter(function(t){return t.dataset.t===data.tab})[0].click();
+    answers=data.answers.slice();
+  }finally{restoring=false}
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Підсумковий проєкт «Емоційний інтелект як ресурс ефективного функціонування організації»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){try{document.documentElement.dataset.theme=localStorage.getItem('pei-theme')==='dark'?'dark':'light'}catch(e){document.documentElement.dataset.theme='light'}})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani', sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron', sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono', monospace;}
+a{color:var(--cyan-deep);}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono', monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background: repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+              repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px);
+  pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(24px,4vw,40px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace; color:var(--ink);}
+.chip b{color:var(--magenta);}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono', monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--solid); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:23px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:17px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:16px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center;
+  font-family:'Orbitron',sans-serif; font-size:13.5px; font-weight:600;}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 18px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--solid); background:var(--solid); color:#fff;
+  padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep);}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.mindmap-wrap{background:var(--bg-soft); border:1px dashed var(--line); border-radius:12px; padding:10px; margin:14px 0;}
+.mindmap-wrap svg{width:100%; height:auto; display:block;}
+.steps{counter-reset:step;}
+.step{position:relative; padding:10px 10px 10px 44px; border-left:2px solid var(--line); margin-left:14px;}
+.step::before{counter-increment:step; content:counter(step); position:absolute; left:-15px; top:8px; width:28px; height:28px; border-radius:50%;
+  background:var(--cyan); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-weight:700;
+  box-shadow:0 0 0 4px var(--bg-panel);}
+table{border-collapse:collapse; width:100%; margin:10px 0; font-size:14px;}
+th,td{border:1px solid var(--line); padding:8px 10px; text-align:left;}
+th{background:var(--bg-soft); font-family:'Orbitron',sans-serif; font-size:11.5px;}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin-top:10px; font-family:'Share Tech Mono',monospace;}
+.result-box .big{font-size:22px; color:var(--magenta); font-family:'Orbitron',sans-serif;}
+.hotspot{cursor:pointer;}
+.hotspot-hit{pointer-events:all;}
+.hotspot-visual,.topic-link{transform:translate(var(--hover-x,0px),var(--hover-y,0px)); transition:transform .24s ease-out;}
+.hotspot-visual{pointer-events:none;}
+.hotspot circle{transition:.2s;}
+.hotspot:hover circle{stroke-width:4;}
+@media (prefers-reduced-motion:reduce){.hotspot-visual,.topic-link{transition:none; transform:none;}}
+.sim-stage{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:10px;}
+:root:not([data-theme="dark"]) .sim-stage{background:transparent; border-color:transparent;}
+.sim-log{background:var(--bg-soft); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-family:'Share Tech Mono',monospace; font-size:12.5px; min-height:60px;}
+.render-btns{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0;}
+.render-btns button{font-family:'Share Tech Mono',monospace; font-size:11.5px; padding:7px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); color:var(--ink); cursor:pointer;}
+.render-btns button.active{background:var(--solid); color:#fff;}
+.gloss dt{font-family:'Orbitron',sans-serif; color:var(--magenta); font-size:14px; margin-top:12px;}
+.gloss dd{margin:4px 0 0; color:var(--ink-soft);}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14.5px; margin-bottom:10px;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); color:var(--ink); cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:14.5px;}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-fb{font-size:13.5px; margin-top:8px; color:var(--ink-soft); display:none;}
+.quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; box-shadow:var(--shadow);}
+.debate-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:800px){.debate-grid{grid-template-columns:1fr;}}
+.debate-card{border-radius:12px; padding:16px;}
+.debate-card.central{background:rgba(0,184,196,.08); border:1px solid var(--cyan);}
+.debate-card.distrib{background:rgba(214,0,110,.06); border:1px solid var(--magenta);}
+textarea{width:100%; min-height:70px; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-family:'Rajdhani',sans-serif; font-size:14px; background:var(--bg-panel); color:var(--ink);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+input[type=range]{width:100%;}
+.jog-readout{font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.hud-bar b{color:var(--ink); font-size:14px;}
+.idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);}
+.callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);}
+.callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);}
+.callout.advice .lbl{color:var(--ok);}
+.setup{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:10px;}
+@media(max-width:700px){.setup{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:24px 18px;}}
+.fld label.l{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px;}
+select.txt,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15.5px; background:var(--bg-panel); color:var(--ink);}
+select.txt:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.modes{display:flex; flex-direction:column; gap:8px;}
+.mode{display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border:1px solid var(--line); border-radius:10px; background:var(--bg-soft); cursor:pointer;}
+.mode input{margin-top:4px; accent-color:var(--cyan-deep); width:18px; height:18px; flex:none;}
+.mode.on{background:rgba(0,184,196,.1); border-color:var(--cyan);}
+.mode b{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12.5px;}
+.mode span{font-size:14px; color:var(--ink-soft);}
+.chk{display:flex; align-items:center; gap:8px; margin-top:12px; cursor:pointer; font-family:'Share Tech Mono',monospace; font-size:13px; color:var(--ink-soft);}
+.chk input{accent-color:var(--cyan-deep); width:18px; height:18px;}
+.btn:hover:not(:disabled){background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn:disabled{opacity:.4; cursor:default;}
+.btn.ghost:hover:not(:disabled){border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 24px;}
+.btn:focus-visible,.opt:focus-visible,.nv button:focus-visible{outline:3px solid rgba(0,184,196,.55); outline-offset:2px;}
+.btnrow .sp{flex:1;}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 12px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--ink-soft);}
+.nv{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px; margin:10px 0 18px;}
+.nv button{height:36px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; color:var(--ink);}
+.nv button:hover{border-color:var(--cyan);}
+.nv button.done{background:var(--bg-soft); border-color:var(--cyan-deep); color:var(--cyan-deep); font-weight:700;}
+.nv button.ok{background:rgba(10,155,92,.16); border-color:var(--ok); color:var(--ok); font-weight:700;}
+.nv button.bad{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--magenta); font-weight:700;}
+.nv button.cur{box-shadow:0 0 0 3px rgba(0,184,196,.45); border-color:var(--cyan);}
+h3.qtext{font-size:clamp(16px,2.6vw,20px); line-height:1.45; color:var(--ink); margin:0 0 16px; min-height:2.9em;}
+.opt{display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; margin-bottom:9px; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:16.5px; color:var(--ink); transition:.15s;}
+.opt:hover:not(.locked){border-color:var(--cyan); background:rgba(0,184,196,.05);}
+.opt .k{flex:none; width:28px; height:28px; border-radius:7px; background:var(--bg-soft); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-size:13px; font-weight:700;}
+.opt.sel{background:var(--solid); color:#fff; border-color:var(--solid);}
+.opt.sel .k{background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.3); color:#fff;}
+.opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700; color:var(--ink);}
+.opt.correct .k{background:var(--ok); border-color:var(--ok); color:#fff;}
+.opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--ink);}
+.opt.wrong .k{background:var(--magenta); border-color:var(--magenta); color:#fff;}
+.opt.locked{cursor:default;}
+#fb{display:none;}
+#fb.show{display:block;}
+.big{font-family:'Orbitron','Segoe UI',sans-serif;}
+.score{font-size:68px; font-weight:900; line-height:1; background:linear-gradient(90deg,var(--ink) 30%,var(--cyan-deep)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.rs{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;}
+.rs div{background:var(--bg-soft); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.rs b{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:20px; color:var(--ink);}
+.mist{border:1px solid var(--line); border-left:5px solid var(--magenta); border-radius:10px; padding:12px 16px; margin-bottom:10px; background:var(--bg-soft);}
+.mist h4{font-size:13.5px; line-height:1.45; margin-bottom:6px;}
+.mist p{margin:0 0 3px; font-size:15px;}
+.mist .y{color:var(--magenta);}
+.mist .r{color:var(--ok); font-weight:700;}
+.acc-body ul{margin:0 0 12px; padding-left:20px;}
+.acc-body li{margin-bottom:4px;}
+.gridf{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;}
+.flip{perspective:900px; height:230px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front .n{font-family:'Share Tech Mono',monospace; color:#fff; background:var(--magenta); border-radius:6px; padding:1px 9px; font-size:12px; margin-bottom:8px;}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tip-popover{position:fixed; z-index:1000; max-width:min(300px,calc(100vw - 24px)); background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font:500 13px/1.35 'Rajdhani',sans-serif; box-shadow:var(--shadow); pointer-events:none; visibility:hidden;}
+.tip-popover.show{visibility:visible;}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.codebox{position:relative; background:#101826; color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt,select.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea:focus,input.txt:focus,select.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:8px;}
+.crit .fld label{color:var(--ink-soft);}
+.slrow{display:grid; grid-template-columns:44px 1fr 1.6fr; gap:12px; align-items:start; border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:10px; background:var(--bg-soft);}
+.slrow .num{font-family:'Share Tech Mono',monospace; font-size:18px; font-weight:700; color:#fff; background:var(--magenta); border-radius:8px; text-align:center; padding:6px 0;}
+.slrow .fld{margin-bottom:0;}
+.bank{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 14px;}
+.bank button{font-family:'Rajdhani','Segoe UI',sans-serif; font-size:14.5px; font-weight:600; background:var(--bg-soft); border:1px solid var(--line); border-radius:20px; padding:4px 12px; cursor:pointer; color:var(--ink);}
+.bank button:hover{border-color:var(--cyan); background:rgba(0,184,196,.1);}
+.sc{display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap;}
+.sc button{flex:0 0 46px; height:40px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:14px; cursor:pointer; color:var(--ink);}
+.sc button:hover{border-color:var(--cyan);}
+.sc button.on{background:var(--solid); color:#fff; border-color:var(--cyan); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.timer{font-family:'Orbitron','Segoe UI',sans-serif; font-size:42px; font-weight:700; color:var(--ink); letter-spacing:.05em; text-align:center;}
+.timer.low{color:var(--magenta);}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.render-btns button:hover{border-color:var(--cyan);}
+.hotspot:focus{outline:none;}
+.hotspot:focus rect{stroke-width:4;}
+input[type=range]{accent-color:var(--cyan-deep);}
+.fld label b.mono{color:var(--magenta);font-size:14px;}
+#prioBox td{vertical-align:top;font-size:14px;}
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative; z-index:70; margin-left:auto; flex:none; display:inline-flex; align-items:center; gap:7px; padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg-soft); color:var(--ink); font:600 12px 'Share Tech Mono','Segoe UI',sans-serif; cursor:pointer; min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan); outline-offset:3px;}
+:root[data-theme="dark"] #mapSvg .hotspot-visual rect:not(.hotspot-hit){fill:var(--bg-panel);}
+:root[data-theme="dark"] #mapSvg .hotspot text[fill="#101826"]{fill:var(--ink);}
+:root[data-theme="dark"] #mapSvg g[stroke="#c7d2e0"]{stroke:var(--line);}
+.hud-bar{gap:12px; flex-wrap:wrap;}
+.hud-bar .hud-status{margin-left:auto;}
+.confirm-dialog{width:min(420px,calc(100vw - 32px)); padding:24px; border:1px solid var(--line); border-radius:14px; background:var(--bg-panel); color:var(--ink); box-shadow:0 18px 60px rgba(0,0,0,.3);}
+.confirm-dialog::backdrop{background:rgba(4,12,24,.62);}
+.confirm-dialog h3{margin:0 0 12px; color:var(--magenta); font-size:17px;}
+.confirm-dialog .btnrow{justify-content:flex-end; margin-bottom:0;}
+input[aria-invalid="true"]{border-color:var(--magenta); box-shadow:0 0 0 3px rgba(214,0,110,.16);}
+@media print{.theme-toggle{display:none;}}
+
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / FINAL-PROJECT.CORE — ОНЛАЙН</span><span class="hud-status">ПІДСУМКОВИЙ ПРОЄКТ · <span class="mono" id="hudProg">ГОТОВНІСТЬ: <b>0%</b></span></span><button type="button" class="theme-toggle" id="themeToggle"></button></div>
+
+  <header class="hero">
+    <span class="hero-tag">// FINAL_PROJECT · EI.ORG.RESOURCE · GROUP + REPORT.DOCX</span>
+    <h1>Підсумковий проєкт з дисципліни «Емоційний інтелект як ресурс ефективного функціонування організації»</h1>
+    <p class="sub">Інтерактивний робочий простір проєктної групи: аналіз емоційного клімату, благополуччя та вигорання, конструктор діагностичної батареї, планувальник програми розвитку ЕІ, рекомендації щодо психологічно безпечного середовища й роль організаційного психолога. Усе збирається в аналітичний звіт у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">🧩 <b>7</b> завдань проєкту</span>
+      <span class="chip">👥 груповий проєкт</span>
+      <span class="chip">📑 звіт <b>10–15</b> с.</span>
+      <span class="chip">🖥 презентація + захист</span>
+      <span class="chip">📄 звіт у .docx з діаграмами</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-map" class="active">🗺 Карта</button>
+    <button data-t="t-1">01 · Клімат</button>
+    <button data-t="t-2">02 · Благополуччя</button>
+    <button data-t="t-3">03 · Вигорання</button>
+    <button data-t="t-4">04 · Діагностика</button>
+    <button data-t="t-5">05 · Програма ЕІ</button>
+    <button data-t="t-6">06 · Психбезпека</button>
+    <button data-t="t-7">07 · Роль психолога</button>
+    <button data-t="t-8">08 · Слайди</button>
+    <button data-t="t-9">09 · Захист</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- MAP -->
+  <section class="panel active" id="t-map">
+    <h2><span class="idx">MAP</span> Загальна карта підсумкового проєкту</h2>
+    <div class="result-box"><b>На прикладі реальної або умовної організації необхідно:</b><br>1) провести аналіз емоційного клімату колективу; 2) оцінити рівень психологічного благополуччя персоналу; 3) визначити чинники професійного вигорання; 4) запропонувати комплекс діагностичних методик; 5) розробити програму розвитку емоційного інтелекту працівників; 6) сформувати рекомендації щодо розвитку психологічно безпечного середовища; 7) обґрунтувати роль організаційного психолога у впровадженні запропонованих заходів.<br><b>Форма підсумкового контролю:</b> груповий проєкт із підготовкою аналітичного звіту (10–15 сторінок) та мультимедійної презентації із захистом результатів.</div>
+    <p class="lede" style="margin-top:14px">Схема показує готовність кожного завдання: кільце заповнюється, коли ви працюєте у відповідній вкладці. Натисніть на блок, щоб перейти до завдання.</p>
+    <div class="mindmap-wrap"><svg id="mapSvg" viewBox="0 0 1100 520" xmlns="http://www.w3.org/2000/svg"></svg></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Формат поєднує науковий аналіз, психодіагностику та розробку практичних організаційно-психологічних інтервенцій. Звіт, який формує сторінка, — основа аналітичного звіту: перевірте його обсяг на вкладці «Звіт» і доопрацюйте текст у Word. Презентацію створюєте окремо. Відповіді зберігаються в цьому браузері (якщо він дозволяє) — регулярно завантажуйте звіт.</div>
+    <h3>Орієнтири якості (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Науковість аналізу</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: аналіз спирається на наукові моделі (клімат, благополуччя за К. Ріфф, вигорання за К. Маслач, ЕІ, психологічна безпека) та джерела; висновки підтверджені даними.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Коректність психодіагностики</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: методики точно названі, відповідають тому, що треба виміряти, процедура етична, обмеження даних визнані.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Практична цінність інтервенцій</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: програма й рекомендації випливають із діагностики, мають терміни, відповідальних і критерії ефективності.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">4</span><h4>Звіт, презентація й захист</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: звіт 10–15 сторінок з логічною структурою, презентація підтримує виступ, усі члени групи беруть участь і аргументовано відповідають.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Умови не містять окремих критеріїв оцінювання, кількості слайдів і тривалості захисту — це орієнтири для самоперевірки. Регламент уточнюйте у викладача.</div>
+    <h3>Чек-лист етапів проєкту</h3>
+    <div class="cl" data-id="cl0"></div>
+    <div class="acc-item"><button class="acc-head">Орієнтовна структура аналітичного звіту (10–15 с.) <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li>Вступ: організація, актуальність, мета — ≈1 с.;</li><li>аналіз емоційного клімату — ≈1,5–2 с.;</li><li>психологічне благополуччя персоналу — ≈1,5 с.;</li><li>чинники професійного вигорання — ≈1,5 с.;</li><li>комплекс діагностичних методик — ≈1,5–2 с.;</li><li>програма розвитку ЕІ — ≈2–3 с.;</li><li>рекомендації щодо психологічно безпечного середовища — ≈1–1,5 с.;</li><li>роль організаційного психолога — ≈1 с.;</li><li>висновки та список джерел — ≈1 с.</li></ul><p>Це наш орієнтовний розподіл, а не вимога: остаточну структуру погодьте з викладачем.</p></div></div>
+  </section>
+
+  <!-- 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Аналіз емоційного клімату колективу</h2>
+    <p class="lede">Опишіть організацію, оцініть параметри клімату за зібраними даними й сформулюйте висновок. Діаграма оновлюється одразу й потрапляє у звіт.</p>
+    <div class="acc-item"><button class="acc-head">Підказка: що таке емоційний клімат <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><span class="tip" tabindex="0" data-tip="Емоційний клімат — відносно стійкий емоційний настрій колективу: переважні емоції, рівень довіри, підтримки та напруженості.">Емоційний клімат</span> — переважний емоційний настрій колективу. Оцінюйте його за даними опитувальників (див. банк у вкладці 04), спостереження та інтерв'ю. Шкали нижче — робочий профіль вашої групи для узагальнення даних, а не стандартизована методика.</p></div></div>
+    <div id="f1a"></div>
+    <div class="grid2">
+      <div><h3 style="margin-top:0">Профіль клімату (1 — низький, 10 — високий)</h3><div id="climRng"></div></div>
+      <div class="sim-stage"><canvas id="radar" width="600" height="420" style="width:100%;height:auto"></canvas></div>
+    </div>
+    <div class="result-box" id="climSum"></div>
+    <div id="f1b"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Оцінка рівня психологічного благополуччя персоналу</h2>
+    <p class="lede">Оцініть групові показники за шістьма складовими психологічного благополуччя (модель К. Ріфф) і опишіть результати.</p>
+    <div class="acc-item"><button class="acc-head">Підказка: модель К. Ріфф <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li><b>Самоприйняття</b> — позитивне ставлення до себе;</li><li><b>Позитивні стосунки</b> — довірливі, теплі стосунки з іншими;</li><li><b>Автономія</b> — незалежність, саморегуляція поведінки;</li><li><b>Управління середовищем</b> — здатність впливати на умови життя й роботи;</li><li><b>Мета в житті</b> — відчуття сенсу та спрямованості;</li><li><b>Особистісне зростання</b> — розвиток і реалізація потенціалу.</li></ul><p>Для оцінки можна використати шкали психологічного благополуччя К. Ріфф або коротший індекс WHO-5.</p></div></div>
+    <div id="wbRng"></div>
+    <div class="result-box" id="wbSum"></div>
+    <div id="f2"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Чинники професійного вигорання</h2>
+    <p class="lede">Оцініть ризик у шести сферах робочого життя (модель М. Лейтера та К. Маслач) і наведіть підтвердження.</p>
+    <div class="acc-item"><button class="acc-head">Підказка: шість сфер робочого життя <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>За М. Лейтером і К. Маслач, вигорання виникає через хронічну невідповідність між людиною та роботою в шести сферах: <b>навантаження, контроль, винагорода, спільнота, справедливість, цінності</b>. Саме вигорання описують трьома складовими: емоційне виснаження, <span class="tip" tabindex="0" data-tip="Деперсоналізація (цинізм) — відсторонене, байдуже чи негативне ставлення до роботи та людей.">деперсоналізація</span> та редукція професійних досягнень.</p></div></div>
+    <div id="bnGrid"></div>
+    <div class="result-box" id="bnSum"></div>
+    <div id="f3"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Комплекс діагностичних методик</h2>
+    <p class="lede">Зберіть діагностичну батарею (до 6 методик). Індикатор покриття показує, чи охоплено всі ключові конструкти проєкту.</p>
+    <div id="cover" class="btnrow"></div>
+    <p>Банк методик (клік додає методику в перший порожній рядок разом із конструктом):</p>
+    <div class="bank" id="bank4"></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Діагностика персоналу — добровільна й конфіденційна: індивідуальні результати отримує лише працівник, керівництво — узагальнені дані. Використовуйте ліцензовані або офіційно адаптовані версії методик.</div>
+    <div id="f4"></div>
+    <div id="f4b"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="panel" id="t-5">
+    <h2><span class="idx">05</span> Програма розвитку емоційного інтелекту працівників</h2>
+    <p class="lede">Сформулюйте мету, сплануйте модулі в часі — діаграма Ганта будується автоматично — і детально опишіть одну вправу.</p>
+    <div id="f5a"></div>
+    <p>Банк модулів (клік додає назву в перше порожнє поле «Модуль»):</p>
+    <div class="bank" id="bank5"></div>
+    <div id="f5m"></div>
+    <h3>План-графік програми</h3>
+    <div class="sim-stage"><canvas id="gantt" width="900" height="300" style="width:100%;height:auto"></canvas></div>
+    <div class="sim-log" id="ganttLog"></div>
+    <h3>Детальний опис однієї вправи</h3>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Назва вправи: ...
+Ціль (яку складову ЕІ розвиває): ...
+Учасники та розмір групи: ...
+Тривалість: ... хв
+Кроки (1, 2, 3 ...): ...
+Питання для обговорення: ...
+Очікуваний результат і спосіб оцінки: ...</pre></div>
+    <div id="f5b"></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="panel" id="t-6">
+    <h2><span class="idx">06</span> Рекомендації щодо розвитку психологічно безпечного середовища</h2>
+    <p class="lede">Опишіть поточний стан і сформулюйте до п'яти рекомендацій із рівнем, пріоритетом, відповідальним і терміном. Матриця пріоритетів оновлюється автоматично.</p>
+    <div class="acc-item"><button class="acc-head">Підказка: психологічна безпека (Е. Едмондсон) <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><span class="tip" tabindex="0" data-tip="Психологічна безпека — спільне переконання членів команди, що в ній безпечно ризикувати в міжособистісному плані.">Психологічна безпека</span> — переконання, що в команді безпечно ставити питання, визнавати помилки й висловлювати незгоду. Рекомендації варто формулювати на трьох рівнях: індивідуальному (навички), командному (норми, ритуали) та організаційному (політики, роль керівників).</p></div></div>
+    <div id="f6a"></div>
+    <p>Банк ідей (клік додає текст у перше порожнє поле «Рекомендація»):</p>
+    <div class="bank" id="bank6"></div>
+    <div id="f6"></div>
+    <h3>Матриця пріоритетів</h3>
+    <div id="prioBox"></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="panel" id="t-7">
+    <h2><span class="idx">07</span> Роль організаційного психолога у впровадженні заходів</h2>
+    <p class="lede">Оберіть ролі, які виконуватиме організаційний психолог у вашому проєкті, і для кожної опишіть конкретні дії.</p>
+    <div class="render-btns" id="roles"></div>
+    <div id="roleFields"></div>
+    <div id="f7"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="panel" id="t-8">
+    <h2><span class="idx">08</span> План мультимедійної презентації</h2>
+    <p class="lede">Для кожного слайда запишіть заголовок і одне ключове повідомлення.</p>
+    <div class="grid2">
+      <div class="fld"><label for="slcnt">Кількість слайдів</label><select class="txt" id="slcnt" data-save><option value="10">10</option><option value="12" selected>12</option><option value="15">15</option></select></div>
+      <div class="fld"><label>Допомога</label><button class="btn ghost" id="recBtn" type="button">✨ Підставити рекомендовані заголовки в порожні поля</button></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Кількість слайдів у завданні не визначена — 10–15 є орієнтиром. Уточніть вимоги у викладача.</div>
+    <div id="slides"></div>
+    <div id="slStatus" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <!-- 9 -->
+  <section class="panel" id="t-9">
+    <h2><span class="idx">09</span> Підготовка до захисту і самооцінка</h2>
+    <p class="lede">Розподіліть виступ між членами групи, потренуйтеся з таймером і заздалегідь підготуйте відповіді.</p>
+    <div class="result-box"><div class="fld" style="max-width:260px;margin:0 auto 8px"><label for="tdur">Тривалість виступу</label><select class="txt" id="tdur" data-save><option value="10">10 хв</option><option value="15" selected>15 хв</option><option value="20">20 хв</option></select></div><div class="timer" id="timer">15:00</div>
+      <div class="btnrow" style="justify-content:center"><button class="btn" id="tStart">▶ Старт</button><button class="btn ghost" id="tReset">Скинути</button></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Тривалість захисту в умовах не вказана — оберіть ту, яку визначить викладач.</div>
+    <div id="f9"></div>
+    <h3>Самооцінка за орієнтирами якості</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Це самооцінка групи за шкалою 1–5, а не оцінка викладача.</div>
+    <div id="selfa"></div>
+    <div class="result-box" id="selfSum"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Перевірте, чи правильно ви зрозуміли вимоги до проєкту. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 5</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- REPORT -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Аналітичний звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість і обсяг, вкажіть дані групи та завантажте звіт у форматі Word (.docx) — з діаграмами клімату та графіком програми.</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента (хто подає звіт)</label><input class="txt" id="rep_name" data-save required placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" data-save required placeholder="Наприклад, ПС-61м"></div>
+    </div>
+    <div class="fld"><label for="rep_team">Склад проєктної групи та ролі</label><textarea id="rep_team" data-save data-wc rows="4" placeholder="Прізвище І. — роль (напр., клімат і благополуччя, діагностика, програма ЕІ, презентація)…"></textarea><div class="wc"></div></div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="result-box" id="volBox"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається. Презентацію подавайте окремо.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <dialog class="confirm-dialog" id="clearDialog" aria-labelledby="clearTitle">
+    <h3 id="clearTitle">Очистити всі відповіді?</h3>
+    <p>Буде видалено відповіді, оцінки, ролі, план слайдів, результат самоперевірки та дані групи.</p>
+    <div class="btnrow"><button type="button" class="btn ghost" id="clearCancel">Скасувати</button><button type="button" class="btn" id="clearConfirm">Очистити</button></div>
+  </dialog>
+  <footer>ПСИХОЛОГІЯ.LAB · Підсумковий проєкт · «Емоційний інтелект як ресурс ефективного функціонування організації»</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var themeButton=$('#themeToggle');
+function updateTheme(){var dark=document.documentElement.dataset.theme==='dark';themeButton.textContent=dark?'☀ Світла тема':'☾ Темна тема';themeButton.setAttribute('aria-label',dark?'Увімкнути світлу тему':'Увімкнути темну тему');
+ if($('#t-map').classList.contains('active'))drawMap();if($('#t-1').classList.contains('active'))drawRadar($('#radar'),1);if($('#t-5').classList.contains('active'))drawGantt($('#gantt'),1);}
+themeButton.addEventListener('click',function(){var root=document.documentElement;root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}updateTheme();});
+window.addEventListener('storage',function(e){if(e.key==='pei-theme'){document.documentElement.dataset.theme=e.newValue==='dark'?'dark':'light';updateTheme();}});
+/* ---------- дані ---------- */
+var F1A=[{id:'c_org',l:'Організація (реальна чи умовна): сфера, розмір, структура, особливості персоналу',r:4},{id:'c_src',l:'Джерела даних про клімат (методики, спостереження, інтерв\'ю, вибірка)',r:3}];
+var CLIM=['Довіра','Взаємопідтримка','Відкритість спілкування','Згуртованість','Задоволеність роботою','Емоційна безпека (низька напруженість)'];
+var F1B=[{id:'c_concl',l:'Висновок: особливості емоційного клімату та його вплив на роботу',r:5}];
+var WB=['Самоприйняття','Позитивні стосунки','Автономія','Управління середовищем','Мета в житті','Особистісне зростання'];
+var F2=[{id:'w_meth',l:'Методи оцінки благополуччя та вибірка',r:3},{id:'w_res',l:'Результати: рівень благополуччя персоналу, відмінності між групами',r:5},{id:'w_concl',l:'Висновок: що підтримує й що знижує благополуччя',r:4}];
+var BN=['Робоче навантаження','Контроль (автономія)','Винагорода й визнання','Спільнота (стосунки)','Справедливість','Цінності'];var RISK=['низький','помірний','високий'];
+var F3=[{id:'b_sym',l:'Прояви вигорання (виснаження, цинізм, зниження ефективності) та групи ризику',r:4},{id:'b_concl',l:'Висновок: ключові чинники вигорання в організації',r:4}];
+var CONS=['Емоційний клімат','Психологічне благополуччя','Професійне вигорання','Емоційний інтелект','Психологічна безпека','Інше'];
+var MBANK=[['Експрес-методика вивчення соціально-психологічного клімату (О. Шмельов)',0],['Оцінка психологічної атмосфери в колективі (А. Фідлер)',0],['Шкали психологічного благополуччя (К. Ріфф)',1],['Індекс благополуччя WHO-5',1],['MBI — опитувальник вигорання (К. Маслач)',2],['Діагностика рівня емоційного вигорання (В. Бойко)',2],['Areas of Worklife Survey (М. Лейтер, К. Маслач)',2],['MSCEIT (Маєр–Саловей–Карузо)',3],['ЕмІн (Д. Люсін)',3],['EQ-i 2.0 (Р. Бар-Он)',3],['Шкала психологічної безпеки команди (Е. Едмондсон)',4],['напівструктуроване інтерв\'ю / фокус-група',5]];
+var DG=6,F4B=[{id:'d_proc',l:'Процедура: етапи, послідовність, терміни, хто проводить, як забезпечено конфіденційність',r:5},{id:'d_why',l:'Обґрунтування комплексу: чому саме ці методики',r:4}];
+var F5A=[{id:'p_goal',l:'Мета й завдання програми розвитку ЕІ (за принципом SMART)',r:4},{id:'p_aud',l:'Учасники, формат, загальна тривалість',r:3}];
+var PM=5,PIDEAS=['Самоусвідомлення: розпізнавання емоцій','Саморегуляція та стресостійкість','Емпатія й активне слухання','Емоції в комунікації та конфліктах','Емоційне лідерство для керівників','Командна емоційна компетентність','Коучинг та інтервізія','Профілактика вигорання'];
+var F5B=[{id:'ex_name',l:'Назва вправи',t:'in'},{id:'ex_goal',l:'Ціль: яку складову ЕІ розвиває',r:3},{id:'ex_aud',l:'Учасники та розмір групи',t:'in'},{id:'ex_time',l:'Тривалість',t:'in',ph:'напр., 45 хв'},{id:'ex_steps',l:'Покрокова інструкція',r:8},{id:'ex_debr',l:'Питання для обговорення',r:4},{id:'ex_res',l:'Очікуваний результат і спосіб оцінки',r:4},{id:'p_eval',l:'Критерії ефективності програми (реакція, навчання, поведінка, результати — за Д. Кіркпатріком)',r:5}];
+var F6A=[{id:'s_now',l:'Поточний стан психологічної безпеки (за результатами діагностики)',r:4}];
+var RC=5,RIDEAS=['Правила нарад: кожен має право на голос','Аналіз помилок без пошуку винних','Навчання керівників конструктивного зворотного зв\'язку','Регулярні зустрічі 1:1','Анонімний канал для пропозицій і скарг','Командні ретроспективи','Визнання внеску працівників','Політика протидії булінгу та мобінгу','Прозорі критерії оцінювання й винагороди'];
+var LEV=['індивідуальний','командний','організаційний'],PRI=['високий','середній','низький'];
+var ROLES=['Діагност','Консультант керівників','Тренер / фасилітатор','Коуч','Медіатор конфліктів','Агент змін','Оцінювач ефективності','Супервізор / підтримка персоналу'];
+var F7=[{id:'o_why',l:'Обґрунтування: чому без організаційного психолога заходи не будуть ефективними',r:5},{id:'o_stake',l:'Взаємодія з керівництвом, HR та працівниками',r:4},{id:'o_eth',l:'Етичні межі та професійні стандарти діяльності',r:4}];
+var SL=15,REC={10:['Титул: тема та склад групи','Організація та актуальність','Емоційний клімат колективу','Психологічне благополуччя персоналу','Чинники професійного вигорання','Комплекс діагностичних методик','Програма розвитку ЕІ','Психологічно безпечне середовище','Роль організаційного психолога','Висновки'],
+ 12:['Титул: тема та склад групи','Організація та актуальність','Методологія дослідження','Емоційний клімат колективу','Психологічне благополуччя персоналу','Чинники професійного вигорання','Комплекс діагностичних методик','Програма розвитку ЕІ: мета й модулі','Програма розвитку ЕІ: графік і оцінка ефективності','Психологічно безпечне середовище','Роль організаційного психолога','Висновки та джерела'],
+ 15:['Титул: тема та склад групи','Організація та актуальність','Мета й завдання проєкту','Методологія дослідження','Емоційний клімат колективу','Психологічне благополуччя персоналу','Чинники професійного вигорання','Комплекс діагностичних методик','Програма розвитку ЕІ: мета й учасники','Програма розвитку ЕІ: модулі та графік','Приклад вправи','Критерії ефективності програми','Психологічно безпечне середовище','Роль організаційного психолога','Висновки та джерела']};
+var F9=[{id:'q_roles',l:'Хто з групи яку частину презентує',r:4},{id:'q_key',l:'Головна думка захисту: яку цінність проєкт створює для організації',r:3},{id:'q_q',l:'Три питання, які можуть поставити на захисті',r:4},{id:'q_a',l:'Ваші короткі відповіді',r:5}];
+var CRIT=['Науковість аналізу','Коректність психодіагностики','Практична цінність інтервенцій','Звіт, презентація й захист'];
+var CL={cl0:['Сформувати групу, розподілити ролі, обрати організацію.','Проаналізувати емоційний клімат (01).','Оцінити психологічне благополуччя (02).','Визначити чинники вигорання (03).','Скласти діагностичну батарею (04).','Розробити програму розвитку ЕІ (05).','Сформувати рекомендації щодо психологічної безпеки (06).','Обґрунтувати роль організаційного психолога (07).','Довести звіт до 10–15 сторінок і створити презентацію (08).','Прорепетирувати захист і зробити самооцінку (09).']};
+var QZ=[
+ {q:'Який обсяг аналітичного звіту передбачено?',o:['5–7 сторінок','10–15 сторінок','20–25 сторінок'],ok:1,e:'Форма контролю — груповий проєкт з аналітичним звітом обсягом 10–15 сторінок.'},
+ {q:'Що з переліченого є окремим завданням проєкту?',o:['Обґрунтувати роль організаційного психолога у впровадженні заходів','Скласти фінансовий план організації','Провести атестацію персоналу'],ok:0,e:'Сьоме завдання — обґрунтувати роль організаційного психолога.'},
+ {q:'Яка форма підсумкового контролю передбачена?',o:['Індивідуальний письмовий іспит','Груповий проєкт з аналітичним звітом, мультимедійною презентацією та захистом','Лише тестування'],ok:1,e:'Груповий проєкт із підготовкою аналітичного звіту та мультимедійної презентації із захистом результатів.'},
+ {q:'На прикладі якої організації виконується проєкт?',o:['Лише реальної','Лише умовної','Реальної або умовної'],ok:2,e:'Умова: «на прикладі реальної або умовної організації».'},
+ {q:'Які три складники поєднує цей формат проєкту?',o:['Науковий аналіз, психодіагностику та розробку практичних інтервенцій','Маркетинг, фінанси та логістику','Лише теоретичний огляд літератури'],ok:0,e:'Формат поєднує науковий аналіз, психодіагностику та розробку практичних організаційно-психологічних інтервенцій.'}];
+
+/* ---------- побудова ---------- */
+function mk(f){if(f.t==='in')return '<div class="fld"><label for="'+f.id+'">'+f.l+'</label><input class="txt" id="'+f.id+'" data-save placeholder="'+(f.ph||'Введіть відповідь…')+'"></div>';
+ return '<div class="fld"><label for="'+f.id+'">'+f.l+'</label><textarea id="'+f.id+'" data-save data-wc rows="'+f.r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+function sel(id,l,opts,ph){return '<div class="fld"><label for="'+id+'">'+l+'</label><select class="txt" id="'+id+'" data-save><option value="">'+(ph||'— оберіть —')+'</option>'+opts.map(function(o,i){return '<option value="'+i+'">'+o+'</option>'}).join('')+'</select></div>';}
+[['#f1a',F1A],['#f1b',F1B],['#f2',F2],['#f3',F3],['#f4b',F4B],['#f5a',F5A],['#f5b',F5B],['#f6a',F6A],['#f7',F7],['#f9',F9]].forEach(function(a){$(a[0]).innerHTML=a[1].map(mk).join('');});
+function rng(id,l){return '<div class="fld"><label for="'+id+'">'+l+': <b class="mono" id="'+id+'_v">5</b></label><input type="range" min="1" max="10" step="1" value="5" id="'+id+'" data-save></div>';}
+$('#climRng').innerHTML=CLIM.map(function(c,i){return rng('cl_'+i,c)}).join('');
+$('#wbRng').innerHTML='<div class="grid2">'+WB.map(function(c,i){return '<div class="crit">'+rng('wb_'+i,c)+'<div class="progress"><i id="wb_'+i+'_b"></i></div></div>'}).join('')+'</div>';
+$('#bnGrid').innerHTML=BN.map(function(c,i){var b='';RISK.forEach(function(r,k){b+='<button type="button" data-v="'+k+'" style="flex:0 0 auto;padding:0 12px">'+r+'</button>'});
+ return '<div class="crit" id="bnc_'+i+'"><h4>'+(i+1)+'. '+c+'</h4><div class="sc bn" data-i="'+i+'">'+b+'</div>'+mk({id:'bn'+i+'_e',l:'Підтвердження (факти, дані, приклади)',t:'in'})+'</div>';}).join('');
+var DF=[],h='';for(var i=0;i<DG;i++){var p='dg'+i+'_';DF.push(p+'n',p+'c',p+'r',p+'w');
+ h+='<div class="crit"><h4>Методика '+(i+1)+'</h4><div class="grid2">'+mk({id:p+'n',l:'Методика',t:'in'})+sel(p+'c','Конструкт',CONS)+'</div><div class="grid2">'+mk({id:p+'r',l:'Респонденти та обсяг вибірки',t:'in'})+mk({id:p+'w',l:'Що дасть для проєкту',t:'in'})+'</div></div>';}
+$('#f4').innerHTML=h;
+var MO=['1','2','3','4','5','6','7','8','9','10','11','12'],DU=['1 міс.','2 міс.','3 міс.','4 міс.','5 міс.','6 міс.'];
+var MF=[];h='';for(i=0;i<PM;i++){p='pm'+i+'_';MF.push(p+'n',p+'f',p+'c',p+'e');
+ h+='<div class="crit"><h4>Модуль '+(i+1)+'</h4><div class="grid2">'+mk({id:p+'n',l:'Модуль',t:'in'})+mk({id:p+'f',l:'Формат (тренінг, коучинг, онлайн…)',t:'in'})+'</div><div class="grid2">'+sel(p+'s','Початок (місяць програми)',MO)+sel(p+'d','Тривалість',DU)+'</div>'+mk({id:p+'c',l:'Зміст і ключові вправи',r:3})+mk({id:p+'e',l:'Яку складову ЕІ розвиває',t:'in'})+'</div>';}
+$('#f5m').innerHTML=h;
+var RF=[];h='';for(i=0;i<RC;i++){p='rc'+i+'_';RF.push(p+'n',p+'o',p+'t');
+ h+='<div class="crit"><h4>Рекомендація '+(i+1)+'</h4>'+mk({id:p+'n',l:'Рекомендація',t:'in'})+'<div class="grid2">'+sel(p+'l','Рівень',LEV)+sel(p+'p','Пріоритет',PRI)+'</div><div class="grid2">'+mk({id:p+'o',l:'Відповідальний',t:'in'})+mk({id:p+'t',l:'Термін',t:'in'})+'</div></div>';}
+$('#f6').innerHTML=h;
+$('#roles').innerHTML=ROLES.map(function(r,i){return '<button type="button" data-r="'+i+'">'+r+'</button>'}).join('');
+$('#roleFields').innerHTML=ROLES.map(function(r,i){return '<div class="crit" id="rf_'+i+'" style="display:none"><h4>'+r+'</h4>'+mk({id:'ro'+i+'_d',l:'Конкретні дії психолога в цій ролі у вашому проєкті',r:3})+'</div>'}).join('');
+var sh='';for(var s=0;s<SL;s++){sh+='<div class="slrow" data-s="'+s+'"><div class="num">'+(s+1)+'</div>'+mk({id:'sl'+s+'_t',l:'Заголовок слайда',t:'in'})+mk({id:'sl'+s+'_m',l:'Ключове повідомлення (1 речення)',r:2})+'</div>';}
+$('#slides').innerHTML=sh;
+$('#selfa').innerHTML=CRIT.map(function(c,i){var b='';for(var k=1;k<=5;k++)b+='<button type="button" data-v="'+k+'">'+k+'</button>';
+ return '<div class="crit"><h4>'+(i+1)+'. '+c+'</h4><div class="sc sa" data-i="'+i+'">'+b+'</div>'+mk({id:'sa'+i+'_c',l:'Коротке обґрунтування оцінки',r:3})+'</div>';}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+function bank(sel,ideas,pref,n,after){$(sel).innerHTML=ideas.map(function(w,k){return '<button type="button" data-k="'+k+'">'+(Array.isArray(w)?w[0]:w)+'</button>'}).join('');
+ $$(sel+' button').forEach(function(b){b.addEventListener('click',function(){for(var i=0;i<n;i++){var el=$('#'+pref+i+'_n');if(!el.value.trim()){el.value=b.textContent;el.dispatchEvent(new Event('input',{bubbles:true}));if(after)after(i,+b.dataset.k);return;}}});});}
+bank('#bank4',MBANK,'dg',DG,function(i,k){var s=$('#dg'+i+'_c');s.value=String(MBANK[k][1]);s.dispatchEvent(new Event('change',{bubbles:true}));});
+bank('#bank5',PIDEAS,'pm',PM);bank('#bank6',RIDEAS,'rc',RC);
+
+/* ---------- UI ---------- */
+function showTab(id){$$('#tabsNav button').forEach(function(x){x.classList.toggle('active',x.dataset.t===id)});$$('section.panel').forEach(function(p){p.classList.toggle('active',p.id===id)});
+ $$('#'+id+' .acc-item.open .acc-body').forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(id==='t-rep')stats();if(id==='t-map')drawMap();if(id==='t-1')drawRadar($('#radar'),1);if(id==='t-5')drawGantt($('#gantt'),1);window.scrollTo({top:0,behavior:'smooth'});}
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){showTab(b.dataset.t)})});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+var tipPopover=document.createElement('div');tipPopover.className='tip-popover';tipPopover.setAttribute('role','tooltip');document.body.appendChild(tipPopover);
+function placeTip(t){var r=t.getBoundingClientRect(),w=tipPopover.offsetWidth,h=tipPopover.offsetHeight,left=Math.max(12,Math.min(innerWidth-w-12,r.left+r.width/2-w/2));
+ var top=r.top-h-9;if(top<12)top=r.bottom+9;tipPopover.style.left=left+'px';tipPopover.style.top=Math.max(12,Math.min(innerHeight-h-12,top))+'px';}
+$$('.tip').forEach(function(t){var show=function(){tipPopover.textContent=t.dataset.tip;tipPopover.classList.add('show');placeTip(t)},hide=function(){tipPopover.classList.remove('show')};
+ t.addEventListener('pointerenter',show);t.addEventListener('pointerleave',hide);t.addEventListener('focus',show);t.addEventListener('blur',hide);t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+window.addEventListener('scroll',function(){var active=document.querySelector('.tip:hover,.tip:focus');if(active&&tipPopover.classList.contains('show'))placeTip(active);},true);
+
+/* ---------- стан ---------- */
+var KEY='final_project_ei_org',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=String(s).trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function v(id){var el=$('#'+id);return el?el.value:''}
+function num(id){return +v(id)||5}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+var touched=function(id){return store[id]!==undefined};
+
+/* клімат */
+function climVals(){return CLIM.map(function(c,i){return num('cl_'+i)})}
+function chartColors(k){var dark=k===1&&document.documentElement.dataset.theme==='dark';return dark?
+ {bg:'#202e40',alt:'#26364a',grid:'#41536a',line:'#526783',text:'#edf3fa',muted:'#b9c7d8',accent:'#65dce5',warn:'#f065ad'}:
+ {bg:k===1?null:'#ffffff',alt:k===1?'rgba(0,184,196,.055)':'#f4f7fb',grid:'#dde5ee',line:'#c7d2e0',text:'#101826',muted:'#4a5568',accent:'#007a84',warn:'#d6006e'};}
+function drawRadar(cv,k){var x=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2+4*k,R=Math.min(W,H)/2-70*k,n=CLIM.length,vals=climVals();
+ var C=chartColors(k);x.clearRect(0,0,W,H);if(C.bg){x.fillStyle=C.bg;x.fillRect(0,0,W,H);}x.font=(12*k)+'px Rajdhani, sans-serif';
+ for(var lv=2;lv<=10;lv+=2){x.beginPath();for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n,r=R*lv/10;x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));}x.closePath();x.strokeStyle=C.grid;x.lineWidth=k;x.stroke();}
+ for(i=0;i<n;i++){a=-Math.PI/2+i*2*Math.PI/n;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a));x.strokeStyle=C.line;x.stroke();
+  var lx=cx+(R+14*k)*Math.cos(a),ly=cy+(R+14*k)*Math.sin(a);x.fillStyle=C.text;x.textAlign=Math.abs(Math.cos(a))<.2?'center':(Math.cos(a)>0?'left':'right');x.textBaseline=Math.sin(a)<-.5?'bottom':Math.sin(a)>.5?'top':'middle';
+  var t=CLIM[i].replace(' (низька напруженість)',''),ws=t.split(' ');if(t.length>16&&ws.length>1){var h1=ws.slice(0,Math.ceil(ws.length/2)).join(' '),h2=ws.slice(Math.ceil(ws.length/2)).join(' ');x.fillText(h1,lx,ly-(x.textBaseline==='bottom'?14*k:x.textBaseline==='top'?0:7*k));x.fillText(h2,lx,ly+(x.textBaseline==='bottom'?0:x.textBaseline==='top'?14*k:7*k));}else x.fillText(t,lx,ly);}
+ x.beginPath();vals.forEach(function(val,i){var a=-Math.PI/2+i*2*Math.PI/n,r=R*val/10;x.lineTo(cx+r*Math.cos(a),cy+r*Math.sin(a));});x.closePath();x.fillStyle='rgba(0,184,196,.22)';x.fill();x.strokeStyle=C.accent;x.lineWidth=2.5*k;x.stroke();
+ vals.forEach(function(val,i){var a=-Math.PI/2+i*2*Math.PI/n,r=R*val/10;x.beginPath();x.arc(cx+r*Math.cos(a),cy+r*Math.sin(a),4.5*k,0,7);x.fillStyle=val<=4?C.warn:C.accent;x.fill();});
+ x.textAlign='left';x.textBaseline='top';x.fillStyle=C.muted;x.font=(11*k)+'px Share Tech Mono, monospace';x.fillText('Профіль емоційного клімату (1–10)',10*k,8*k);}
+function climSum(){var vals=climVals(),avg=vals.reduce(function(a,b){return a+b},0)/vals.length,mx=0,mn=0;vals.forEach(function(x,i){if(x>vals[mx])mx=i;if(x<vals[mn])mn=i;});
+ CLIM.forEach(function(c,i){$('#cl_'+i+'_v').textContent=vals[i]});if(!CLIM.some(function(c,i){return touched('cl_'+i)})){$('#climSum').innerHTML='Пересуньте повзунки відповідно до зібраних даних — тут з\'явиться підсумок профілю.';return;}
+ var lv=avg>=7.5?'сприятливий':avg>=5?'помірно сприятливий':'несприятливий';
+ $('#climSum').innerHTML='<b>Середній показник:</b> '+avg.toFixed(1)+' / 10 — клімат за вашим профілем <b>'+lv+'</b><br><b>Найсильніша сторона:</b> '+CLIM[mx]+' ('+vals[mx]+') · <b>Зона уваги:</b> '+CLIM[mn]+' ('+vals[mn]+')'+(vals.filter(function(x){return x<=4}).length?'<br>Параметри ≤4 позначено на діаграмі пурпуровим — їх варто врахувати в програмі (05) і рекомендаціях (06).':'');
+ CLIM.forEach(function(c,i){$('#cl_'+i+'_v').textContent=vals[i]});}
+/* благополуччя */
+function wbSum(){var vals=WB.map(function(c,i){return num('wb_'+i)}),avg=vals.reduce(function(a,b){return a+b},0)/6,low=[];
+ vals.forEach(function(x,i){$('#wb_'+i+'_v').textContent=x;var b=$('#wb_'+i+'_b');b.style.width=(x*10)+'%';b.style.background=x<=4?'var(--magenta)':x<=6?'var(--amber)':'linear-gradient(90deg,var(--cyan),var(--ok))';if(x<=4)low.push(WB[i]);});
+ if(!WB.some(function(c,i){return touched('wb_'+i)})){$('#wbSum').innerHTML='Оцініть складові благополуччя за зібраними даними — тут з\'явиться підсумок.';return;}
+ $('#wbSum').innerHTML='<b>Середній рівень благополуччя (групова оцінка):</b> '+avg.toFixed(1)+' / 10<br>'+(low.length?'<b>Знижені складові:</b> '+low.join(', '):'Знижених складових (≤4) не виявлено.');}
+/* вигорання */
+function bn(i){return typeof store['bn'+i]==='number'?store['bn'+i]:null}
+function bnSync(){var cnt=[0,0,0],hi=[];$$('.sc.bn').forEach(function(r){var i=+r.dataset.i,val=bn(i);$$('button',r).forEach(function(b){b.classList.toggle('on',+b.dataset.v===val)});
+  var c=$('#bnc_'+i);c.style.borderColor=val===2?'var(--magenta)':val===1?'var(--amber)':val===0?'var(--ok)':'';c.style.background=val===2?'rgba(214,0,110,.06)':val===1?'rgba(201,122,0,.07)':val===0?'rgba(10,155,92,.06)':'';
+  if(val!==null){cnt[val]++;if(val===2)hi.push(BN[i]);}});
+ var n=cnt[0]+cnt[1]+cnt[2];
+ $('#bnSum').innerHTML=n?'<b>Оцінено сфер:</b> '+n+' з 6 · низький ризик: '+cnt[0]+' · помірний: '+cnt[1]+' · високий: '+cnt[2]+(hi.length?'<br><b>Ключові чинники вигорання:</b> '+hi.join(', ')+'. Саме на них мають бути спрямовані заходи 05–06.':''):'Оцініть рівень ризику в кожній сфері.';}
+/* покриття */
+function coverSync(){var got={};for(var i=0;i<DG;i++){var c=v('dg'+i+'_c');if(c!==''&&v('dg'+i+'_n').trim())got[+c]=1;}
+ $('#cover').innerHTML='<span class="mono" style="font-size:12px">ПОКРИТТЯ:</span>'+CONS.slice(0,5).map(function(c,i){return '<span class="chip" style="'+(got[i]?'background:rgba(10,155,92,.14);border-color:var(--ok);color:var(--ok)':'')+'">'+(got[i]?'✔ ':'○ ')+c+'</span>'}).join('')+'<span class="mono" style="font-size:12px">'+Object.keys(got).filter(function(k){return k<5}).length+' / 5</span>';}
+/* Гант */
+function mods(){var r=[];for(var i=0;i<PM;i++){var n=v('pm'+i+'_n').trim(),s=v('pm'+i+'_s'),d=v('pm'+i+'_d');if(n)r.push({n:n,s:s===''?null:+s,d:d===''?null:+d+1,f:v('pm'+i+'_f')});}return r;}
+function drawGantt(cv,k){var m=mods(),rows=Math.max(m.length,1),W=900*k,H=(70+rows*44)*k;cv.width=W;cv.height=H;var x=cv.getContext('2d'),L=250*k,R=W-20*k,T=40*k,C=chartColors(k);
+ var last=6;m.forEach(function(o){if(o.s!==null&&o.d)last=Math.max(last,o.s+o.d)});last=Math.min(12,last);var cw=(R-L)/last;
+ x.clearRect(0,0,W,H);if(C.bg){x.fillStyle=C.bg;x.fillRect(0,0,W,H);}x.font=(12*k)+'px Share Tech Mono, monospace';x.textBaseline='middle';
+ for(var mth=0;mth<last;mth++){var shade=mth%2?C.alt:C.bg;if(shade){x.fillStyle=shade;x.fillRect(L+mth*cw,T,cw,H-T-10*k);}x.fillStyle=C.muted;x.textAlign='center';x.fillText('міс. '+(mth+1),L+mth*cw+cw/2,T-14*k);}
+ if(!m.length){x.textAlign='left';x.fillStyle=C.muted;x.fillText('Додайте модулі, щоб побачити графік',L+10*k,T+22*k);return;}
+ var col=['#00b8c4','#d6006e','#c97a00','#0a9b5c','#007a84'];
+ m.forEach(function(o,i){var y=T+10*k+i*44*k;x.textAlign='left';x.fillStyle=C.text;x.font=(13*k)+'px Rajdhani, sans-serif';var t=o.n.length>34?o.n.slice(0,33)+'…':o.n;x.fillText(t,10*k,y+14*k);
+  if(o.s===null||!o.d){x.fillStyle=C.warn;x.font=(11*k)+'px Share Tech Mono, monospace';x.fillText('вкажіть початок і тривалість',L+8*k,y+14*k);return;}
+  var bx=L+o.s*cw,bw=Math.min(o.d,last-o.s)*cw;x.fillStyle=col[i%5];x.beginPath();if(x.roundRect)x.roundRect(bx+2*k,y,bw-4*k,28*k,6*k);else x.rect(bx+2*k,y,bw-4*k,28*k);x.fill();
+  x.fillStyle='#fff';x.font=(11*k)+'px Share Tech Mono, monospace';x.fillText(o.d+' міс.',bx+8*k,y+14*k);});}
+function ganttLog(){var m=mods(),tot=0,ok=m.filter(function(o){return o.s!==null&&o.d});ok.forEach(function(o){tot=Math.max(tot,o.s+o.d)});
+ $('#ganttLog').innerHTML=m.length?'Модулів: '+m.length+(ok.length?' · загальна тривалість програми: '+Math.min(tot,12)+' міс.':'')+(ok.length<m.length?' · для '+(m.length-ok.length)+' модул(ів) не вказано терміни':'')+(tot>12?' · графік обмежено 12 місяцями':''):'Графік з\'явиться після додавання модулів.';}
+/* пріоритети */
+function prio(){var r=[];for(var i=0;i<RC;i++){var n=v('rc'+i+'_n').trim();if(n)r.push({n:n,l:v('rc'+i+'_l'),p:v('rc'+i+'_p'),o:v('rc'+i+'_o'),t:v('rc'+i+'_t')});}
+ if(!r.length){$('#prioBox').innerHTML='<div class="sim-log">Додайте рекомендації, щоб побачити матрицю.</div>';return;}
+ var h='<table><tr><th>Рівень \\ Пріоритет</th>'+PRI.map(function(p){return '<th>'+p+'</th>'}).join('')+'</tr>';
+ LEV.concat(['не вказано']).forEach(function(l,li){var row=r.filter(function(o){return (o.l===''?3:+o.l)===li});if(li===3&&!row.length)return;
+  h+='<tr><th>'+l+'</th>'+PRI.map(function(p,pi){return '<td>'+row.filter(function(o){return +o.p===pi&&o.p!==''}).map(function(o){return '• '+o.n}).join('<br>')+'</td>'}).join('')+'</tr>';});
+ var np=r.filter(function(o){return o.p===''}).length;h+='</table>'+(np?'<div class="mono" style="font-size:12px;color:var(--amber)">Без пріоритету: '+np+'</div>':'');$('#prioBox').innerHTML=h;}
+/* ролі */
+function role(i){return !!store['role'+i]}
+function roleSync(){$$('#roles button').forEach(function(b){var i=+b.dataset.r;b.classList.toggle('active',role(i));$('#rf_'+i).style.display=role(i)?'':'none';});}
+$$('#roles button').forEach(function(b){b.addEventListener('click',function(){var i=+b.dataset.r;store['role'+i]=!role(i);persist();roleSync();drawMap();});});
+/* слайди */
+function slN(){return +v('slcnt')||12}
+function slVis(){var n=slN(),f=0;$$('.slrow').forEach(function(r){r.style.display=(+r.dataset.s<n)?'':'none';});for(var s=0;s<n;s++)if(v('sl'+s+'_t').trim())f++;$('#slStatus').textContent='Заповнено заголовків: '+f+' з '+n;}
+$('#recBtn').addEventListener('click',function(){var n=slN(),arr=REC[n]||REC[12];for(var s=0;s<n;s++){var el=$('#sl'+s+'_t');if(!el.value.trim()){el.value=arr[s];el.dispatchEvent(new Event('input',{bubbles:true}));}}});
+/* самооцінка */
+function sa(i){return typeof store['sa'+i]==='number'?store['sa'+i]:null}
+function saSync(){$$('.sc.sa').forEach(function(r){var val=sa(+r.dataset.i);$$('button',r).forEach(function(b){b.classList.toggle('on',+b.dataset.v===val)});});
+ if(!CRIT.every(function(c,i){return sa(i)!==null})){$('#selfSum').innerHTML='Оцініть усі чотири орієнтири, щоб побачити підсумок.';return;}
+ var sum=0,mn=0;CRIT.forEach(function(c,i){sum+=sa(i);if(sa(i)<sa(mn))mn=i;});
+ $('#selfSum').innerHTML='<b>Середній бал самооцінки:</b> '+(sum/4).toFixed(1)+' / 5<br><b>Слабке місце:</b> '+CRIT[mn]+' ('+sa(mn)+'). Приділіть йому більше уваги перед захистом.';}
+$$('.sc').forEach(function(r){var p=r.classList.contains('bn')?'bn':'sa';$$('button',r).forEach(function(b){b.addEventListener('click',function(){var k=p+r.dataset.i;store[k]=(store[k]===+b.dataset.v&&p==='bn')?undefined:+b.dataset.v;persist();bnSync();saSync();drawMap();});});});
+
+/* ---------- готовність ---------- */
+function fl(ids){return ids.filter(function(id){return v(id).trim()}).length}
+function ids(a){return a.map(function(f){return f.id})}
+function prog(){var cl=CLIM.filter(function(c,i){return touched('cl_'+i)}).length,wb=WB.filter(function(c,i){return touched('wb_'+i)}).length,bnN=BN.filter(function(c,i){return bn(i)!==null}).length,
+ bnE=BN.map(function(c,i){return 'bn'+i+'_e'}),dgN=0;for(var i=0;i<DG;i++)if(v('dg'+i+'_n').trim())dgN++;
+ var mo=mods(),mOk=mo.filter(function(o){return o.s!==null&&o.d}).length,rr=0;for(i=0;i<RC;i++)if(v('rc'+i+'_n').trim())rr++;
+ var roN=ROLES.filter(function(r,i){return role(i)}).length,roD=ROLES.filter(function(r,i){return role(i)&&v('ro'+i+'_d').trim()}).length;
+ return [
+  [fl(ids(F1A))+fl(ids(F1B))+cl,F1A.length+F1B.length+CLIM.length],
+  [fl(ids(F2))+wb,F2.length+WB.length],
+  [fl(ids(F3))+bnN+fl(bnE),F3.length+12],
+  [Math.min(dgN,4)+fl(ids(F4B)),4+F4B.length],
+  [fl(ids(F5A))+Math.min(mo.length,3)+Math.min(mOk,3)+fl(ids(F5B)),F5A.length+6+F5B.length],
+  [fl(ids(F6A))+Math.min(rr,3),F6A.length+3],
+  [Math.min(roN,3)+Math.min(roD,3)+fl(ids(F7)),6+F7.length]];}
+var TN=['Емоційний клімат','Психологічне благополуччя','Чинники вигорання','Діагностичні методики','Програма розвитку ЕІ','Психологічна безпека','Роль психолога'];
+var lastMapPointer=null;document.addEventListener('pointermove',function(e){if(e.pointerType!=='touch')lastMapPointer={x:e.clientX,y:e.clientY};});
+function drawMap(){var P=prog(),cx=550,cy=260,pos=[[550,50],[880,120],[960,300],[780,460],[320,460],[140,300],[220,120]],cols=document.documentElement.dataset.theme==='dark'?['#65dce5','#f065ad','#efb65a','#65dce5','#f065ad','#42cc95','#efb65a']:['#00b8c4','#d6006e','#c97a00','#00b8c4','#d6006e','#0a9b5c','#c97a00'];
+ var tot=0,h='<g stroke="#c7d2e0" stroke-width="2">';pos.forEach(function(p,i){h+='<line class="topic-link" data-i="'+i+'" x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'"/>'});h+='</g>';
+ P.forEach(function(x){tot+=Math.min(1,x[0]/x[1])});var pt=Math.round(tot/P.length*100);
+ h+='<rect x="430" y="215" width="240" height="90" rx="18" fill="#101826"/><text x="550" y="248" text-anchor="middle" fill="#fff" font-size="13" font-family="Orbitron">ПІДСУМКОВИЙ ПРОЄКТ</text><text x="550" y="272" text-anchor="middle" fill="#00e5ef" font-size="12" font-family="Share Tech Mono">ГОТОВНІСТЬ '+pt+'%</text><rect x="470" y="284" width="160" height="6" rx="3" fill="#2a3446"/><rect x="470" y="284" width="'+(160*pt/100)+'" height="6" rx="3" fill="#00e5ef"/>';
+ pos.forEach(function(p,i){var f=Math.min(1,P[i][0]/P[i][1]),r=20,c=2*Math.PI*r,w=230,x0=p[0]-w/2,y0=p[1]-32,rx=x0+30,ry=p[1];
+  h+='<g class="hotspot" data-i="'+i+'" tabindex="0" role="button"><rect class="hotspot-hit" x="'+x0+'" y="'+y0+'" width="'+w+'" height="64" rx="14" fill="transparent"/><g class="hotspot-visual"><rect x="'+x0+'" y="'+y0+'" width="'+w+'" height="64" rx="14" fill="#fff" stroke="'+cols[i]+'" stroke-width="2"/>'+
+  '<circle cx="'+rx+'" cy="'+ry+'" r="'+r+'" fill="none" stroke="#e3e9f0" stroke-width="6"/><circle cx="'+rx+'" cy="'+ry+'" r="'+r+'" fill="none" stroke="'+(f>=1?'#0a9b5c':cols[i])+'" stroke-width="6" stroke-dasharray="'+(c*f)+' '+c+'" transform="rotate(-90 '+rx+' '+ry+')"/>'+
+  '<text x="'+rx+'" y="'+(ry+4)+'" text-anchor="middle" font-size="11" font-family="Share Tech Mono" fill="#101826">'+Math.round(f*100)+'%</text>'+
+  '<text x="'+(x0+60)+'" y="'+(p[1]-6)+'" font-size="11" font-family="Share Tech Mono" fill="'+cols[i]+'">ЗАВДАННЯ 0'+(i+1)+'</text><text x="'+(x0+60)+'" y="'+(p[1]+14)+'" font-size="13" font-family="Rajdhani" font-weight="700" fill="#101826">'+TN[i]+'</text></g></g>';});
+ $('#mapSvg').innerHTML=h;$('#hudProg').innerHTML='ГОТОВНІСТЬ: <b>'+pt+'%</b>';
+ $$('#mapSvg .hotspot').forEach(function(g){var go=function(){showTab('t-'+(+g.dataset.i+1))},link=$('#mapSvg .topic-link[data-i="'+g.dataset.i+'"]');
+  g.addEventListener('click',go);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+  g.addEventListener('pointerenter',function(e){if(e.pointerType==='touch')return;
+   var r=$('.hotspot-hit',g).getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+   var vx=lastMapPointer?e.clientX-lastMapPointer.x:0,vy=lastMapPointer?e.clientY-lastMapPointer.y:0,travel=Math.hypot(vx,vy);
+   if(travel<1||travel>80){var hx=x/r.width*2-1,hy=y/r.height*2-1;
+    if(Math.abs(hx)>.65&&Math.abs(hy)>.65){vx=-hx;vy=-hy;}
+    else{var edge=[y/r.height,(r.height-y)/r.height,x/r.width,(r.width-x)/r.width],side=edge.indexOf(Math.min.apply(null,edge));vx=side===2?1:side===3?-1:0;vy=side===0?1:side===1?-1:0;}}
+   var length=Math.hypot(vx,vy),dx=Math.round(50*vx/length)/10+'px',dy=Math.round(50*vy/length)/10+'px';
+   g.style.setProperty('--hover-x',dx);g.style.setProperty('--hover-y',dy);link.style.setProperty('--hover-x',dx);link.style.setProperty('--hover-y',dy);
+  });
+  g.addEventListener('pointerleave',function(){g.style.removeProperty('--hover-x');g.style.removeProperty('--hover-y');link.style.removeProperty('--hover-x');link.style.removeProperty('--hover-y');});
+ });}
+
+/* ---------- збереження ---------- */
+function refresh(){climSum();wbSum();coverSync();ganttLog();prio();slVis();if($('#t-1').classList.contains('active'))drawRadar($('#radar'),1);if($('#t-5').classList.contains('active'))drawGantt($('#gantt'),1);}
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ var fn=function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();refresh();if(k==='tdur'&&!tId){tLeft=tDur();tShow();saveTimer();}};
+ el.addEventListener(el.type==='checkbox'||el.tagName==='SELECT'?'change':'input',fn);});
+var mapT=null;document.addEventListener('input',function(){clearTimeout(mapT);mapT=setTimeout(drawMap,400)});document.addEventListener('change',function(){clearTimeout(mapT);mapT=setTimeout(drawMap,400)});
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+/* таймер */
+var tLeft=0,tId=null,tEnd=0;function tDur(){return (+v('tdur')||15)*60}
+function saveTimer(){store._timer={left:tLeft,end:tEnd};persist();}
+function tShow(){var m=Math.floor(tLeft/60),s=tLeft%60;$('#timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;$('#timer').classList.toggle('low',tLeft<=60);}
+function tickTimer(){tLeft=Math.max(0,Math.ceil((tEnd-Date.now())/1000));tShow();if(!tLeft){clearInterval(tId);tId=null;tEnd=0;$('#tStart').textContent='▶ Старт';$('#timer').textContent='Час вийшов!';}saveTimer();}
+$('#tStart').addEventListener('click',function(){if(tId){tickTimer();clearInterval(tId);tId=null;tEnd=0;this.textContent='▶ Продовжити';saveTimer();return;}
+ if(tLeft<=0)tLeft=tDur();tEnd=Date.now()+tLeft*1000;this.textContent='⏸ Пауза';saveTimer();tId=setInterval(tickTimer,1000);});
+$('#tReset').addEventListener('click',function(){clearInterval(tId);tId=null;tEnd=0;tLeft=tDur();$('#tStart').textContent='▶ Старт';tShow();saveTimer();});
+if(store._timer&&typeof store._timer.left==='number'){tLeft=Math.max(0,store._timer.left);tEnd=store._timer.end||0;}else tLeft=tDur();
+if(tEnd){$('#tStart').textContent='⏸ Пауза';tickTimer();if(tEnd)tId=setInterval(tickTimer,1000);}else{$('#tStart').textContent=tLeft<tDur()&&tLeft>0?'▶ Продовжити':'▶ Старт';tShow();}
+
+/* тест */
+var ans=Array.isArray(store._quiz)?store._quiz.slice(0,QZ.length):[],score=0;
+function quizSync(){score=0;$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],j=ans[i],opts=$$('.quiz-opt',q),f=$('.quiz-fb',q);q.classList.toggle('locked',Number.isInteger(j)&&j>=0&&j<x.o.length);
+ opts.forEach(function(o,k){o.classList.remove('correct','wrong');o.textContent=x.o[k];if(q.classList.contains('locked')){if(k===j){o.classList.add(j===x.ok?'correct':'wrong');o.textContent=(j===x.ok?'✔ Правильно! ':'✘ Неправильно. ')+x.o[k];}else if(k===x.ok)o.classList.add('correct');}});
+ f.textContent=x.e;f.classList.toggle('show',q.classList.contains('locked'));if(j===x.ok)score++;});
+ var n=ans.filter(function(j){return Number.isInteger(j)}).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');}
+$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){if(q.classList.contains('locked'))return;ans[i]=j;store._quiz=ans;persist();quizSync();});});});
+$('#quizReset').addEventListener('click',function(){ans=[];store._quiz=ans;persist();quizSync();});
+quizSync();
+
+/* статистика й обсяг */
+function textIds(){var r=ids(F1A).concat(ids(F1B),ids(F2),ids(F3),BN.map(function(c,i){return 'bn'+i+'_e'}),DF,ids(F4B),ids(F5A),MF,ids(F5B),ids(F6A),RF.concat(RF.map(function(){return null})).filter(Boolean),ids(F7));
+ ROLES.forEach(function(x,i){if(role(i))r.push('ro'+i+'_d')});return r;}
+function stats(){var P=prog(),n=slN(),sl=[],i;for(i=0;i<n;i++)sl.push('sl'+i+'_t','sl'+i+'_m');
+ var sac=[];for(i=0;i<4;i++)sac.push('sa'+i+'_c');var saN=CRIT.filter(function(c,k){return sa(k)!==null}).length;
+ var rows=TN.map(function(t,i){return ['0'+(i+1)+' '+t,Math.min(P[i][0],P[i][1]),P[i][1]]}).concat([['08 Слайди',fl(sl),sl.length],['09 Захист',fl(ids(F9)),F9.length],['Самооцінка',fl(sac)+saN,8],['Тест',ans.filter(function(j){return Number.isInteger(j)}).length,QZ.length]]);
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');
+ var w=0;textIds().forEach(function(id){w+=words(v(id))});var pg=w/350;
+ $('#volBox').innerHTML='<b>Обсяг аналітичної частини:</b> '+w+' слів ≈ '+pg.toFixed(1)+' с. тексту (орієнтовно, ~350 слів на сторінку; таблиці й діаграми додадуть ще 2–3 с.)<br>'+(pg<8?'Для звіту на 10–15 сторінок потрібно приблизно 3000–4500 слів тексту — розширте аналіз або доопрацюйте звіт у Word.':pg>14?'Обсяг може перевищити 15 сторінок — подумайте, що можна скоротити.':'Обсяг відповідає вимозі 10–15 сторінок разом із таблицями й діаграмами.');}
+
+/* ---------- DOCX ---------- */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function img(rid,id,name,cx,cy){return '<w:p><w:pPr><w:keepNext/><w:jc w:val="center"/></w:pPr><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="'+cx+'" cy="'+cy+'"/><wp:docPr id="'+id+'" name="'+name+'"/><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="'+id+'" name="'+name+'.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="'+rid+'"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="'+cx+'" cy="'+cy+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>';}
+function png(cv){var b64=cv.toDataURL('image/png').split(',')[1],bin=atob(b64),arr=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);return arr;}
+function opt(arr,val){return val===''?'—':arr[+val]}
+function buildDoc(im){var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='',i;
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('АНАЛІТИЧНИЙ ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('Підсумковий проєкт з дисципліни «Емоційний інтелект як ресурс ефективного функціонування організації»',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент (подає звіт): '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:120})+S('Склад проєктної групи та ролі')+paras(v('rep_team'));
+ x+=H('1. Аналіз емоційного клімату колективу');F1A.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=S('Профіль емоційного клімату')+table([['Параметр','Оцінка (1–10)']].concat(CLIM.map(function(c,i){return [c,touched('cl_'+i)?String(num('cl_'+i)):'— не оцінено —']})),[6638,3000]);
+ if(im.radar)x+=img('rIdImg1',1,'Профіль клімату',5486400,3840480)+para('Рис. 1. Профіль емоційного клімату колективу',{i:1,al:'center',s:20});
+ F1B.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('2. Оцінка рівня психологічного благополуччя персоналу')+table([['Складова (К. Ріфф)','Групова оцінка (1–10)']].concat(WB.map(function(c,i){return [c,touched('wb_'+i)?String(num('wb_'+i)):'— не оцінено —']})),[6638,3000]);
+ F2.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('3. Чинники професійного вигорання')+table([['Сфера робочого життя','Рівень ризику','Підтвердження']].concat(BN.map(function(c,i){return [c,bn(i)===null?'—':RISK[bn(i)],v('bn'+i+'_e')]})),[3000,1600,5038]);
+ F3.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var dr=[['№','Методика','Конструкт','Респонденти','Що дасть']];for(i=0;i<DG;i++){var p='dg'+i+'_';if(v(p+'n').trim()||i<3)dr.push([String(i+1),v(p+'n'),opt(CONS,v(p+'c')),v(p+'r'),v(p+'w')]);}
+ x+=H('4. Комплекс діагностичних методик')+table(dr,[500,3000,1900,1838,2400]);F4B.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('5. Програма розвитку емоційного інтелекту працівників');F5A.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var mr=[['№','Модуль','Терміни','Формат','Зміст','Складова ЕІ']];for(i=0;i<PM;i++){p='pm'+i+'_';if(v(p+'n').trim()||i<3)mr.push([String(i+1),v(p+'n'),(v(p+'s')===''?'—':'з '+(+v(p+'s')+1)+'-го міс.')+(v(p+'d')===''?'':', '+DU[+v(p+'d')]),v(p+'f'),v(p+'c'),v(p+'e')]);}
+ x+=table(mr,[450,1900,1400,1400,2788,1700]);
+ if(im.gantt)x+=img('rIdImg2',2,'Графік програми',5943600,im.gh)+para('Рис. 2. План-графік програми розвитку ЕІ',{i:1,al:'center',s:20});
+ x+=S('Детальний опис вправи')+table([['Параметр','Опис']].concat(F5B.slice(0,7).map(function(f){return [f.l,v(f.id)]})),[2800,6838]);x+=S(F5B[7].l)+paras(v('p_eval'));
+ x+=H('6. Рекомендації щодо розвитку психологічно безпечного середовища');F6A.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var rr=[['№','Рекомендація','Рівень','Пріоритет','Відповідальний','Термін']];for(i=0;i<RC;i++){p='rc'+i+'_';if(v(p+'n').trim()||i<3)rr.push([String(i+1),v(p+'n'),opt(LEV,v(p+'l')),opt(PRI,v(p+'p')),v(p+'o'),v(p+'t')]);}
+ x+=table(rr,[450,3400,1400,1300,1688,1400]);
+ x+=H('7. Роль організаційного психолога у впровадженні заходів');var ro=[['Роль','Конкретні дії']];ROLES.forEach(function(r,i){if(role(i))ro.push([r,v('ro'+i+'_d')]);});
+ x+=ro.length>1?table(ro,[3000,6638]):para('— ролі не обрано —',{i:1,c:'888888'});F7.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var N=slN();x+=H('План мультимедійної презентації ('+N+' слайдів)');var sr=[['№','Заголовок слайда','Ключове повідомлення']];for(var s=0;s<N;s++)sr.push([String(s+1),v('sl'+s+'_t'),v('sl'+s+'_m')]);x+=table(sr,[600,3400,5638]);
+ x+=H('Підготовка до захисту (тривалість виступу: '+v('tdur')+' хв)');F9.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var cr=[['Орієнтир','Оцінка (1–5)','Обґрунтування']];CRIT.forEach(function(c,k){cr.push([c,sa(k)!==null?String(sa(k)):'—',v('sa'+k+'_c')]);});x+=H('Самооцінка групи')+table(cr,[3200,1400,5038]);
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i],answered=Number.isInteger(a)&&a>=0&&a<q.o.length,ok=answered&&a===q.ok;x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});x+=answered?para('Відповідь: '+q.o[a]+' — '+(ok?'правильно':'неправильно'),{c:ok?'0A9B5C':'D6006E'})+(ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=typeof f.d==='string'?enc.encode(f.d):f.d,c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){var name=$('#rep_name'),group=$('#rep_group'),missing=!name.value.trim()?name:!group.value.trim()?group:null;
+ if(missing){$('#repMsg').textContent='Вкажіть ПІБ та групу перед завантаженням звіту.';missing.setAttribute('aria-invalid','true');missing.focus({preventScroll:true});missing.scrollIntoView({behavior:'smooth',block:'center'});return;}
+ name.removeAttribute('aria-invalid');group.removeAttribute('aria-invalid');var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',im={},rel='',media=[];
+ if(CLIM.some(function(c,i){return touched('cl_'+i)})){try{var c1=document.createElement('canvas');c1.width=1200;c1.height=840;drawRadar(c1,2);media.push({n:'word/media/radar.png',d:png(c1)});rel+='<Relationship Id="rIdImg1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/radar.png"/>';im.radar=1;}catch(e){}}
+ if(mods().some(function(o){return o.s!==null&&o.d})){try{var c2=document.createElement('canvas');drawGantt(c2,2);media.push({n:'word/media/gantt.png',d:png(c2)});rel+='<Relationship Id="rIdImg2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/gantt.png"/>';im.gantt=1;im.gh=Math.round(5943600*c2.height/c2.width);}catch(e){}}
+ var files=[{n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc(im)}];
+ if(media.length)files.push({n:'word/_rels/document.xml.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+rel+'</Relationships>'});
+ files=files.concat(media);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(zip(files));a.download='Звіт_підсумковий_проєкт_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent='Звіт сформовано. Перевірте папку «Завантаження».';});
+['rep_name','rep_group'].forEach(function(id){$('#'+id).addEventListener('input',function(){if(this.value.trim())this.removeAttribute('aria-invalid');});});
+$('#clearBtn').addEventListener('click',function(){$('#clearDialog').showModal();});
+$('#clearCancel').addEventListener('click',function(){$('#clearDialog').close();});
+$('#clearConfirm').addEventListener('click',function(){$('#clearDialog').close();
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else if(el.type==='range')el.value='5';else if(el.id==='slcnt')el.value='12';else if(el.id==='tdur')el.value='15';else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clearInterval(tId);tId=null;tEnd=0;tLeft=tDur();$('#tStart').textContent='▶ Старт';tShow();ans=[];score=0;quizSync();
+ clProg();bnSync();saSync();roleSync();refresh();stats();drawMap();$('#repMsg').textContent='Усі відповіді очищено.';});
+
+clProg();bnSync();saSync();roleSync();refresh();drawMap();stats();updateTheme();
+})();
+</script>
+</body>
+</html>

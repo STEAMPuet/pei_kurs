@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Комплексне завдання до теми 3. Мініпроєкт «Програма розвитку емоційної стійкості керівників»</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px; position:relative;}
+header.hero h1{position:relative; font-size:clamp(22px,4vw,36px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:900px;}
+header.hero p.sub{position:relative; color:var(--ink-soft); max-width:780px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{position:relative; display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.acc-body ul{margin:0 0 12px; padding-left:20px;} .acc-body li{margin-bottom:4px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.gridf{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px;}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:230px; cursor:pointer; outline:none;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front .n{font-family:'Share Tech Mono',monospace; color:#fff; background:var(--magenta); border-radius:6px; padding:1px 9px; font-size:12px; margin-bottom:8px;}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt,select.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus,select.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:8px;} .crit .fld label{color:var(--ink-soft);}
+.slrow{display:grid; grid-template-columns:44px 1fr 1.6fr; gap:12px; align-items:start; border:1px solid var(--line); border-radius:12px; padding:12px; margin-bottom:10px; background:var(--bg-soft);}
+.slrow .num{font-family:'Share Tech Mono',monospace; font-size:18px; font-weight:700; color:#fff; background:var(--magenta); border-radius:8px; text-align:center; padding:6px 0;}
+.slrow .fld{margin-bottom:0;}
+@media(max-width:700px){.slrow{grid-template-columns:1fr;} .slrow .num{width:44px;}}
+.bank{display:flex; flex-wrap:wrap; gap:6px; margin:8px 0 14px;}
+.bank button{font-family:'Rajdhani','Segoe UI',sans-serif; font-size:14.5px; font-weight:600; background:var(--bg-soft); border:1px solid var(--line); border-radius:20px; padding:4px 12px; cursor:pointer; color:var(--ink);}
+.bank button:hover{border-color:var(--cyan); background:rgba(0,184,196,.1);}
+.sc{display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap;}
+.sc button{flex:0 0 46px; height:40px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:14px; cursor:pointer; color:var(--ink);}
+.sc button:hover{border-color:var(--cyan);}
+.sc button.on{background:var(--solid); color:#fff; border-color:var(--cyan); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.timer{font-family:'Orbitron','Segoe UI',sans-serif; font-size:42px; font-weight:700; color:var(--ink); letter-spacing:.05em; text-align:center;}
+.timer.low{color:var(--magenta);}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / MINI-PROJECT — ОНЛАЙН</span><span>КОМПЛЕКСНЕ ЗАВДАННЯ · ТЕМА 3</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// TOPIC_03 · LEADER.RESILIENCE.PROGRAM + REPORT.DOCX</span>
+    <h1>Комплексне завдання до теми 3. Мініпроєкт «Програма розвитку емоційної стійкості керівників»</h1>
+    <p class="sub">Робочий зошит проєктної групи: розробіть програму психологічного супроводу керівників організації за шістьма компонентами, сформулюйте професійні рекомендації, сплануйте презентацію та підготуйтеся до захисту. Усе записується в звіт, який можна завантажити у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">👥 груповий проєкт</span>
+      <span class="chip">🧩 6 компонентів програми</span>
+      <span class="chip">⏱ таймер захисту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Завдання</button>
+    <button data-t="t-1">01 · Мета</button>
+    <button data-t="t-2">02 · Діагностика</button>
+    <button data-t="t-3">03 · Емоції</button>
+    <button data-t="t-4">04 · Стресостійкість</button>
+    <button data-t="t-5">05 · Вигорання</button>
+    <button data-t="t-6">06 · Критерії</button>
+    <button data-t="t-7">07 · Рекомендації й слайди</button>
+    <button data-t="t-8">08 · Захист</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ЗАВДАННЯ -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">TASK</span> Умови комплексного завдання</h2>
+    <div class="result-box"><b>Розробіть програму психологічного супроводу керівників організації.</b><br>Програма повинна включати: 1) мету та завдання; 2) діагностику рівня саморегуляції та резильєнтності; 3) тренінговий модуль з управління емоціями; 4) блок розвитку стресостійкості; 5) практики профілактики професійного вигорання; 6) критерії оцінювання ефективності програми.<br><b>Форма контролю:</b> груповий проєкт з презентацією результатів та захистом професійних рекомендацій для умовної або реальної організації.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Це груповий проєкт: домовтеся, хто веде спільний звіт, і внесіть склад групи та розподіл ролей на вкладці «Звіт». Презентацію ви створюєте в PowerPoint чи іншому редакторі. Відповіді зберігаються в цьому браузері (якщо він дозволяє) — завантажте звіт до завершення роботи.</div>
+    <h3>Орієнтири якості проєкту (натисніть на картку)</h3>
+    <div class="gridf">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">1</span><h4>Обґрунтованість</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: програма спирається на реальні проблеми керівників організації та на дані діагностики; є посилання на наукові джерела.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">2</span><h4>Цілісність програми</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: шість компонентів логічно пов'язані — діагностика показує дефіцити, модулі їх усувають, критерії перевіряють результат.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">3</span><h4>Практичність рекомендацій</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: рекомендації конкретні й здійсненні: зрозуміло, хто, що, коли робить і з якими ресурсами.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><span class="n">4</span><h4>Презентація та захист</h4><small>натисни, щоб перевернути</small></div><div class="face back">Орієнтир: чітка структура, рівномірна участь усіх членів групи, аргументовані відповіді на питання.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Умови завдання не містять окремих критеріїв оцінювання, кількості слайдів і тривалості захисту — це орієнтири для самоперевірки. Регламент уточнюйте у викладача.</div>
+    <div class="callout advice"><b class="lbl">Порада</b>Працюйте за порядком вкладок 01–08: шість компонентів програми, далі рекомендації та план слайдів, наприкінці — підготовка до захисту й самооцінка.</div>
+    <h3>Чек-лист етапів проєкту</h3>
+    <div class="cl" data-id="cl0"></div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що містить звіт <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li>Склад проєктної групи та розподіл ролей;</li><li>організація, мета й завдання програми;</li><li>діагностика саморегуляції та резильєнтності (до 3 методів);</li><li>тренінговий модуль з управління емоціями та детальний опис однієї вправи;</li><li>блок розвитку стресостійкості;</li><li>практики профілактики професійного вигорання;</li><li>критерії та показники ефективності;</li><li>професійні рекомендації та план презентації по слайдах;</li><li>підготовка до захисту, самооцінка й результат тесту.</li></ul></div></div>
+  </section>
+
+  <!-- 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Мета та завдання програми</h2>
+    <p class="lede">Опишіть організацію й ситуацію керівників, сформулюйте мету та завдання програми супроводу.</p>
+    <div class="acc-item open"><button class="acc-head">Підказка: як сформулювати мету <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li>Почніть з ситуації: які навантаження мають керівники (зміни, кризи, відповідальність за людей, конфлікти)?</li><li>Формулюйте мету за принципом <span class="tip" tabindex="0" data-tip="SMART — конкретна, вимірювана, досяжна, релевантна, обмежена в часі.">SMART</span>.</li><li>Завдання програми мають відповідати компонентам 02–06: діагностика, управління емоціями, стресостійкість, профілактика вигорання, оцінка ефективності.</li><li><span class="tip" tabindex="0" data-tip="Психологічний супровід — системна, тривала підтримка, а не разовий тренінг: діагностика, навчання, індивідуальна робота й моніторинг.">Психологічний супровід</span> — це система заходів, а не разова подія.</li></ul></div></div>
+    <div id="f1"></div>
+  </section>
+
+  <!-- 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Діагностика рівня саморегуляції та резильєнтності</h2>
+    <p class="lede">Оберіть до трьох методів. Для кожного вкажіть, що він вимірює, як і коли проводиться та як ви використаєте результати.</p>
+    <p>Банк методів для натхнення (клік додає назву в перше порожнє поле «Метод / методика»):</p>
+    <div class="bank" id="bank2"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: що діагностувати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Саморегуляція</b> — здатність свідомо керувати своїми станами, емоціями й поведінкою. <b><span class="tip" tabindex="0" data-tip="Резильєнтність — здатність зберігати функціонування та відновлюватися після стресу й труднощів.">Резильєнтність</span></b> — здатність відновлюватися після стресу. Додайте показник вигорання, щоб мати базу для компонента 05. Плануйте вхідну діагностику і повторну після програми — це основа критеріїв у компоненті 06.</p></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Керівники особливо чутливі до того, хто побачить результати. Гарантуйте конфіденційність: індивідуальні дані — лише учаснику, організації — тільки узагальнені показники.</div>
+    <div id="f2"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Тренінговий модуль з управління емоціями</h2>
+    <p class="lede">Сплануйте до чотирьох занять модуля і детально опишіть одну вправу так, щоб інший фахівець міг її провести.</p>
+    <p>Банк ідей (клік додає назву в перше порожнє поле «Тема заняття»):</p>
+    <div class="bank" id="bank3"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: логіка модуля <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>Від розпізнавання власних емоцій — до їх регуляції та управління емоціями в команді. Враховуйте специфіку керівників: емоційне зараження підлеглих, складні розмови, ухвалення рішень під тиском, власний приклад.</p></div></div>
+    <div id="f3"></div>
+    <h3>Детальний опис однієї вправи</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>У вправі мають бути ціль, учасники, тривалість, покрокова інструкція й питання для обговорення. Не вимагайте від керівників надмірної особистої відкритості перед колегами чи підлеглими.</div>
+    <p>Скопіюйте шаблон і заповніть поля нижче:</p>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Назва вправи: ...
+Ціль (яку навичку управління емоціями розвиває): ...
+Учасники та розмір групи: ...
+Тривалість: ... хв
+Кроки (1, 2, 3 ...): ...
+Питання для обговорення: ...
+Очікуваний результат і спосіб оцінки: ...</pre></div>
+    <div id="f3b"></div>
+  </section>
+
+  <!-- 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Блок розвитку стресостійкості</h2>
+    <p class="lede">Визначте ключові стресори керівників і оберіть техніки, які допоможуть їм зберігати ефективність під тиском.</p>
+    <p>Банк технік (клік додає назву в перше порожнє поле «Техніка / практика»):</p>
+    <div class="bank" id="bank4"></div>
+    <div class="acc-item"><button class="acc-head">Підказка: рівні роботи зі стресом <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li><b>Фізіологічний:</b> дихальні техніки, м'язова релаксація, сон і відновлення.</li><li><b>Когнітивний:</b> переоцінка ситуації, робота з катастрофізацією.</li><li><b>Поведінковий:</b> планування, делегування, межі робочого часу.</li><li><b>Соціальний:</b> підтримка колег, супервізія, коучинг.</li></ul></div></div>
+    <div id="f4"></div>
+    <div id="f4t"></div>
+  </section>
+
+  <!-- 5 -->
+  <section class="panel" id="t-5">
+    <h2><span class="idx">05</span> Практики профілактики професійного вигорання</h2>
+    <p class="lede">Запропонуйте заходи на індивідуальному та організаційному рівнях.</p>
+    <div class="acc-item open"><button class="acc-head">Підказка: два рівні профілактики <span class="arrow">▶</span></button>
+      <div class="acc-body"><p>За К. Маслач, <span class="tip" tabindex="0" data-tip="Модель К. Маслач: емоційне виснаження, деперсоналізація (цинізм), редукція професійних досягнень.">вигорання</span> пов'язане не лише з особистістю, а й з умовами праці: перевантаженням, браком контролю, винагороди, справедливості, підтримки та розбіжністю цінностей. Тому профілактика має поєднувати індивідуальні практики й зміни в організації.</p></div></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Керівник — також модель для команди: його практики відновлення та повага до меж робочого часу впливають на ризик вигорання всього підрозділу.</div>
+    <div id="f5"></div>
+  </section>
+
+  <!-- 6 -->
+  <section class="panel" id="t-6">
+    <h2><span class="idx">06</span> Критерії оцінювання ефективності програми</h2>
+    <p class="lede">Визначте, як ви доведете, що програма спрацювала.</p>
+    <div class="acc-item open"><button class="acc-head">Підказка: модель Д. Кіркпатріка <span class="arrow">▶</span></button>
+      <div class="acc-body"><ul><li><b>Реакція:</b> задоволеність учасників.</li><li><b>Навчання:</b> зміна показників саморегуляції та резильєнтності (повторна діагностика).</li><li><b>Поведінка:</b> зміни в роботі керівника (360° зворотний зв'язок).</li><li><b>Результати:</b> показники підрозділу (вигорання, плинність, конфлікти, лікарняні).</li></ul></div></div>
+    <div class="callout advice"><b class="lbl">Порада</b>Для кожного критерію вкажіть цільове значення та строк — тоді результат можна перевірити.</div>
+    <div id="f6"></div>
+  </section>
+
+  <!-- 7 -->
+  <section class="panel" id="t-7">
+    <h2><span class="idx">07</span> Професійні рекомендації та план презентації</h2>
+    <p class="lede">Сформулюйте рекомендації для організації, які ви захищатимете, і складіть план презентації по слайдах.</p>
+    <div id="f7"></div>
+    <h3>План презентації по слайдах</h3>
+    <div class="grid2">
+      <div class="fld"><label for="slcnt">Кількість слайдів</label><select class="txt" id="slcnt" data-save><option value="8">8</option><option value="9">9</option><option value="10" selected>10</option></select></div>
+      <div class="fld"><label>Допомога</label><button class="btn ghost" id="recBtn" type="button">✨ Підставити рекомендовані заголовки в порожні поля</button></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Кількість слайдів у завданні не визначена — 8–10 є орієнтиром. Уточніть вимоги у викладача.</div>
+    <div id="slides"></div>
+    <div id="slStatus" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <!-- 8 -->
+  <section class="panel" id="t-8">
+    <h2><span class="idx">08</span> Підготовка до захисту і самооцінка</h2>
+    <p class="lede">Розподіліть виступ між членами групи, потренуйтеся з таймером і заздалегідь підготуйте відповіді на питання.</p>
+    <div class="result-box"><div class="fld" style="max-width:260px;margin:0 auto 8px"><label for="tdur">Тривалість виступу</label><select class="txt" id="tdur" data-save><option value="5">5 хв</option><option value="7">7 хв</option><option value="10" selected>10 хв</option></select></div><div class="timer" id="timer">10:00</div>
+      <div class="btnrow" style="justify-content:center"><button class="btn" id="tStart">▶ Старт</button><button class="btn ghost" id="tReset">Скинути</button></div></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Тривалість захисту в умовах не вказана — оберіть ту, яку визначить викладач.</div>
+    <div id="f8"></div>
+    <h3>Самооцінка за орієнтирами якості</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Це самооцінка групи за шкалою 1–5, а не оцінка викладача. Вона допоможе побачити слабке місце до захисту.</div>
+    <div id="selfa"></div>
+    <div class="result-box" id="selfSum"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Перевірте, чи правильно ви зрозуміли вимоги до завдання. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 4</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані групи та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента (хто подає звіт)</label><input class="txt" id="rep_name" required data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" required data-save placeholder="Наприклад, ПС-61м"></div>
+    </div>
+    <div class="fld"><label for="rep_team">Склад проєктної групи та ролі</label><textarea id="rep_team" data-save data-wc rows="4" placeholder="Прізвище І. — роль (напр., діагностика, тренінговий модуль, презентація)…"></textarea><div class="wc"></div></div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається. Презентацію подавайте окремо.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Комплексне завдання до теми 3 · Мініпроєкт «Програма розвитку емоційної стійкості керівників»</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var F1=[{id:'g_org',l:'Організація (умовна чи реальна): сфера, розмір, рівні керівників-учасників',r:4},{id:'g_prob',l:'Проблема: з якими емоційними навантаженнями стикаються керівники',r:5},{id:'g_goal',l:'Мета програми (за принципом SMART)',r:3},{id:'g_tasks',l:'Завдання програми (відповідно до компонентів 02–06)',r:5},{id:'g_src',l:'Наукове підґрунтя: джерела (автор, назва, рік)',r:3}];
+var DG=3,DIDEAS=['Шкала резильєнтності Коннора–Девідсона (CD-RISC)','Brief Resilience Scale (BRS)','Тест життєстійкості (С. Мадді)','Опитувальник «Стиль саморегуляції поведінки» (В. Моросанова)','Шкала сприйманого стресу (PSS-10)','MBI (вигорання, К. Маслач)','ЕмІн (Д. Люсін)','напівструктуроване інтерв\'ю','360° зворотний зв\'язок'];
+var TRN=4,TIDEAS=['розпізнавання власних емоцій','тригери керівника','техніки саморегуляції «тут і зараз»','емоції у складних розмовах з підлеглими','управління гнівом і роздратуванням','емоційне зараження в команді','рішення під емоційним тиском','рольова гра «Важка нарада»'];
+var F3B=[{id:'ex_name',l:'Назва вправи',t:'in'},{id:'ex_goal',l:'Ціль: яку навичку управління емоціями розвиває',r:3},{id:'ex_aud',l:'Учасники та розмір групи',t:'in'},{id:'ex_time',l:'Тривалість',t:'in',ph:'напр., 40 хв'},{id:'ex_steps',l:'Покрокова інструкція',r:8},{id:'ex_debr',l:'Питання для обговорення після вправи',r:4},{id:'ex_res',l:'Очікуваний результат і спосіб оцінки',r:4}];
+var F4=[{id:'s_str',l:'Ключові стресори керівників у цій організації',r:4},{id:'s_goal',l:'Ціль блоку та формат (тривалість, кількість занять)',r:3}];
+var STK=3,SIDEAS=['діафрагмальне дихання','прогресивна м\'язова релаксація (Джекобсон)','когнітивна переоцінка','техніка «STOP»','майндфулнес-практики','тайм-менеджмент і делегування','супервізія / коучинг','баланс «робота — відновлення»'];
+var F5=[{id:'b_risk',l:'Ознаки та чинники ризику вигорання керівників у цій організації',r:4},{id:'b_ind',l:'Індивідуальні практики профілактики',r:5},{id:'b_org',l:'Організаційні заходи (навантаження, підтримка, культура)',r:5},{id:'b_mon',l:'Моніторинг: як і коли відстежуватимете ризик вигорання',r:3}];
+var KC=4,KPH=['реакція / навчання / поведінка / результати','напр., рівень резильєнтності (CD-RISC)','напр., повторна діагностика','напр., через 3 і 6 місяців'];
+var F7=[{id:'rc_main',l:'Професійні рекомендації для організації (3–5 пунктів)',r:6},{id:'rc_plan',l:'План упровадження: етапи, терміни, відповідальні',r:4},{id:'rc_res',l:'Необхідні ресурси та можливі ризики',r:4}];
+var SL=10,REC={8:['Титул: назва програми та склад групи','Організація та проблема','Мета й завдання програми','Діагностика саморегуляції та резильєнтності','Модуль з управління емоціями','Стресостійкість і профілактика вигорання','Критерії ефективності','Професійні рекомендації'],
+ 9:['Титул: назва програми та склад групи','Організація та проблема','Мета й завдання програми','Діагностика саморегуляції та резильєнтності','Модуль з управління емоціями','Блок розвитку стресостійкості','Профілактика професійного вигорання','Критерії ефективності','Професійні рекомендації'],
+ 10:['Титул: назва програми та склад групи','Організація та проблема','Мета й завдання програми','Діагностика саморегуляції та резильєнтності','Модуль з управління емоціями','Блок розвитку стресостійкості','Профілактика професійного вигорання','Критерії ефективності','Професійні рекомендації','Висновки та джерела']};
+var F8=[{id:'d_roles',l:'Хто з групи яку частину презентує',r:4},{id:'d_key',l:'Головна думка захисту: чому організації варто впровадити програму',r:3},{id:'d_q',l:'Три питання, які можуть поставити на захисті',r:4},{id:'d_a',l:'Ваші короткі відповіді на ці питання',r:5}];
+var CRIT=['Обґрунтованість','Цілісність програми','Практичність рекомендацій','Презентація та захист'];
+var CL={cl0:['Сформувати групу, розподілити ролі та обрати організацію.','Сформулювати мету й завдання програми (01).','Спланувати діагностику саморегуляції та резильєнтності (02).','Розробити модуль з управління емоціями й описати вправу (03).','Розробити блок стресостійкості (04).','Запропонувати практики профілактики вигорання (05).','Визначити критерії ефективності (06).','Сформулювати рекомендації та створити презентацію (07).','Прорепетирувати захист, зробити самооцінку й завантажити звіт (08).']};
+var QZ=[
+ {q:'Для кого розробляється програма психологічного супроводу в цьому мініпроєкті?',o:['Для всіх працівників організації','Для керівників організації','Для студентів-психологів'],ok:1,e:'Завдання: розробити програму психологічного супроводу керівників організації.'},
+ {q:'Що саме потрібно діагностувати в програмі?',o:['Рівень саморегуляції та резильєнтності','Лише рівень інтелекту (IQ)','Професійні знання керівників'],ok:0,e:'Другий компонент програми — діагностика рівня саморегуляції та резильєнтності.'},
+ {q:'Який компонент НЕ входить до обов\'язкової структури програми?',o:['Блок розвитку стресостійкості','Практики профілактики професійного вигорання','Бізнес-план розширення організації'],ok:2,e:'Структура: мета й завдання, діагностика, модуль з управління емоціями, стресостійкість, профілактика вигорання, критерії ефективності.'},
+ {q:'Яка форма контролю передбачена завданням?',o:['Індивідуальна письмова контрольна робота','Груповий проєкт з презентацією результатів і захистом професійних рекомендацій','Усне опитування без презентації'],ok:1,e:'Форма контролю — груповий проєкт з презентацією результатів та захистом рекомендацій для умовної або реальної організації.'}];
+
+function mk(f){if(f.t==='in')return '<div class="fld"><label for="'+f.id+'">'+f.l+'</label><input class="txt" id="'+f.id+'" data-save placeholder="'+(f.ph||'Введіть відповідь…')+'"></div>';
+ return '<div class="fld"><label for="'+f.id+'">'+f.l+'</label><textarea id="'+f.id+'" data-save data-wc rows="'+f.r+'" placeholder="Введіть відповідь…"></textarea><div class="wc"></div></div>';}
+function mkTA(id,l,r){return mk({id:id,l:l,r:r});}
+$('#f1').innerHTML=F1.map(mk).join('');$('#f3b').innerHTML=F3B.map(mk).join('');$('#f4').innerHTML=F4.map(mk).join('');$('#f5').innerHTML=F5.map(mk).join('');$('#f7').innerHTML=F7.map(mk).join('');$('#f8').innerHTML=F8.map(mk).join('');
+var h='',DF=[],i;
+for(i=0;i<DG;i++){var p='dg'+i+'_';DF.push(p+'n',p+'w',p+'h',p+'u');
+ h+='<div class="crit"><h4>Метод діагностики '+(i+1)+'</h4><div class="grid2">'+mk({id:p+'n',l:'Метод / методика',t:'in'})+mk({id:p+'w',l:'Що вимірює',t:'in'})+'</div>'+mkTA(p+'h','Як і коли проводиться (до / після програми, хто проводить)',3)+mkTA(p+'u','Як використаємо результати',3)+'</div>';}
+$('#f2').innerHTML=h;
+h='';var TF=[];
+for(i=0;i<TRN;i++){var q='tr'+i+'_';TF.push(q+'n',q+'f',q+'c',q+'e');
+ h+='<div class="crit"><h4>Заняття '+(i+1)+'</h4><div class="grid2">'+mk({id:q+'n',l:'Тема заняття',t:'in'})+mk({id:q+'f',l:'Формат і тривалість',t:'in'})+'</div>'+mkTA(q+'c','Зміст і ключові вправи',4)+mk({id:q+'e',l:'Очікуваний результат заняття',t:'in'})+'</div>';}
+$('#f3').innerHTML=h;
+h='';var SF=[];
+for(i=0;i<STK;i++){var t='st'+i+'_';SF.push(t+'n',t+'d',t+'w');
+ h+='<div class="crit"><h4>Техніка / практика '+(i+1)+'</h4><div class="grid2">'+mk({id:t+'n',l:'Техніка / практика',t:'in'})+mk({id:t+'w',l:'Коли і як часто застосовувати',t:'in'})+'</div>'+mkTA(t+'d','Як навчатимете та як керівник застосовуватиме її в роботі',3)+'</div>';}
+$('#f4t').innerHTML=h;
+h='';var KF=[];
+for(i=0;i<KC;i++){var k='kc'+i+'_';KF.push(k+'l',k+'i',k+'m',k+'t');
+ h+='<div class="crit"><h4>Критерій '+(i+1)+'</h4><div class="grid2">'+mk({id:k+'l',l:'Рівень оцінювання',t:'in',ph:KPH[0]})+mk({id:k+'i',l:'Показник',t:'in',ph:KPH[1]})+mk({id:k+'m',l:'Метод вимірювання',t:'in',ph:KPH[2]})+mk({id:k+'t',l:'Коли вимірюємо і цільове значення',t:'in',ph:KPH[3]})+'</div></div>';}
+$('#f6').innerHTML=h;
+function bank(sel,ideas,pref,n){$(sel).innerHTML=ideas.map(function(w){return '<button type="button">'+w+'</button>'}).join('');
+ $$(sel+' button').forEach(function(b){b.addEventListener('click',function(){for(var i=0;i<n;i++){var el=$('#'+pref+i+'_n');if(!el.value.trim()){el.value=b.textContent;el.dispatchEvent(new Event('input',{bubbles:true}));return;}}});});}
+bank('#bank2',DIDEAS,'dg',DG);bank('#bank3',TIDEAS,'tr',TRN);bank('#bank4',SIDEAS,'st',STK);
+var sh='';for(var s=0;s<SL;s++){sh+='<div class="slrow" data-s="'+s+'"><div class="num">'+(s+1)+'</div>'+mk({id:'sl'+s+'_t',l:'Заголовок слайда',t:'in'})+mkTA('sl'+s+'_m','Ключове повідомлення (1 речення)',2)+'</div>';}
+$('#slides').innerHTML=sh;
+$('#selfa').innerHTML=CRIT.map(function(c,i){var b='';for(var k=1;k<=5;k++)b+='<button type="button" data-v="'+k+'">'+k+'</button>';
+ return '<div class="crit"><h4>'+(i+1)+'. '+c+'</h4><div class="sc" data-i="'+i+'">'+b+'</div>'+mkTA('sa'+i+'_c','Коротке обґрунтування оцінки',3)+'</div>';}).join('');
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='topic3_leader_resilience',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent='Виконано кроків: '+n+' / '+b.length;});}
+function slN(){return +$('#slcnt').value||10}
+function slVis(){var n=slN(),f=0;$$('.slrow').forEach(function(r){r.style.display=(+r.dataset.s<n)?'':'none';});
+ for(var s=0;s<n;s++)if($('#sl'+s+'_t').value.trim())f++;
+ $('#slStatus').textContent='Заповнено заголовків: '+f+' з '+n;}
+function sa(i){return typeof store['sa'+i]==='number'?store['sa'+i]:null}
+function selfSync(){$$('#selfa .sc').forEach(function(r){var v=sa(+r.dataset.i);$$('button',r).forEach(function(b){b.classList.toggle('on',+b.dataset.v===v)});});
+ var all=CRIT.every(function(c,i){return sa(i)!==null});
+ if(!all){$('#selfSum').innerHTML='Оцініть усі чотири орієнтири, щоб побачити підсумок самооцінки.';return;}
+ var sum=0,mn=0;CRIT.forEach(function(c,i){sum+=sa(i);if(sa(i)<sa(mn))mn=i;});
+ $('#selfSum').innerHTML='<b>Середній бал самооцінки:</b> '+(sum/4).toFixed(1)+' / 5<br><b>Слабке місце за вашою оцінкою:</b> '+CRIT[mn]+' ('+sa(mn)+'). Приділіть йому більше уваги перед захистом.';}
+function tDur(){return (+$('#tdur').value||10)*60}
+var tLeft=0,tId=null;
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ var fn=function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();slVis();if(k==='tdur'&&!tId){tLeft=tDur();tShow();}};
+ el.addEventListener(el.type==='checkbox'?'change':'input',fn);if(el.tagName==='SELECT')el.addEventListener('change',fn);});
+clProg();slVis();
+$$('#selfa .sc').forEach(function(r){$$('button',r).forEach(function(b){b.addEventListener('click',function(){store['sa'+r.dataset.i]=+b.dataset.v;persist();selfSync();});});});
+selfSync();
+$('#recBtn').addEventListener('click',function(){var n=slN(),arr=REC[n]||REC[10];
+ for(var s=0;s<n;s++){var el=$('#sl'+s+'_t');if(!el.value.trim()){el.value=arr[s];el.dispatchEvent(new Event('input',{bubbles:true}));}}});
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+tLeft=tDur();
+function tShow(){var m=Math.floor(tLeft/60),s=tLeft%60;$('#timer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;$('#timer').classList.toggle('low',tLeft<=60);}
+$('#tStart').addEventListener('click',function(){
+ if(tId){clearInterval(tId);tId=null;this.textContent='▶ Продовжити';return;}
+ if(tLeft<=0)tLeft=tDur();this.textContent='⏸ Пауза';var btn=this;
+ tId=setInterval(function(){tLeft--;tShow();if(tLeft<=0){clearInterval(tId);tId=null;btn.textContent='▶ Старт';$('#timer').textContent='Час вийшов!';}},1000);});
+$('#tReset').addEventListener('click',function(){clearInterval(tId);tId=null;tLeft=tDur();$('#tStart').textContent='▶ Старт';tShow();});
+tShow();
+
+var ans=[],score=0;
+$$('.quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('.quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function fl(ids){return ids.filter(function(id){return $('#'+id).value.trim()}).length}
+function ids(a){return a.map(function(f){return f.id})}
+function stats(){var n=slN(),sl=[],i;for(i=0;i<n;i++)sl.push('sl'+i+'_t','sl'+i+'_m');
+ var sac=[];for(i=0;i<4;i++)sac.push('sa'+i+'_c');var saN=CRIT.filter(function(c,k){return sa(k)!==null}).length;
+ var rows=[['01 Мета',fl(ids(F1)),F1.length],['02 Діагностика',fl(DF),DF.length],['03 Емоції',fl(TF)+fl(ids(F3B)),TF.length+F3B.length],['04 Стресостійкість',fl(ids(F4))+fl(SF),F4.length+SF.length],['05 Вигорання',fl(ids(F5)),F5.length],['06 Критерії',fl(KF),KF.length],['07 Рекомендації',fl(ids(F7)),F7.length],['07 Слайди',fl(sl),sl.length],['08 Захист',fl(ids(F8)),F8.length],['Самооцінка',fl(sac)+saN,8],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function v(id){return $('#'+id).value;}
+function buildDoc(){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('Комплексне завдання до теми 3. Мініпроєкт «Програма розвитку емоційної стійкості керівників»',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент (подає звіт): '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:120});
+ x+=S('Склад проєктної групи та ролі')+paras(v('rep_team'));
+ x+=H('1. Мета та завдання програми');F1.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('2. Діагностика рівня саморегуляції та резильєнтності');
+ var dr=[['№','Метод / методика','Що вимірює','Як і коли','Використання результатів']];
+ for(var i=0;i<DG;i++){var p='dg'+i+'_';dr.push([String(i+1),v(p+'n'),v(p+'w'),v(p+'h'),v(p+'u')]);}
+ x+=table(dr,[500,1900,1900,2669,2669]);
+ x+=H('3. Тренінговий модуль з управління емоціями');
+ var tr=[['№','Тема заняття','Формат і тривалість','Зміст і вправи','Очікуваний результат']];
+ for(i=0;i<TRN;i++){var q='tr'+i+'_';tr.push([String(i+1),v(q+'n'),v(q+'f'),v(q+'c'),v(q+'e')]);}
+ x+=table(tr,[500,2000,1900,3438,1800]);
+ x+=S('Детальний опис вправи')+table([['Параметр','Опис']].concat(F3B.map(function(f){return [f.l,v(f.id)]})),[2800,6838]);
+ x+=H('4. Блок розвитку стресостійкості');F4.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var st=[['№','Техніка / практика','Коли і як часто','Навчання та застосування']];
+ for(i=0;i<STK;i++){var t='st'+i+'_';st.push([String(i+1),v(t+'n'),v(t+'w'),v(t+'d')]);}
+ x+=table(st,[500,2600,2200,4338]);
+ x+=H('5. Практики профілактики професійного вигорання');F5.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('6. Критерії оцінювання ефективності програми');
+ var kr=[['№','Рівень','Показник','Метод вимірювання','Коли і цільове значення']];
+ for(i=0;i<KC;i++){var k='kc'+i+'_';kr.push([String(i+1),v(k+'l'),v(k+'i'),v(k+'m'),v(k+'t')]);}
+ x+=table(kr,[500,2000,2400,2369,2369]);
+ x+=H('Професійні рекомендації для організації');F7.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ var N=slN();x+=H('План презентації ('+N+' слайдів)');
+ var sr=[['№','Заголовок слайда','Ключове повідомлення']];for(var s=0;s<N;s++)sr.push([String(s+1),v('sl'+s+'_t'),v('sl'+s+'_m')]);
+ x+=table(sr,[600,3400,5638]);
+ x+=H('Підготовка до захисту (тривалість виступу: '+v('tdur')+' хв)');F8.forEach(function(f){x+=S(f.l)+paras(v(f.id));});
+ x+=H('Самооцінка за орієнтирами якості');
+ var cr=[['Орієнтир','Оцінка (1–5)','Обґрунтування']];CRIT.forEach(function(c,k){cr.push([c,sa(k)!==null?String(sa(k)):'—',v('sa'+k+'_c')]);});
+ x+=table(cr,[3200,1400,5038]);
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var reportName=$('#rep_name').value.trim(),reportGroup=$('#rep_group').value.trim();
+ if(!reportName||!reportGroup){
+  $('#repMsg').textContent=!reportName&&!reportGroup?'Вкажіть ПІБ і групу, щоб завантажити документ.':!reportName?'Вкажіть ПІБ, щоб завантажити документ.':'Вкажіть групу, щоб завантажити документ.';
+  (!reportName?$('#rep_name'):$('#rep_group')).focus();
+  return;
+ }
+
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_мініпроєкт_тема3_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, план слайдів, самооцінку, чек-лист і дані групи?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else if(el.id==='slcnt')el.value='10';else if(el.id==='tdur')el.value='10';else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clearInterval(tId);tId=null;tLeft=tDur();$('#tStart').textContent='▶ Старт';tShow();
+ clProg();slVis();selfSync();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+<script>
+(function(){
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('#tabsNav button[data-t]'));
+  var questions=Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var checks=Array.prototype.slice.call(document.querySelectorAll('#checklist input'));
+  var flips=Array.prototype.slice.call(document.querySelectorAll('.flip'));
+  var accordions=Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  var signature=questions.map(function(q){return q.querySelector('h4').textContent.trim()});
+  var key='pei-page-progress:'+location.pathname;
+  var answers=questions.map(function(){return null}),restoring=false;
+  function save(){
+    if(restoring)return;
+    var active=document.querySelector('#tabsNav button.active');
+    try{sessionStorage.setItem(key,JSON.stringify({
+      v:1,questions:signature,tab:active?active.dataset.t:null,answers:answers,
+      checks:checks.map(function(x){return x.checked}),
+      flips:flips.map(function(x){return x.classList.contains('on')}),
+      accordions:accordions.map(function(x){return x.classList.contains('open')})
+    }))}catch(e){}
+  }
+  function valid(data){
+    if(!data||data.v!==1||JSON.stringify(data.questions)!==JSON.stringify(signature)||
+       !Array.isArray(data.answers)||data.answers.length!==questions.length||
+       !Array.isArray(data.checks)||data.checks.length!==checks.length||
+       !Array.isArray(data.flips)||data.flips.length!==flips.length||
+       !Array.isArray(data.accordions)||data.accordions.length!==accordions.length||
+       (data.tab!==null&&!tabs.some(function(t){return t.dataset.t===data.tab})))return false;
+    return data.answers.every(function(a,i){return a===null||(Number.isInteger(a)&&a>=0&&a<questions[i].querySelectorAll('.quiz-opt').length)})&&
+      data.checks.every(function(x){return typeof x==='boolean'})&&
+      data.flips.every(function(x){return typeof x==='boolean'})&&
+      data.accordions.every(function(x){return typeof x==='boolean'});
+  }
+  tabs.forEach(function(tab){tab.addEventListener('click',save)});
+  questions.forEach(function(q,i){
+    Array.prototype.slice.call(q.querySelectorAll('.quiz-opt')).forEach(function(option,j){
+      option.addEventListener('click',function(){
+        if(!restoring&&answers[i]===null&&q.classList.contains('locked')){answers[i]=j;save()}
+      });
+    });
+  });
+  var quizReset=document.getElementById('quizReset');
+  if(quizReset)quizReset.addEventListener('click',function(){answers=questions.map(function(){return null});save()});
+  checks.forEach(function(box){box.addEventListener('change',save)});
+  var resetChecks=document.getElementById('resetChecks');
+  if(resetChecks)resetChecks.addEventListener('click',save);
+  flips.forEach(function(flip){
+    flip.addEventListener('click',save);
+    flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')save()});
+  });
+  accordions.forEach(function(item){item.querySelector('.acc-head').addEventListener('click',save)});
+  var data;
+  try{data=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){data=null}
+  if(!data)return;
+  if(!valid(data)){try{sessionStorage.removeItem(key)}catch(e){}return}
+  restoring=true;
+  try{
+    data.answers.forEach(function(answer,i){
+      if(answer!==null)questions[i].querySelectorAll('.quiz-opt')[answer].click();
+    });
+    checks.forEach(function(box,i){
+      if(box.checked!==data.checks[i]){
+        box.checked=data.checks[i];
+        box.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    flips.forEach(function(flip,i){flip.classList.toggle('on',data.flips[i])});
+    accordions.forEach(function(item,i){
+      if(item.classList.contains('open')!==data.accordions[i])item.querySelector('.acc-head').click();
+    });
+    if(data.tab)tabs.filter(function(t){return t.dataset.t===data.tab})[0].click();
+    answers=data.answers.slice();
+  }finally{restoring=false}
+})();
+</script>
+</body>
+</html>

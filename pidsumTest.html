@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Підсумковий тест з усіх тем курсу</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani', sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron', sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono', monospace;}
+a{color:var(--cyan-deep);}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow); gap:12px; flex-wrap:wrap;
+  font-family:'Share Tech Mono', monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background: repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+              repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px);
+  pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(24px,4vw,40px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace; color:var(--ink);}
+.chip b{color:var(--magenta);}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono', monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--solid); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:23px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:17px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:16px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center;
+  font-family:'Orbitron',sans-serif; font-size:13.5px; font-weight:600;}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 18px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--solid); background:var(--solid); color:#fff;
+  padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep);}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.mindmap-wrap{background:var(--bg-soft); border:1px dashed var(--line); border-radius:12px; padding:10px; margin:14px 0;}
+.mindmap-wrap svg{width:100%; height:auto; display:block;}
+.steps{counter-reset:step;}
+.step{position:relative; padding:10px 10px 10px 44px; border-left:2px solid var(--line); margin-left:14px;}
+.step::before{counter-increment:step; content:counter(step); position:absolute; left:-15px; top:8px; width:28px; height:28px; border-radius:50%;
+  background:var(--cyan); color:#fff; display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-weight:700;
+  box-shadow:0 0 0 4px var(--bg-panel);}
+table{border-collapse:collapse; width:100%; margin:10px 0; font-size:14px;}
+th,td{border:1px solid var(--line); padding:8px 10px; text-align:left;}
+th{background:var(--bg-soft); font-family:'Orbitron',sans-serif; font-size:11.5px;}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin-top:10px; font-family:'Share Tech Mono',monospace;}
+.result-box .big{font-size:22px; color:var(--magenta); font-family:'Orbitron',sans-serif;}
+.hotspot{cursor:pointer;}
+.hotspot-hit{pointer-events:all;}
+.hotspot-visual,.topic-link{transform:translate(var(--hover-x,0px),var(--hover-y,0px)); transition:transform .24s ease-out;}
+.hotspot-visual{pointer-events:none;}
+.hotspot circle{transition:.2s;}
+.hotspot:hover circle{stroke-width:4;}
+@media (prefers-reduced-motion:reduce){.hotspot-visual,.topic-link{transition:none; transform:none;}}
+.sim-stage{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:10px;}
+.sim-log{background:var(--bg-soft); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-family:'Share Tech Mono',monospace; font-size:12.5px; min-height:60px;}
+.render-btns{display:flex; gap:8px; flex-wrap:wrap; margin:10px 0;}
+.render-btns button{font-family:'Share Tech Mono',monospace; font-size:11.5px; padding:7px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); color:var(--ink); cursor:pointer;}
+.render-btns button.active{background:var(--solid); color:#fff;}
+.gloss dt{font-family:'Orbitron',sans-serif; color:var(--magenta); font-size:14px; margin-top:12px;}
+.gloss dd{margin:4px 0 0; color:var(--ink-soft);}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14.5px; margin-bottom:10px;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); color:var(--ink); cursor:pointer; font-family:'Rajdhani',sans-serif; font-size:14.5px;}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-fb{font-size:13.5px; margin-top:8px; color:var(--ink-soft); display:none;}
+.quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; box-shadow:var(--shadow);}
+.debate-grid{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+@media(max-width:800px){.debate-grid{grid-template-columns:1fr;}}
+.debate-card{border-radius:12px; padding:16px;}
+.debate-card.central{background:rgba(0,184,196,.08); border:1px solid var(--cyan);}
+.debate-card.distrib{background:rgba(214,0,110,.06); border:1px solid var(--magenta);}
+textarea{width:100%; min-height:70px; border:1px solid var(--line); border-radius:8px; padding:8px 10px; font-family:'Rajdhani',sans-serif; font-size:14px; background:var(--bg-panel); color:var(--ink);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+input[type=range]{width:100%;}
+.jog-readout{font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.hud-bar b{color:var(--ink); font-size:14px;}
+.idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);}
+.callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);}
+.callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);}
+.callout.advice .lbl{color:var(--ok);}
+.setup{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:10px;}
+@media(max-width:700px){.setup{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:24px 18px;}}
+.fld label.l{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px;}
+select.txt,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15.5px; background:var(--bg-panel); color:var(--ink);}
+select.txt:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+input.txt[aria-invalid="true"]{border-color:var(--magenta); box-shadow:0 0 0 3px rgba(214,0,110,.16);}
+.modes{display:flex; flex-direction:column; gap:8px;}
+.mode{display:flex; gap:10px; align-items:flex-start; padding:10px 14px; border:1px solid var(--line); border-radius:10px; background:var(--bg-soft); cursor:pointer;}
+.mode input{margin-top:4px; accent-color:var(--cyan-deep); width:18px; height:18px; flex:none;}
+.mode.on{background:rgba(0,184,196,.1); border-color:var(--cyan);}
+.mode b{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12.5px;}
+.mode span{font-size:14px; color:var(--ink-soft);}
+.chk{display:flex; align-items:center; gap:8px; margin-top:12px; cursor:pointer; font-family:'Share Tech Mono',monospace; font-size:13px; color:var(--ink-soft);}
+.chk input{accent-color:var(--cyan-deep); width:18px; height:18px;}
+.btn:hover:not(:disabled){background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn:disabled{opacity:.4; cursor:default;}
+.btn.ghost:hover:not(:disabled){border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 24px;}
+.btn:focus-visible,.opt:focus-visible,.nv button:focus-visible{outline:3px solid rgba(0,184,196,.55); outline-offset:2px;}
+.btnrow .sp{flex:1;}
+#finBtn.shake{animation:finish-shake .34s ease-in-out;}
+@keyframes finish-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.finish-warning{flex-basis:100%; margin:2px 0 0; font-size:14px;}
+.finish-warning[hidden]{display:none;}
+.action-dialog{width:min(440px,calc(100% - 32px)); max-width:none; padding:24px; border:1px solid var(--line); border-left:5px solid var(--amber); border-radius:14px; background:var(--bg-panel); color:var(--ink); box-shadow:var(--shadow);}
+.action-dialog::backdrop{background:rgba(8,15,24,.72);}
+.action-dialog h2{margin:0 0 10px; font:700 17px 'Orbitron','Segoe UI',sans-serif; color:var(--ink);}
+.action-dialog p{margin:0; line-height:1.5; color:var(--ink-soft);}
+.action-dialog .btnrow{justify-content:flex-end; margin:22px 0 0;}
+@media (prefers-reduced-motion:reduce){#finBtn.shake{animation:none;}}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 12px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.qhead{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; font-family:'Share Tech Mono',monospace; font-size:12.5px; color:var(--ink-soft);}
+.test-toolbar{position:sticky; top:var(--test-toolbar-top,76px); z-index:45; background:var(--bg-panel); border:1px solid var(--line); border-radius:10px; padding:10px 12px; margin-bottom:12px; box-shadow:var(--shadow);}
+.test-timer{margin-left:auto; border-radius:8px; background:var(--solid); color:#fff; padding:7px 11px; font-weight:700; white-space:nowrap;}
+.test-timer b{font-size:16px; color:#fff;}
+.test-timer.warning b{color:#ffb3d1;}
+.nv{display:grid; grid-template-columns:repeat(auto-fill,minmax(38px,1fr)); gap:6px; margin:10px 0 18px;}
+.nv button{height:36px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; color:var(--ink);}
+.nv button:hover{border-color:var(--cyan);}
+.nv button.done{background:var(--bg-soft); border-color:var(--cyan-deep); color:var(--cyan-deep); font-weight:700;}
+.nv button.ok{background:rgba(10,155,92,.16); border-color:var(--ok); color:var(--ok); font-weight:700;}
+.nv button.bad{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--magenta); font-weight:700;}
+.nv button.cur{box-shadow:0 0 0 3px rgba(0,184,196,.45); border-color:var(--cyan);}
+section.panel h3.qtext{font-size:clamp(16px,2.6vw,20px); line-height:1.45; color:var(--ink); margin:0 0 16px; min-height:2.9em;}
+.opt{display:flex; gap:12px; align-items:flex-start; width:100%; text-align:left; margin-bottom:9px; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:16.5px; color:var(--ink); transition:.15s;}
+.opt:hover:not(.locked){border-color:var(--cyan); background:rgba(0,184,196,.05);}
+.opt .k{flex:none; width:28px; height:28px; border-radius:7px; background:var(--bg-soft); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:'Share Tech Mono',monospace; font-size:13px; font-weight:700;}
+.opt.sel{background:var(--solid); color:#fff; border-color:var(--solid);}
+.opt.sel .k{background:rgba(255,255,255,.15); border-color:rgba(255,255,255,.3); color:#fff;}
+.opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700; color:var(--ink);}
+.opt.correct .k{background:var(--ok); border-color:var(--ok); color:#fff;}
+.opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta); color:var(--ink);}
+.opt.wrong .k{background:var(--magenta); border-color:var(--magenta); color:#fff;}
+.opt.locked{cursor:default;}
+#fb{display:none;}
+#fb.show{display:block;}
+.big{font-family:'Orbitron','Segoe UI',sans-serif;}
+.score{font-size:68px; font-weight:900; line-height:1; background:linear-gradient(90deg,var(--ink) 30%,var(--cyan-deep)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+.rs{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0;}
+.rs div{background:var(--bg-soft); border:1px solid var(--line); border-radius:10px; padding:10px 14px; font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.rs b{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:20px; color:var(--ink);}
+.mist{border:1px solid var(--line); border-left:5px solid var(--magenta); border-radius:10px; padding:12px 16px; margin-bottom:10px; background:var(--bg-soft);}
+.mist h4{font-size:13.5px; line-height:1.45; margin-bottom:6px;}
+.mist p{margin:0 0 3px; font-size:15px;}
+.mist .y{color:var(--magenta);}
+.mist .r{color:var(--ok); font-weight:700;}
+.render-btns button:hover{border-color:var(--cyan);}
+.hotspot:focus{outline:none;}
+.hotspot:focus .hotspot-visual rect{stroke-width:4;}
+#topicTag{font-family:'Rajdhani',sans-serif;font-size:14px;}
+
+/* Спільна для курсу тема. */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative; z-index:70; margin-left:auto; flex:none; display:inline-flex; align-items:center; gap:7px; padding:8px 12px; border:1px solid var(--line); border-radius:8px; background:var(--bg-soft); color:var(--ink); font:600 12px 'Share Tech Mono','Segoe UI',sans-serif; cursor:pointer; min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan); outline-offset:3px;}
+:root[data-theme="dark"] #mapSvg .hotspot-visual rect{fill:var(--bg-panel);}
+:root[data-theme="dark"] #mapSvg .hotspot text[fill="#101826"]{fill:var(--ink);}
+:root[data-theme="dark"] #mapSvg .hotspot text[fill="#4a5568"]{fill:var(--ink-soft);}
+:root[data-theme="dark"] #mapSvg g[stroke="#c7d2e0"]{stroke:var(--line);}
+:root[data-theme="dark"] #histSvg g{fill:var(--ink-soft);}
+:root[data-theme="dark"] #histSvg text[fill="#101826"]{fill:var(--ink);}
+:root[data-theme="dark"] #histSvg line[stroke="#dde5ee"]{stroke:var(--line);}
+@media print{.theme-toggle{display:none;}}
+
+</style>
+</head>
+<body>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / FINAL-TEST.CORE — ОНЛАЙН</span><span>ПІДСУМКОВИЙ ТЕСТ</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// FINAL_TEST · 6_TOPICS · RANDOM_40 + REPORT.DOCX</span>
+    <h1>Підсумковий тест: 40 випадкових завдань з усіх тем курсу</h1>
+    <p class="sub">40 тестових завдань, випадково дібраних з банку всіх шести тем. Кожна спроба — новий набір питань. Оберіть режим, пройдіть тест, перегляньте результат за темами й розбір помилок та завантажте звіт у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">🎲 <b>40</b> випадкових питань</span>
+      <span class="chip">📚 банк: <b id="poolChip">180</b> питань з 6 тем</span>
+      <span class="chip">⏱ режим на час</span>
+      <span class="chip">📊 аналітика за темами</span>
+      <span class="chip">📄 результат у .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-map" class="active">🗺 Карта тем</button>
+    <button data-t="t-setup">⚙ Старт</button>
+    <button data-t="t-test">▶ Тест</button>
+    <button data-t="t-result">📊 Результат</button>
+    <button data-t="t-review">🔍 Розбір</button>
+    <button data-t="t-hist">📜 Історія спроб</button>
+  </nav>
+
+  <!-- КАРТА -->
+  <section class="panel active" id="t-map">
+    <h2><span class="idx">MAP</span> Карта підсумкового тесту</h2>
+    <p class="lede">Тест охоплює всі шість тем курсу. Натисніть на тему на схемі, щоб побачити, скільки питань з неї потрапляє в тест і ваш найкращий результат з цієї теми.</p>
+    <div class="mindmap-wrap"><svg id="mapSvg" viewBox="0 0 1100 480" xmlns="http://www.w3.org/2000/svg"></svg></div>
+    <div class="result-box" id="topicInfo">Оберіть тему на схемі.</div>
+    <div class="grid3" style="margin-top:16px">
+      <div class="card"><h4>Як формується тест</h4>У режимах «Підсумковий» і «Екзамен на час» з кожної теми береться 6–7 випадкових питань — разом 40. Порядок питань перемішується.</div>
+      <div class="card"><h4>Формат питань</h4>Кожне питання має 4 варіанти (а–г) і лише одну правильну відповідь. Варіанти відповідей можна перемішувати.</div>
+      <div class="card"><h4>Після тесту</h4>Ви побачите бал, відсоток, результат за кожною темою, розбір помилок, а також зможете повторити помилки чи потренувати слабку тему.</div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Орієнтовна оцінка за 100-бальною шкалою та ECTS на цій сторінці — лише для самоперевірки. Остаточну оцінку та кількість дозволених спроб визначає викладач.</div>
+    <div class="btnrow"><button class="btn big" id="goSetup">⚙ Перейти до налаштувань</button></div>
+  </section>
+
+  <!-- СТАРТ -->
+  <section class="panel" id="t-setup">
+    <h2><span class="idx">SET</span> Налаштування спроби</h2>
+    <p class="lede">Вкажіть свої дані й оберіть режим. Підсумковий тест — 40 питань з усіх тем; тренування дозволяє обрати теми й кількість питань.</p>
+    <div class="setup">
+      <div class="fld"><label class="l" for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" data-save required autocomplete="name" placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label class="l" for="rep_group">Група</label><input class="txt" id="rep_group" data-save required placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <div class="setup">
+      <div class="fld"><label class="l">Режим</label>
+        <div class="modes">
+          <label class="mode on"><input type="radio" name="mode" value="final" checked><div><b>Підсумковий</b><span>40 питань з усіх тем, результат наприкінці; відповіді можна змінювати до завершення.</span></div></label>
+          <label class="mode"><input type="radio" name="mode" value="timed"><div><b>Екзамен на час</b><span>Те саме, але з обмеженням часу; коли час вийде, тест завершиться автоматично.</span></div></label>
+          <label class="mode"><input type="radio" name="mode" value="train"><div><b>Тренування</b><span>Миттєва перевірка після кожної відповіді; можна обрати теми та кількість питань.</span></div></label>
+        </div>
+      </div>
+      <div class="fld">
+        <div id="timedBox" style="display:none"><label class="l" for="tlim">Ліміт часу</label>
+          <select class="txt" id="tlim" data-save><option value="30">30 хв</option><option value="40" selected>40 хв (≈1 хв на питання)</option><option value="60">60 хв</option></select></div>
+        <div id="trainBox" style="display:none"><label class="l">Теми для тренування</label><div id="topicChk"></div>
+          <label class="l" for="tcnt" style="margin-top:10px">Кількість питань</label>
+          <select class="txt" id="tcnt" data-save><option value="10">10</option><option value="20" selected>20</option><option value="40">40</option><option value="all">усі з обраних тем</option></select></div>
+        <div id="finalBox"><label class="l">Розподіл питань</label><div class="card" id="distInfo" style="font-size:15px"></div></div>
+        <label class="chk"><input type="checkbox" id="shufOpt" data-save checked> Перемішувати варіанти відповідей</label>
+        <div class="callout advice" style="margin-top:14px"><b class="lbl">Порада</b>Клавіші під час тесту: 1–4 — вибір варіанта, ←/→ — перехід, F — позначити питання «повернутися пізніше».</div>
+      </div>
+    </div>
+    <div class="btnrow"><button class="btn big" id="startBtn">▶ Згенерувати тест і розпочати</button><span id="setupMsg" class="mono" role="alert" style="font-size:12.5px;color:var(--magenta)"></span></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-test">
+    <div id="testEmpty" class="callout attention"><b class="lbl">Тест не розпочато</b>Оберіть режим на вкладці «Старт» і натисніть «Згенерувати тест».</div>
+    <div id="testBox" style="display:none">
+      <div class="test-toolbar" id="testToolbar"><div class="qhead"><span id="qcount">Питання 1 / 40</span><span id="modeTag"></span><span id="answeredTag">Відповідей: 0</span><span id="hudTime" class="test-timer" role="timer">ЧАС: <b>00:00</b></span></div></div>
+      <div class="progress"><i id="pbar"></i></div>
+      <div class="nv" id="nv"></div>
+      <div class="btnrow" style="margin-top:-6px"><span class="chip" id="topicTag"></span><span class="sp"></span><button class="btn small ghost" id="flagBtn">⚑ Позначити</button><button class="btn small ghost" id="jumpBtn">→ До першого без відповіді</button></div>
+      <h3 class="qtext" id="qtext"></h3>
+      <div id="opts"></div>
+      <div class="callout" id="fb"></div>
+      <div class="btnrow">
+        <button class="btn ghost" id="prevBtn">← Назад</button>
+        <button class="btn ghost" id="nextBtn">Далі →</button>
+        <span class="sp"></span>
+        <button class="btn" id="finBtn">Завершити тест</button>
+        <div id="finishWarning" class="callout attention finish-warning" role="alert" hidden></div>
+      </div>
+      <div class="mono" style="font-size:12px;color:var(--ink-soft)">Позначення в навігаторі: <span style="color:var(--cyan-deep)">■</span> є відповідь · <span style="color:var(--amber)">⚑</span> позначене · у тренуванні <span style="color:var(--ok)">■</span> правильно / <span style="color:var(--magenta)">■</span> помилка</div>
+    </div>
+  </section>
+
+  <dialog id="actionDialog" class="action-dialog" aria-labelledby="actionDialogTitle" aria-describedby="actionDialogText">
+    <h2 id="actionDialogTitle">Підтвердити дію?</h2>
+    <p id="actionDialogText"></p>
+    <div class="btnrow">
+      <button type="button" class="btn ghost" id="cancelAction">Продовжити тест</button>
+      <button type="button" class="btn" id="confirmAction">Підтвердити</button>
+    </div>
+  </dialog>
+
+  <!-- РЕЗУЛЬТАТ -->
+  <section class="panel" id="t-result">
+    <h2><span class="idx">END</span> Результат</h2>
+    <div id="resEmpty" class="callout attention"><b class="lbl">Ще немає результату</b>Результат з'явиться після завершення тесту.</div>
+    <div id="resBox" style="display:none">
+      <div class="grid2" style="align-items:center">
+        <div><div class="score" id="rScore">0/0</div><div class="progress"><i id="rBar"></i></div><p id="rMsg" class="lede"></p></div>
+        <div class="result-box"><div>Орієнтовна оцінка (самоперевірка):</div><div class="big" id="rGrade">—</div><div id="rGradeNote" style="font-size:12.5px;color:var(--ink-soft)"></div></div>
+      </div>
+      <div class="rs" id="rStats"></div>
+      <h3>Результат за темами</h3>
+      <div id="topicBars"></div>
+      <div class="callout advice" id="weakBox"></div>
+      <h3>Звіт у файлі Word</h3>
+      <div class="btnrow">
+        <button class="btn big" id="dlBtn">⬇ Завантажити результат (.docx)</button>
+        <button class="btn" id="againBtn">Новий тест</button>
+        <button class="btn ghost" id="errBtn">Повторити лише помилки</button>
+        <button class="btn ghost" id="weakBtn">Тренувати слабку тему</button>
+      </div>
+      <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+    </div>
+  </section>
+
+  <!-- РОЗБІР -->
+  <section class="panel" id="t-review">
+    <h2><span class="idx">REV</span> Розбір відповідей</h2>
+    <div id="revEmpty" class="callout attention"><b class="lbl">Немає даних</b>Розбір з'явиться після завершення тесту.</div>
+    <div id="revBox" style="display:none">
+      <div class="render-btns" id="revFilter"></div>
+      <div id="mistakes"></div>
+    </div>
+  </section>
+
+  <!-- ІСТОРІЯ -->
+  <section class="panel" id="t-hist">
+    <h2><span class="idx">LOG</span> Історія спроб</h2>
+    <p class="lede">Останні 10 спроб зберігаються лише в цьому браузері (якщо він дозволяє) і нікуди не надсилаються.</p>
+    <div class="sim-stage"><svg id="histSvg" viewBox="0 0 700 220" xmlns="http://www.w3.org/2000/svg"></svg></div>
+    <div id="histTable"></div>
+    <div class="btnrow"><button class="btn ghost" id="histClear">Очистити історію</button></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Підсумковий тест · 40 випадкових питань з усіх тем курсу</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var L=['а','б','в','г'];
+var T=[
+ {n:'Тема 1',t:'Теоретичні засади психології емоційного інтелекту',c:'#00b8c4'},
+ {n:'Тема 2',t:'Емоції як ресурс професійної діяльності та самоусвідомлення',c:'#d6006e'},
+ {n:'Тема 3',t:'Саморегуляція та емоційна стійкість особистості',c:'#c97a00'},
+ {n:'Тема 4',t:'Емпатія та емоційний інтелект у комунікації',c:'#00b8c4'},
+ {n:'Тема 5',t:'Емоційний інтелект лідера та командна взаємодія',c:'#d6006e'},
+ {n:'Тема 6',t:'Емоційний інтелект і психологічне благополуччя персоналу. Діагностика та розвиток EI',c:'#0a9b5c'}];
+var POOL=[[["Хто вперше запропонував поняття соціального інтелекту?", ["Д. Гоулман", "Р. Бар-Он", "Е. Торндайк", "Г. Гарднер"], 2], ["Соціальний інтелект за Е. Торндайком означає:", ["уміння керувати організацією", "здатність розуміти людей та ефективно взаємодіяти з ними", "здатність до математичних обчислень", "рівень емоційності особистості"], 1], ["Автором теорії множинного інтелекту є:", ["П. Саловей", "Дж. Маєр", "Р. Бар-Он", "Г. Гарднер"], 3], ["Згідно з теорією Г. Гарднера, внутрішньоособистісний інтелект пов’язаний із:", ["математичними здібностями", "музичними здібностями", "здатністю розуміти власні переживання та мотиви", "фізичною координацією"], 2], ["Термін «емоційний інтелект» був уперше введений у науковий обіг:", ["К. Роджерсом", "Дж. Маєром і П. Саловеєм", "Г. Гарднером", "Р. Лазарусом"], 1], ["У якому році Дж. Маєр і П. Саловей представили концепцію емоційного інтелекту?", ["1975", "1985", "1990", "2005"], 2], ["Емоційний інтелект у моделі здібностей розглядається як:", ["риса характеру", "тип темпераменту", "когнітивна здатність обробляти емоційну інформацію", "стиль керівництва"], 2], ["Яка модель належить Дж. Маєру, П. Саловею та Д. Карузо?", ["змішана модель", "модель компетентностей", "модель здібностей", "поведінкова модель"], 2], ["Який компонент НЕ належить до моделі здібностей Дж. Маєра, П. Саловея та Д. Карузо?", ["сприйняття емоцій", "управління емоціями", "використання емоцій у мисленні", "харизматичне лідерство"], 3], ["Перший рівень емоційного інтелекту в моделі здібностей пов’язаний із:", ["управлінням емоціями інших людей", "розпізнаванням емоцій", "оцінкою професійних ризиків", "формуванням мотивації"], 1], ["Здатність використовувати емоції для підвищення ефективності мислення належить до:", ["емоційної регуляції", "емпатії", "емоційного сприяння мисленню", "соціальної адаптації"], 2], ["Автор популярної змішаної моделі емоційного інтелекту:", ["Дж. Маєр", "Д. Гоулман", "Г. Гарднер", "К. Роджерс"], 1], ["Д. Гоулман пов’язував високий рівень емоційного інтелекту насамперед із:", ["академічною успішністю", "рівнем IQ", "фізичним здоров’ям", "успішністю в професійній та соціальній діяльності"], 3], ["До структури емоційного інтелекту за Д. Гоулманом належить:", ["самоусвідомлення", "саморегуляція", "емпатія", "усі відповіді правильні"], 3], ["Автором моделі EQ-i є:", ["Д. Гоулман", "Р. Бар-Он", "Г. Гарднер", "П. Саловей"], 1], ["Р. Бар-Он розглядав емоційний інтелект як:", ["лише когнітивну здібність", "сукупність емоційних і соціальних компетентностей", "характеристику темпераменту", "властивість нервової системи"], 1], ["Яке поняття найбільшою мірою характеризує модель Р. Бар-Она?", ["мотивація досягнення", "креативність", "адаптація до життєвих ситуацій", "конформізм"], 2], ["Яка модель належить до змішаних моделей EI?", ["Модель Дж. Маєра та П. Саловея", "Модель Д. Гоулмана", "Теорія Ж. Піаже", "Теорія К. Роджерса"], 1], ["Емоційний інтелект допомагає психологу:", ["підвищувати лише рівень IQ клієнта", "розробляти комп’ютерні програми", "ефективніше будувати професійну взаємодію", "проводити економічні розрахунки"], 2], ["Для діяльності психолога особливе значення має:", ["механічна пам’ять", "швидкість читання", "емпатія", "зорова увага"], 2], ["Який компонент емоційного інтелекту найбільш тісно пов’язаний із розумінням емоцій інших людей?", ["самоконтроль", "емпатія", "пам’ять", "інтуїція"], 1], ["Критики концепції емоційного інтелекту вказують на:", ["повну відсутність методів вимірювання", "нечіткість визначення та структури поняття", "неможливість розвитку EI", "застарілість концепції"], 1], ["Емоційний інтелект найбільш тісно пов’язаний із:", ["міжособистісною взаємодією", "фізичною витривалістю", "швидкістю реакції", "математичними розрахунками"], 0], ["Який із перелічених учених НЕ є автором концепції емоційного інтелекту?", ["Дж. Маєр", "П. Саловей", "Д. Карузо", "Ж. Піаже"], 3], ["У професійній діяльності психолога емоційний інтелект сприяє:", ["формальному спілкуванню", "ігноруванню емоцій клієнта", "ефективному консультуванню та супроводу клієнтів", "уникненню комунікації"], 2], ["Який із наведених компонентів належить до емоційного інтелекту за Д. Гоулманом?", ["емпатія", "інстинкт", "тип темпераменту", "екстраверсія"], 0], ["Емоційний інтелект можна розвивати завдяки:", ["навчанню та тренуванню", "лише спадковості", "лише віку людини", "лише рівню IQ"], 0], ["Основним об’єктом дослідження психології емоційного інтелекту є:", ["психофізіологічні рефлекси", "емоції та їх роль у мисленні й поведінці людини", "біохімічні процеси організму", "когнітивні помилки"], 1], ["Високий рівень емоційного інтелекту сприяє:", ["професійному вигоранню", "конфліктності", "ефективній міжособистісній взаємодії", "униканню відповідальності"], 2], ["Емоційний інтелект організаційного психолога є важливим для:", ["підвищення якості діагностики й консультування", "ведення бухгалтерського обліку", "розробки технічної документації", "програмування програмного забезпечення"], 0]], [["Хто є автором периферичної теорії емоцій?", ["П. Саловей", "В. Джемс і К. Ланге", "С. Шехтер", "Д. Гоулман"], 1], ["Згідно з теорією В. Джемса та К. Ланге, емоція виникає:", ["До фізіологічної реакції", "Незалежно від фізіологічних змін", "Як усвідомлення фізіологічних змін організму", "Внаслідок соціального навчання"], 2], ["Відповідно до теорії Джемса-Ланге людина сумує тому, що:", ["Плаче", "Відчуває несправедливість", "Усвідомлює втрату", "Аналізує ситуацію"], 0], ["Двофакторна теорія емоцій була запропонована:", ["Дж. Маєром", "Д. Гоулманом", "С. Шехтером", "Р. Бар-Оном"], 2], ["Згідно з теорією Шехтера, емоція формується через:", ["Інстинктивну реакцію", "Фізіологічне збудження та когнітивну оцінку ситуації", "Потреби особистості", "Соціальну роль"], 1], ["Який компонент НЕ входить до двофакторної теорії С. Шехтера?", ["Фізіологічне збудження", "Когнітивна інтерпретація", "Поведінкова реакція", "Оцінка ситуації"], 2], ["Основне призначення емоцій полягає у:", ["Збереженні інформації", "Регуляції поведінки людини", "Контролі пам'яті", "Формуванні інтелекту"], 1], ["До регулятивної функції емоцій належить:", ["Передавання інформації", "Спрямування діяльності людини", "Формування мовлення", "Оцінка знань"], 1], ["Самоусвідомлення в структурі емоційного інтелекту означає:", ["Управління емоціями інших людей", "Здатність усвідомлювати власні емоції", "Вміння проводити переговори", "Контроль поведінки колективу"], 1], ["Високий рівень самоусвідомлення дозволяє:", ["Приховувати емоції", "Ігнорувати переживання", "Краще розуміти власні реакції та потреби", "Уникати відповідальності"], 2], ["Емоційний тригер це:", ["Спосіб розвитку пам'яті", "Подія або стимул, який викликає емоційну реакцію", "Метод релаксації", "Техніка переконання"], 1], ["Щоденник емоцій використовується для:", ["Оцінки професійних знань", "Розвитку емоційної самосвідомості", "Діагностики інтелекту", "Контролю часу"], 1], ["Авторкою концепції емоційної компетентності є:", ["К. Саарні", "К. Роджерс", "Д. Гоулман", "А. Маслоу"], 0], ["Згідно з концепцією К. Саарні, емоційна компетентність включає:", ["Лише контроль емоцій", "Знання математичних закономірностей", "Усвідомлення, вираження та регуляцію емоцій", "Тільки розвиток емпатії"], 2], ["Емоційна компетентність сприяє:", ["Уникненню будь-яких конфліктів", "Ефективній соціальній взаємодії", "Зменшенню інтелектуальної активності", "Зниженню мотивації"], 1], ["Усвідомленість (mindfulness) передбачає:", ["Концентрацію на минулих подіях", "Утримання уваги на теперішньому моменті без оцінювання", "Аналіз лише негативних емоцій", "Контроль інших людей"], 1], ["Основною метою практик mindfulness є:", ["Підвищення рівня конфліктності", "Розвиток усвідомленості та саморегуляції", "Посилення конкуренції", "Формування авторитарності"], 1], ["Mindfulness найбільше сприяє розвитку:", ["Просторового мислення", "Емоційної самосвідомості", "Механічної пам'яті", "Технічних навичок"], 1], ["Одним із результатів розвитку усвідомленості є:", ["Зростання імпульсивності", "Покращення контролю емоційних реакцій", "Уникнення спілкування", "Зниження відповідальності"], 1], ["Емоційна регуляція поведінки означає:", ["Пригнічення всіх емоцій", "Керування емоційними проявами відповідно до ситуації", "Демонстрацію лише позитивних емоцій", "Уникнення емоційних переживань"], 1], ["Який із чинників найбільше впливає на емоційний клімат організації?", ["Колір стін офісу", "Взаємини між працівниками та керівництвом", "Розмір приміщення", "Кількість документів"], 1], ["Позитивний емоційний клімат сприяє:", ["Зниженню продуктивності", "Підвищенню мотивації працівників", "Зростанню конфліктності", "Зниженню залученості персоналу"], 1], ["Негативні емоції працівників можуть призводити до:", ["Підвищення лояльності", "Посилення довіри", "Професійного вигорання", "Посилення командної взаємодії"], 2], ["Вплив емоцій на управлінські рішення проявляється через:", ["Повну об'єктивність керівника", "Оцінювання ризиків та альтернатив під впливом переживань", "Відсутність мотивації", "Неможливість ухвалювати рішення"], 1], ["Яка емоція найчастіше пов'язана з уникненням ризику?", ["Радість", "Інтерес", "Страх", "Натхнення"], 2], ["Емоційно компетентний керівник:", ["Ігнорує переживання працівників", "Усвідомлює власні емоції та враховує емоції інших", "Уникає комунікації", "Використовує лише адміністративний вплив"], 1], ["Самоспостереження допомагає:", ["Краще розуміти причини своїх емоційних реакцій", "Уникати відповідальності", "Контролювати інших людей", "Ігнорувати власні почуття"], 0], ["До емоційних процесів в організації належить:", ["Передача технічної документації", "Формування групових настроїв", "Ведення бухгалтерського обліку", "Складання наказів"], 1], ["Емоційний інтелект найбільше пов'язаний із здатністю:", ["Виконувати складні математичні обчислення", "Розуміти та управляти емоціями", "Запам'ятовувати великі обсяги інформації", "Здійснювати фінансове планування"], 1], ["Високий рівень емоційного інтелекту працівника сприяє:", ["Погіршенню взаємодії в колективі", "Зростанню конфліктності", "Ефективній комунікації та професійній діяльності", "Уникненню відповідальності"], 2]], [["Саморегуляція особистості це:", ["Уникнення складних ситуацій", "Здатність керувати власними психічними станами та поведінкою", "Підпорядкування вимогам оточення", "Контроль поведінки інших людей"], 1], ["Основною метою саморегуляції є:", ["Пригнічення всіх емоцій", "Досягнення ефективної поведінки в різних ситуаціях", "Уникнення конфліктів", "Зменшення соціальних контактів"], 1], ["Який компонент є важливим елементом саморегуляції?", ["Самоусвідомлення", "Плітки", "Конкуренція", "Навіювання"], 0], ["До методів управління емоціями належить:", ["Когнітивна переоцінка", "Маніпулювання людьми", "Ізоляція від суспільства", "Ігнорування проблем"], 0], ["Когнітивна переоцінка передбачає:", ["Зміну інтерпретації ситуації для зниження емоційної напруги", "Приховування емоцій", "Уникнення емоційних подій", "Зосередження лише на негативному досвіді"], 0], ["Прикладом когнітивної переоцінки є твердження:", ["«Я нічого не можу змінити»", "«Ця помилка дає мені можливість навчитися новому»", "«Усі винні, крім мене»", "«Потрібно просто забути про проблему»"], 1], ["Дихальні техніки використовуються для:", ["Збільшення рівня тривоги", "Зниження фізіологічного напруження", "Пригнічення пам'яті", "Розвитку інтелекту"], 1], ["Яка з технік належить до дихальних?", ["SWOT-аналіз", "Квадратне дихання", "Мозковий штурм", "Контент-аналіз"], 1], ["Резильєнтність це:", ["Здатність уникати труднощів", "Психологічна стійкість та здатність відновлюватися після стресу", "Високий рівень інтелекту", "Схильність до ризику"], 1], ["Стресостійкість означає:", ["Здатність ефективно діяти в умовах стресу", "Відсутність негативних емоцій", "Ігнорування проблем", "Небажання приймати рішення"], 0], ["До особистісних ресурсів резильєнтності належать:", ["Оптимізм і впевненість у собі", "Заробітна плата", "Технічні навички", "Посадова інструкція"], 0], ["Який із чинників підвищує резильєнтність?", ["Соціальна підтримка", "Хронічний стрес", "Постійна ізоляція", "Емоційне виснаження"], 0], ["До конструктивних способів подолання стресу належить:", ["Зловживання алкоголем", "Уникнення відповідальності", "Планування дій і пошук підтримки", "Агресивна поведінка"], 2], ["Однією з ознак високої резильєнтності є:", ["Безпорадність", "Гнучкість у реагуванні на зміни", "Імпульсивність", "Конфліктність"], 1], ["Яке поняття означає здатність контролювати прояви власних емоцій?", ["Саморегуляція", "Інтуїція", "Навіювання", "Адаптація"], 0], ["Основною ознакою емоційної зрілості є:", ["Усвідомлене управління власними емоціями", "Уникнення відповідальності", "Приховування почуттів", "Відсутність переживань"], 0], ["Найбільш ефективним способом профілактики емоційного виснаження є:", ["Ігнорування відпочинку", "Баланс між працею та відновленням ресурсів", "Збільшення навантаження", "Скорочення комунікацій"], 1], ["До психологічних ресурсів особистості належить:", ["Самоефективність", "Посада", "Робочий кабінет", "Розмір організації"], 0], ["Індивідуальний план розвитку резильєнтності повинен містити:", ["Лише перелік проблем", "Цілі, ресурси та конкретні заходи розвитку", "Лише оцінку ризиків", "Опис особистих якостей"], 1], ["Саморегуляція керівника найбільшою мірою впливає на:", ["Емоційний клімат колективу", "Рівень інфляції", "Розташування офісу", "Технічні характеристики обладнання"], 0], ["Емоційно компетентний керівник у конфліктній ситуації:", ["Реагує імпульсивно", "Демонструє самоконтроль і конструктивну комунікацію", "Ігнорує проблему", "Перекладає відповідальність"], 1], ["Яка поведінка керівника свідчить про низький рівень саморегуляції?", ["Виважене ухвалення рішень", "Публічна агресивна критика працівників", "Активне слухання", "Підтримка персоналу"], 1], ["Однією з функцій саморегуляції керівника є:", ["Управління власними емоційними реакціями", "Контроль погоди", "Визначення особистого життя працівників", "Підвищення конкуренції між працівниками"], 0], ["Уміння зберігати спокій у кризових ситуаціях характеризує:", ["Резильєнтність", "Перфекціонізм", "Конформізм", "Ригідність"], 0], ["Яке з наведених тверджень характеризує стресостійку особистість?", ["Легко впадає у паніку", "Швидко відновлюється після труднощів", "Уникає прийняття рішень", "Часто втрачає контроль над емоціями"], 1], ["До методів емоційного контролю належить:", ["Усвідомлення та називання власних емоцій", "Ігнорування проблемної ситуації", "Уникнення спілкування", "Приписування провини іншим"], 0], ["Який фактор найбільше сприяє професійній стійкості керівника?", ["Емоційний інтелект", "Авторитарність", "Жорсткість поведінки", "Формальна влада"], 0], ["Метою аналізу ресурсів особистості є:", ["Виявлення сильних сторін та резервів розвитку", "Контроль інших людей", "Порівняння доходів працівників", "Аналіз виробничих процесів"], 0], ["Психологічна резильєнтність допомагає:", ["Збільшувати емоційну вразливість", "Ефективніше адаптуватися до змін і криз", "Уникати відповідальності", "Зменшувати комунікацію"], 1], ["Високий рівень саморегуляції керівника сприяє:", ["Зростанню довіри та ефективності команди", "Посиленню конфліктності", "Зниженню мотивації персоналу", "Погіршенню психологічного клімату"], 0]], [["Емпатія це:", ["Уміння впливати на інших людей", "Здатність розуміти та співпереживати емоціям іншої людини", "Навичка переконання", "Спосіб управління конфліктами"], 1], ["Який компонент емпатії пов'язаний із розумінням переживань іншої людини?", ["Когнітивний", "Поведінковий", "Мотиваційний", "Інструментальний"], 0], ["Емоційний компонент емпатії передбачає:", ["Аналіз інформації", "Співпереживання емоційним станам іншої людини", "Контроль поведінки співрозмовника", "Управління організацією"], 1], ["Високий рівень емпатії сприяє:", ["Поглибленню конфліктів", "Побудові довірливих взаємин", "Уникненню комунікації", "Зменшенню взаєморозуміння"], 1], ["Емпатійне реагування передбачає:", ["Оцінювання співрозмовника", "Визнання та розуміння його емоцій", "Критику поведінки", "Зміну теми розмови"], 1], ["Яке висловлювання є прикладом емпатійної відповіді?", ["«Не переймайтеся, це дрібниці»", "«Я розумію, що ця ситуація могла викликати у вас сильні переживання»", "«Ви перебільшуєте проблему»", "«Треба було діяти інакше»"], 1], ["Активне слухання це:", ["Пасивне сприйняття повідомлення", "Уважне слухання із використанням спеціальних комунікативних технік", "Контроль діалогу", "Переконання співрозмовника"], 1], ["До технік активного слухання належить:", ["Перефразування", "Наказ", "Маніпуляція", "Ігнорування"], 0], ["Перефразування використовується для:", ["Критики співрозмовника", "Уточнення та перевірки правильності розуміння інформації", "Завершення розмови", "Зміни теми"], 1], ["Резюмування у процесі слухання допомагає:", ["Узагальнити основний зміст повідомлення", "Посилити конфлікт", "Змінити позицію співрозмовника", "Проводити оцінювання"], 0], ["Яка з наведених дій суперечить принципам активного слухання?", ["Підтримання зорового контакту", "Уточнюючі запитання", "Перебивання співрозмовника", "Відображення емоцій"], 2], ["Емоційна компетентність у діловому спілкуванні передбачає:", ["Уміння керувати емоціями під час взаємодії", "Використання службового становища", "Формальне виконання обов'язків", "Жорсткий контроль підлеглих"], 0], ["До складових емоційної компетентності належить:", ["Саморегуляція", "Володіння комп'ютером", "Математичні здібності", "Технічна грамотність"], 0], ["Емоційний інтелект у діловому спілкуванні сприяє:", ["Конструктивній взаємодії", "Зростанню кількості конфліктів", "Уникненню відповідальності", "Зниженню командної ефективності"], 0], ["Головною метою переговорів є:", ["Перемога будь-якою ціною", "Досягнення прийнятного для сторін рішення", "Демонстрація влади", "Нав'язування позиції"], 1], ["Управління емоціями в переговорах допомагає:", ["Погіршити комунікацію", "Уникнути імпульсивних рішень", "Посилити міжособистісну напругу", "Припинити діалог"], 1], ["Яка емоція найчастіше ускладнює переговорний процес?", ["Інтерес", "Гнів", "Довіра", "Повага"], 1], ["Що є прикладом зміни перспективи?", ["Аналіз ситуації з позиції іншої людини", "Уникнення проблеми", "Захист власної точки зору", "Контроль поведінки інших"], 0], ["Вправа на зміну перспективи сприяє розвитку:", ["Емпатії", "Пам'яті", "Логічного мислення", "Уяви"], 0], ["До емоційних бар'єрів комунікації належить:", ["Страх", "Емпатія", "Довіра", "Співробітництво"], 0], ["Упереджене ставлення до співрозмовника є прикладом:", ["Комунікативного бар'єру", "Активного слухання", "Перефразування", "Емпатійного реагування"], 0], ["Основною причиною виникнення комунікативних бар'єрів є:", ["Наявність зворотного зв'язку", "Нерозуміння або спотворення інформації", "Ефективне слухання", "Високий рівень довіри"], 1], ["Для подолання комунікативних бар'єрів доцільно використовувати:", ["Активне слухання", "Ігнорування співрозмовника", "Маніпулятивні техніки", "Тиск"], 0], ["Конфлікт у комунікації часто виникає через:", ["Відкрите обговорення проблем", "Непорозуміння та неефективний зворотний зв'язок", "Уважне слухання", "Емоційну компетентність"], 1], ["Яка поведінка демонструє високий рівень емоційного інтелекту?", ["Ігнорування переживань співрозмовника", "Усвідомлення власних емоцій і врахування емоцій інших", "Агресивне відстоювання позиції", "Уникнення контактів"], 1], ["Який інструмент найбільше сприяє встановленню довіри у професійній взаємодії?", ["Емпатія", "Критика", "Контроль", "Конкуренція"], 0], ["Психологічною основою ефективних переговорів є:", ["Емоційна компетентність сторін", "Формальна влада", "Примус", "Конкуренція"], 0], ["Відображення емоцій у техніках слухання означає:", ["Повторення фактів", "Вербалізацію емоцій співрозмовника", "Надання порад", "Критику позиції співрозмовника"], 1], ["Для організаційного психолога емпатія є важливою тому, що допомагає:", ["Маніпулювати працівниками", "Краще розуміти потреби та переживання персоналу", "Контролювати особисте життя співробітників", "Уникати конфліктних ситуацій"], 1], ["Високий рівень емоційної компетентності в організації сприяє:", ["Покращенню комунікації та психологічного клімату", "Посиленню конфліктності", "Зростанню міжособистісних бар'єрів", "Зменшенню ефективності командної роботи"], 0]], [["Емоційне лідерство ґрунтується на:", ["Використанні формальної влади", "Уміннях розуміти та управляти емоціями людей", "Адміністративному контролі", "Системі покарань"], 1], ["Основною характеристикою емоційного лідера є:", ["Жорсткий контроль підлеглих", "Високий рівень емоційного інтелекту", "Авторитарність", "Формалізованість стосунків"], 1], ["Хто популяризував концепцію резонансного лідерства?", ["Р. Бар-Он", "Д. Гоулман", "С. Шехтер", "К. Саарні"], 1], ["Резонансне лідерство передбачає:", ["Створення позитивного емоційного настрою в колективі", "Застосування жорстких санкцій", "Повне дистанціювання від працівників", "Постійний контроль діяльності"], 0], ["Харизматичний лідер впливає на підлеглих насамперед через:", ["Посадові повноваження", "Особистісну привабливість та натхнення", "Матеріальні стимули", "Систему звітності"], 1], ["Яка риса найбільш характерна для харизматичного лідера?", ["Байдужість до команди", "Уміння надихати послідовників", "Уникнення відповідальності", "Пасивність"], 1], ["Емоційний клімат організації це:", ["Сукупність емоційних настроїв та взаємин у колективі", "Система матеріальної мотивації", "Організаційна структура підприємства", "Стиль документації"], 0], ["Позитивний емоційний клімат сприяє:", ["Зниженню продуктивності", "Підвищенню мотивації персоналу", "Посиленню конфліктів", "Плинності кадрів"], 1], ["Який чинник найбільше впливає на емоційний клімат команди?", ["Поведінка керівника", "Розмір офісу", "Кількість працівників", "Тип обладнання"], 0], ["Групова емоційна компетентність означає:", ["Здатність команди ефективно управляти колективними емоціями", "Високий рівень IQ учасників групи", "Наявність формального лідера", "Відсутність конфліктів"], 0], ["До проявів групової емоційної компетентності належить:", ["Взаємна підтримка членів команди", "Конкуренція за ресурси", "Уникнення спілкування", "Формалізація взаємин"], 0], ["Високий рівень EI керівника сприяє:", ["Формуванню довіри в команді", "Посиленню конфліктів", "Зниженню мотивації персоналу", "Погіршенню комунікації"], 0], ["Який компонент емоційного інтелекту допомагає лідеру розуміти потреби працівників?", ["Емпатія", "Саморегуляція", "Наполегливість", "Конкурентність"], 0], ["Саморегуляція керівника дозволяє:", ["Контролювати власні емоційні реакції", "Уникати спілкування", "Зменшувати відповідальність", "Ігнорувати конфлікти"], 0], ["Успішний лідер у кризовій ситуації:", ["Поширює паніку", "Демонструє впевненість та емоційну стійкість", "Уникає прийняття рішень", "Перекладає відповідальність"], 1], ["Психологічна безпека команди означає:", ["Відсутність контролю", "Можливість відкрито висловлювати думки без страху осуду", "Відсутність розбіжностей", "Дотримання службової дисципліни"], 1], ["Який показник свідчить про низький рівень психологічної безпеки?", ["Відкрите обговорення проблем", "Страх працівників висловлювати власну думку", "Взаємодопомога у колективі", "Конструктивний зворотний зв'язок"], 1], ["Конфлікт у команді найчастіше виникає через:", ["Різні цілі та інтереси учасників", "Узгодженість дій", "Командну підтримку", "Ефективну комунікацію"], 0], ["Емоційний інтелект допомагає керівнику:", ["Конструктивно управляти конфліктами", "Уникати відповідальності", "Посилювати напруженість", "Маніпулювати співробітниками"], 0], ["Найбільш ефективною стратегією керівника під час конфлікту є:", ["Ігнорування проблеми", "Пошук взаємовигідного рішення", "Тиск на одну зі сторін", "Покарання всіх учасників"], 1], ["Роль емпатії в управлінні конфліктами полягає у:", ["Кращому розумінні позицій учасників", "Посиленні критики", "Уникненні спілкування", "Застосуванні примусу"], 0], ["Високий рівень довіри в команді зазвичай призводить до:", ["Покращення взаємодії та продуктивності", "Зниження залученості персоналу", "Зростання конфліктності", "Погіршення комунікацій"], 0], ["Яка поведінка керівника сприяє формуванню позитивного емоційного клімату?", ["Визнання досягнень працівників", "Публічне приниження співробітників", "Уникнення комунікації", "Несправедлива оцінка роботи"], 0], ["До лідерських компетентностей належить:", ["Управління міжособистісними відносинами", "Лише професійна експертність", "Контроль особистого життя працівників", "Ізоляція від колективу"], 0], ["Який чинник сприяє розвитку згуртованості команди?", ["Взаємна підтримка та довіра", "Прихована конкуренція", "Ігнорування проблем", "Часта зміна складу команди"], 0], ["Групова емоційна компетентність допомагає:", ["Підвищувати ефективність спільної діяльності", "Посилювати міжособистісні бар'єри", "Збільшувати конфліктність", "Уникати спільних рішень"], 0], ["Однією з ознак емоційно компетентного лідера є:", ["Здатність надихати команду на досягнення цілей", "Байдужість до проблем працівників", "Авторитарне управління", "Імпульсивність"], 0], ["Що найбільше впливає на формування командної довіри?", ["Послідовна та справедлива поведінка керівника", "Формальні накази", "Система штрафів", "Матеріальні ресурси"], 0], ["Управління конфліктами через емоційний інтелект передбачає:", ["Усвідомлення емоцій усіх учасників ситуації", "Ігнорування переживань сторін", "Використання адміністративного тиску", "Уникнення обговорення проблем"], 0], ["Емоційний інтелект лідера є важливим тому, що:", ["Сприяє ефективному управлінню людьми та розвиткові команди", "Замінює професійні знання", "Дозволяє відмовитися від комунікації", "Унеможливлює виникнення конфліктів"], 0]], [["Професійне вигорання це:", ["Тимчасове зниження працездатності", "Стан емоційного, фізичного та психічного виснаження внаслідок тривалого стресу", "Звичайна втома після роботи", "Відсутність професійних знань"], 1], ["Автором концепції професійного вигорання вважають:", ["К. Саарні", "Г. Фрейденбергера", "Д. Гоулмана", "С. Шехтера"], 1], ["До основних компонентів професійного вигорання належить:", ["Емоційне виснаження", "Самоактуалізація", "Когнітивна гнучкість", "Харизматичність"], 0], ["Яка ознака найбільш характерна для емоційного виснаження?", ["Підвищення енергійності", "Відчуття спустошеності та хронічної втоми", "Зростання мотивації", "Підвищення творчої активності"], 1], ["Одним із методів профілактики професійного вигорання є:", ["Збільшення навантаження", "Дотримання балансу між роботою та відпочинком", "Ізоляція від колег", "Відмова від соціальних контактів"], 1], ["Емоційне здоров'я персоналу передбачає:", ["Відсутність будь-яких емоцій", "Здатність ефективно управляти своїм емоційним станом", "Виключно фізичне здоров'я", "Формальне виконання завдань"], 1], ["Високий рівень емоційного здоров'я працівників сприяє:", ["Зростанню продуктивності праці", "Підвищенню конфліктності", "Плинності кадрів", "Емоційному виснаженню"], 0], ["Найбільш суттєвим наслідком професійного вигорання для організації є:", ["Підвищення мотивації персоналу", "Зниження ефективності роботи", "Зростання інноваційності", "Покращення клімату"], 1], ["Well-being у сучасних організаціях означає:", ["Матеріальне забезпечення працівників", "Загальне фізичне, психологічне та соціальне благополуччя персоналу", "Виключно корпоративні заходи", "Рівень прибутку підприємства"], 1], ["Концепція well-being спрямована на:", ["Підвищення психологічного благополуччя працівників", "Скорочення чисельності персоналу", "Підвищення контролю керівництва", "Формалізацію комунікацій"], 0], ["Психологічна безпека в організації означає:", ["Можливість відкрито висловлювати думки без страху покарання", "Відсутність керівника", "Відсутність критики", "Формальність взаємин"], 0], ["Психологічно безпечне середовище сприяє:", ["Розвитку довіри та співпраці", "Зростанню страху помилки", "Збільшенню прихованих конфліктів", "Ізоляції працівників"], 0], ["До чинників психологічної безпеки належить:", ["Повага до думки працівників", "Авторитарний стиль керівництва", "Публічне приниження співробітників", "Ігнорування проблем персоналу"], 0], ["Емоційний інтелект допомагає запобігати вигоранню через:", ["Краще усвідомлення та регуляцію емоцій", "Збільшення робочого навантаження", "Підвищення рівня тривоги", "Уникнення спілкування"], 0], ["Яка психодіагностична методика розроблена Дж. Маєром, П. Саловеєм і Д. Карузо?", ["EQ-i", "MSCEIT", "MMPI", "16PF"], 1], ["Методика EQ-i була розроблена:", ["Д. Гоулманом", "Р. Бар-Оном", "К. Саарні", "Дж. Роттером"], 1], ["Методика ЕмІн належить:", ["Д. Люсіну", "Р. Кеттеллу", "А. Маслоу", "С. Рубінштейну"], 0], ["Діагностика емоційного інтелекту дає змогу:", ["Визначити рівень розвитку емоційних компетентностей", "Оцінити тільки рівень IQ", "Виміряти фізичну витривалість", "Визначити професійну спеціалізацію"], 0], ["Який компонент найчастіше оцінюється під час діагностики EI?", ["Управління емоціями", "Фізична сила", "Механічна пам'ять", "Швидкість читання"], 0], ["Основною метою аналізу результатів діагностики EI є:", ["Виявлення сильних і слабких сторін особистості", "Контроль поведінки працівників", "Покарання персоналу", "Визначення рівня заробітної плати"], 0], ["Тренінгові програми розвитку EI найчастіше спрямовані на розвиток:", ["Самоусвідомлення, саморегуляції та емпатії", "Технічних навичок", "Математичних здібностей", "Фізичної підготовки"], 0], ["Перший етап розробки програми розвитку EI:", ["Оцінка результатів", "Діагностика потреб учасників", "Проведення тренінгу", "Контроль знань"], 1], ["Який метод найчастіше використовується для розвитку емпатії?", ["Рольові ігри", "Контрольні роботи", "Тестування IQ", "Математичні вправи"], 0], ["Високий рівень EI працівника пов'язаний із:", ["Кращою адаптацією до організаційних змін", "Зростанням конфліктності", "Високим рівнем вигорання", "Уникненням комунікації"], 0], ["Одним із критеріїв оцінювання ефективності тренінгу EI є:", ["Зміни в емоційній компетентності учасників", "Кількість сторінок методичних матеріалів", "Тривалість тренінгу", "Кількість аудиторій"], 0], ["Який компонент благополуччя найбільше пов'язаний з емоційним інтелектом?", ["Психологічний", "Технічний", "Виробничий", "Фінансовий"], 0], ["Організаційний психолог у системі підтримки well-being виконує функцію:", ["Психологічного супроводу персоналу", "Фінансового аудиту", "Юридичного контролю", "Технічного моніторингу"], 0], ["Для оцінки рівня професійного вигорання часто використовують:", ["Опитувальник MBI", "Тест Айзенка IQ", "Тест Равена", "Шкалу Холла"], 0], ["Емоційно здорове організаційне середовище характеризується:", ["Взаємною підтримкою та довірою", "Високою напруженістю", "Постійними міжособистісними конфліктами", "Низькою залученістю працівників"], 0], ["Розвиток емоційного інтелекту в організації сприяє:", ["Підвищенню ефективності діяльності та психологічного благополуччя персоналу", "Посиленню професійного вигорання", "Зниженню продуктивності праці", "Погіршенню організаційного клімату"], 0]]];
+var Q=[];POOL.forEach(function(arr,t){arr.forEach(function(q,i){Q.push({t:t,i:i,q:q[0],o:q[1],a:q[2]});});});
+$('#poolChip').textContent=Q.length;
+var N_FINAL=40;
+
+var KEY='final_test_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+$$('[data-save]').forEach(function(el){var k=el.id;if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ el.addEventListener(el.type==='checkbox'||el.tagName==='SELECT'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();});});
+function hist(){return Array.isArray(store.hist)?store.hist:[]}
+
+/* вкладки */
+function showTab(id,scrollToTop){$$('#tabsNav button').forEach(function(x){x.classList.toggle('active',x.dataset.t===id)});$$('section.panel').forEach(function(p){p.classList.toggle('active',p.id===id)});
+ $$('#'+id+' .acc-item.open .acc-body').forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});if(id==='t-hist')drawHist();if(id==='t-map')topicInfo(curTopic);if(scrollToTop!==false)window.scrollTo({top:0,behavior:'smooth'});}
+function positionTestToolbar(){document.documentElement.style.setProperty('--test-toolbar-top',($('#tabsNav').getBoundingClientRect().height+16)+'px');}
+window.addEventListener('resize',positionTestToolbar);
+if(window.ResizeObserver)new ResizeObserver(positionTestToolbar).observe($('#tabsNav'));
+positionTestToolbar();
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){showTab(b.dataset.t)})});
+$('#goSetup').addEventListener('click',function(){showTab('t-setup')});
+
+/* карта */
+var curTopic=null;
+var lastPointer=null;
+document.addEventListener('pointermove',function(e){if(e.pointerType!=='touch')lastPointer={x:e.clientX,y:e.clientY};});
+(function(){var cx=550,cy=240,pos=[[200,70],[900,70],[180,240],[920,240],[200,410],[900,410]],h='<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#9fb0c4"/></marker></defs><g stroke="#c7d2e0" stroke-width="2" fill="none">';
+ pos.forEach(function(p,i){h+='<line class="topic-link" data-t="'+i+'" x1="'+cx+'" y1="'+cy+'" x2="'+p[0]+'" y2="'+p[1]+'" marker-end="url(#arrow)"/>'});h+='</g>';
+ h+='<rect x="440" y="200" width="220" height="80" rx="16" fill="#101826"/><text x="550" y="232" text-anchor="middle" fill="#fff" font-size="13" font-family="Orbitron">ПІДСУМКОВИЙ ТЕСТ</text><text x="550" y="256" text-anchor="middle" fill="#00e5ef" font-size="11.5" font-family="Share Tech Mono">40 з '+Q.length+' · 6 ТЕМ</text>';
+ pos.forEach(function(p,i){var t=T[i],w=270,words=t.t.split(' '),l1='',l2='';words.forEach(function(wd){if((l1+' '+wd).length<=34&&!l2)l1=(l1?l1+' ':'')+wd;else l2=(l2?l2+' ':'')+wd;});if(l2.length>36)l2=l2.slice(0,34)+'…';
+  h+='<g class="hotspot" data-t="'+i+'" tabindex="0" role="button"><rect class="hotspot-hit" x="'+(p[0]-w/2)+'" y="'+(p[1]-36)+'" width="'+w+'" height="72" rx="14" fill="transparent"/><g class="hotspot-visual"><rect x="'+(p[0]-w/2)+'" y="'+(p[1]-36)+'" width="'+w+'" height="72" rx="14" fill="#fff" stroke="'+t.c+'" stroke-width="2"/><circle cx="'+(p[0]-w/2+18)+'" cy="'+(p[1]-18)+'" r="11" fill="'+t.c+'"/><text x="'+(p[0]-w/2+18)+'" y="'+(p[1]-14)+'" text-anchor="middle" fill="#fff" font-size="11" font-family="Share Tech Mono">'+(i+1)+'</text>'+
+  '<text x="'+(p[0]+8)+'" y="'+(p[1]-12)+'" text-anchor="middle" font-size="12" font-family="Orbitron" fill="#101826">'+t.n+' · '+POOL[i].length+' пит.</text><text x="'+p[0]+'" y="'+(p[1]+8)+'" text-anchor="middle" font-size="10.5" fill="#4a5568">'+l1+'</text><text x="'+p[0]+'" y="'+(p[1]+23)+'" text-anchor="middle" font-size="10.5" fill="#4a5568">'+l2+'</text></g></g>';});
+ $('#mapSvg').innerHTML=h;
+ $$('#mapSvg .hotspot').forEach(function(g){var f=function(){topicInfo(+g.dataset.t)},link=$('#mapSvg .topic-link[data-t="'+g.dataset.t+'"]');
+  g.addEventListener('click',f);g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}});
+  g.addEventListener('pointerenter',function(e){if(e.pointerType==='touch')return;
+   var r=$('.hotspot-hit',g).getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
+   var vx=lastPointer?e.clientX-lastPointer.x:0,vy=lastPointer?e.clientY-lastPointer.y:0;
+   var travel=Math.hypot(vx,vy);
+   if(travel<1||travel>80){
+    var hx=x/r.width*2-1,hy=y/r.height*2-1;
+    if(Math.abs(hx)>.65&&Math.abs(hy)>.65){vx=-hx;vy=-hy;}
+    else{var edge=[y/r.height,(r.height-y)/r.height,x/r.width,(r.width-x)/r.width];
+     var side=edge.indexOf(Math.min.apply(null,edge));vx=side===2?1:side===3?-1:0;vy=side===0?1:side===1?-1:0;}
+   }
+   var length=Math.hypot(vx,vy),dx=Math.round(50*vx/length)/10+'px',dy=Math.round(50*vy/length)/10+'px';
+   g.style.setProperty('--hover-x',dx);g.style.setProperty('--hover-y',dy);
+   link.style.setProperty('--hover-x',dx);link.style.setProperty('--hover-y',dy);
+  });
+  g.addEventListener('pointerleave',function(){g.style.removeProperty('--hover-x');g.style.removeProperty('--hover-y');link.style.removeProperty('--hover-x');link.style.removeProperty('--hover-y');});
+ });})();
+function topicInfo(i){if(i===null||i===undefined)return;curTopic=i;var t=T[i],best=null;
+ hist().forEach(function(h){var s=h.top&&h.top[i];if(s&&s[1]){var p=Math.round(s[0]/s[1]*100);if(best===null||p>best)best=p;}});
+ $$('#mapSvg .hotspot-visual rect').forEach(function(r,k){r.setAttribute('stroke-width',k===i?4:2)});
+ $('#topicInfo').innerHTML='<b>'+t.n+'. '+t.t+'</b><br>Питань у банку: '+POOL[i].length+' · у підсумковому тесті: 6–7<br>Найкращий результат з цієї теми в історії: '+(best===null?'ще немає спроб':best+'%')+'<div class="btnrow"><button class="btn small" id="trainThis">Тренувати цю тему (10 питань)</button></div>';
+ $('#trainThis').addEventListener('click',function(){begin(pickTopics([i],10),'train');});}
+
+/* налаштування */
+$('#topicChk').innerHTML=T.map(function(t,i){return '<label class="chk" style="margin-top:6px"><input type="checkbox" class="tc" value="'+i+'" checked> '+t.n+'. '+t.t+'</label>'}).join('');
+$('#distInfo').innerHTML='З кожної з 6 тем — 6 або 7 випадкових питань (4 теми по 7, 2 теми по 6, обираються випадково). Разом — '+N_FINAL+' питань у випадковому порядку.';
+function modeSync(){var m=$('input[name=mode]:checked').value;$$('.mode').forEach(function(x){x.classList.toggle('on',$('input',x).checked)});
+ $('#timedBox').style.display=m==='timed'?'':'none';$('#trainBox').style.display=m==='train'?'':'none';$('#finalBox').style.display=m==='train'?'none':'';}
+$$('input[name=mode]').forEach(function(r){r.addEventListener('change',modeSync)});modeSync();
+
+function shuffle(a){a=a.slice();for(var k=a.length-1;k>0;k--){var j=Math.floor(Math.random()*(k+1));var t=a[k];a[k]=a[j];a[j]=t}return a}
+function idsOf(t){var r=[];Q.forEach(function(q,k){if(q.t===t)r.push(k)});return r}
+function pickStratified(n){var per=[],base=Math.floor(n/T.length),extra=n-base*T.length,ex=shuffle(T.map(function(x,i){return i})).slice(0,extra);
+ T.forEach(function(x,i){per[i]=base+(ex.indexOf(i)>=0?1:0)});var used={},out=[];
+ T.forEach(function(x,i){var c=0;shuffle(idsOf(i)).forEach(function(k){if(c<per[i]&&!used[Q[k].q]){used[Q[k].q]=1;out.push(k);c++;}});});
+ return shuffle(out);}
+function pickTopics(ts,n){var all=[],used={};ts.forEach(function(t){all=all.concat(idsOf(t))});all=shuffle(all).filter(function(k){if(used[Q[k].q])return false;used[Q[k].q]=1;return true});
+ return n==='all'?all:all.slice(0,+n);}
+
+/* тест */
+var mode='final',order=[],pos=0,ans={},perm={},flag={},finished=false,running=false,t0=0,tId=null,tEnd=0,limit=0,lastRes=null;
+var progressKey=KEY+'_progress_v1',pendingAction=null,pendingStart=null;
+function saveProgress(){if(!running||finished||!order.length)return;
+ try{sessionStorage.setItem(progressKey,JSON.stringify({v:1,mode:mode,order:order,pos:pos,ans:ans,perm:perm,flag:flag,t0:t0,limit:limit}));}catch(e){}}
+function clearProgress(){try{sessionStorage.removeItem(progressKey);}catch(e){}}
+function validProgress(d){if(!d||d.v!==1||['final','timed','train'].indexOf(d.mode)<0||!Array.isArray(d.order)||!d.order.length||d.order.length>Q.length||
+ !Number.isInteger(d.pos)||d.pos<0||d.pos>=d.order.length||!Number.isFinite(d.t0)||d.t0<=0||
+ !Number.isInteger(d.limit)||(d.mode==='timed'?d.limit<=0:d.limit!==0)||!d.ans||!d.perm||!d.flag||
+ typeof d.ans!=='object'||typeof d.perm!=='object'||typeof d.flag!=='object')return false;
+ var seen={};if(!d.order.every(function(k){if(!Number.isInteger(k)||k<0||k>=Q.length||seen[k])return false;seen[k]=true;
+  var p=d.perm[k];return Array.isArray(p)&&p.length===4&&p.slice().sort().join(',')==='0,1,2,3';}))return false;
+ return Object.keys(d.ans).every(function(k){return seen[k]&&Number.isInteger(d.ans[k])&&d.ans[k]>=0&&d.ans[k]<=3;})&&
+  Object.keys(d.flag).every(function(k){return seen[k]&&typeof d.flag[k]==='boolean';});}
+function restoreProgress(){var data;try{data=JSON.parse(sessionStorage.getItem(progressKey)||'null');}catch(e){clearProgress();return;}
+ if(!data)return;if(!validProgress(data)){clearProgress();return;}
+ mode=data.mode;order=data.order;pos=data.pos;ans=data.ans;perm=data.perm;flag=data.flag;t0=data.t0;limit=data.limit;finished=false;running=true;
+ setModeTag();$('#testEmpty').style.display='none';$('#testBox').style.display='';showTab('t-test',false);render();tick();
+ if(running){tId=setInterval(tick,1000);requestAnimationFrame(function(){
+  if(!running)return;var top=$('#t-test').getBoundingClientRect().top+window.scrollY-$('#tabsNav').getBoundingClientRect().height-16;
+  window.scrollTo(0,Math.max(0,top));});}}
+function setModeTag(){$('#modeTag').textContent='РЕЖИМ: '+(mode==='train'?'ТРЕНУВАННЯ':mode==='timed'?'ЕКЗАМЕН НА ЧАС ('+(limit/60)+' хв)':'ПІДСУМКОВИЙ');}
+function mmss(s){s=Math.max(0,s);var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r}
+function tick(){var s=Math.floor((Date.now()-t0)/1000);
+ if(limit){var left=limit-s;$('#hudTime').classList.toggle('warning',left<=300);$('#hudTime').innerHTML='ЗАЛИШИЛОСЬ: <b>'+mmss(left)+'</b>';if(left<=0){finish(true);}}
+ else{$('#hudTime').classList.remove('warning');$('#hudTime').innerHTML='ЧАС: <b>'+mmss(s)+'</b>';}}
+function requireStudent(){var name=$('#rep_name'),group=$('#rep_group'),missingName=!name.value.trim(),missingGroup=!group.value.trim();
+ name.setAttribute('aria-invalid',String(missingName));group.setAttribute('aria-invalid',String(missingGroup));
+ if(!missingName&&!missingGroup){$('#setupMsg').textContent='';return true;}
+ $('#setupMsg').textContent='Перед початком тесту введіть ПІБ та групу.';
+ showTab('t-setup',false);var field=missingName?name:group;
+ field.focus({preventScroll:true});field.scrollIntoView({block:'center',behavior:'smooth'});return false;}
+['#rep_name','#rep_group'].forEach(function(s){$(s).addEventListener('input',function(){this.removeAttribute('aria-invalid');if($('#rep_name').value.trim()&&$('#rep_group').value.trim())$('#setupMsg').textContent='';});});
+$('#startBtn').addEventListener('click',function(){var m=$('input[name=mode]:checked').value,list;
+ if(!requireStudent())return;
+ if(m==='train'){var ts=$$('.tc').filter(function(c){return c.checked}).map(function(c){return +c.value});
+  if(!ts.length){$('#setupMsg').textContent='Оберіть хоча б одну тему.';return;}list=pickTopics(ts,$('#tcnt').value);}
+ else list=pickStratified(N_FINAL);
+ $('#setupMsg').textContent='';begin(list,m);});
+function begin(list,m,confirmed){if(!requireStudent())return;
+ if(running&&!finished&&!confirmed){
+  if(mode==='timed'&&Object.keys(ans).length<order.length){showTab('t-test',false);showExamWarning(order.length-Object.keys(ans).length);return;}
+  pendingStart={list:list,mode:m};openActionDialog('restart','Поточну спробу ще не завершено. Почати новий тест замість неї?');return;
+ }
+ mode=m;order=list;pos=0;ans={};flag={};perm={};finished=false;running=true;clearFinishWarning();
+ order.forEach(function(k){perm[k]=$('#shufOpt').checked?shuffle([0,1,2,3]):[0,1,2,3]});
+ limit=m==='timed'?(+$('#tlim').value||40)*60:0;
+ clearInterval(tId);t0=Date.now();tick();tId=setInterval(tick,1000);
+ setModeTag();
+ $('#testEmpty').style.display='none';$('#testBox').style.display='';showTab('t-test');render();}
+function isOk(k){return ans[k]===Q[k].a}
+function render(){var k=order[pos],q=Q[k],a=ans[k],p=perm[k];
+ $('#qcount').textContent='Питання '+(pos+1)+' / '+order.length;
+ var n=Object.keys(ans).length;$('#answeredTag').textContent='Відповідей: '+n+' / '+order.length+' · ⚑ '+Object.keys(flag).filter(function(x){return flag[x]}).length;
+ $('#pbar').style.width=(n/order.length*100)+'%';
+ $('#nv').innerHTML=order.map(function(x,i){var s=ans[x],c='';if(s!==undefined)c=mode==='train'?(isOk(x)?'ok':'bad'):'done';
+  return '<button type="button" data-p="'+i+'" class="'+c+(i===pos?' cur':'')+'" aria-label="Питання '+(i+1)+'"'+(flag[x]?' style="border-color:var(--amber);border-width:2px"':'')+'>'+(flag[x]?'⚑':'')+(i+1)+'</button>';}).join('');
+ $$('#nv button').forEach(function(b){b.addEventListener('click',function(){pos=+b.dataset.p;render();});});
+ $('#topicTag').innerHTML='<b>'+T[q.t].n+'</b> · '+T[q.t].t;
+ $('#flagBtn').textContent=flag[k]?'⚑ Зняти позначку':'⚑ Позначити';
+ $('#qtext').textContent=(pos+1)+'. '+q.q;
+ var locked=finished||(mode==='train'&&a!==undefined);
+ $('#opts').innerHTML=p.map(function(oi,di){var c='opt';
+  if(locked){c+=' locked';if(oi===q.a)c+=' correct';else if(oi===a)c+=' wrong';}else if(a===oi)c+=' sel';
+  return '<button type="button" class="'+c+'" data-i="'+oi+'"><span class="k">'+L[di]+'</span><span>'+q.o[oi]+'</span></button>';}).join('');
+ $$('#opts .opt').forEach(function(b){b.addEventListener('click',function(){choose(+b.dataset.i);});});
+ var fb=$('#fb');
+ if(locked&&a!==undefined||finished){var ok=a===q.a;fb.className='callout show '+(ok?'advice':'important');
+  fb.innerHTML='<b class="lbl">'+(ok?'Правильно':a===undefined?'Без відповіді':'Неправильно')+'</b>'+(ok?'Ваша відповідь вірна.':'Правильна відповідь: <b>'+L[p.indexOf(q.a)]+') '+q.o[q.a]+'</b>');}
+ else{fb.className='callout';fb.innerHTML='';}
+ $('#prevBtn').disabled=pos===0;$('#nextBtn').disabled=pos===order.length-1;$('#finBtn').disabled=finished;$('#flagBtn').disabled=finished;saveProgress();}
+function choose(i){if(finished)return;var k=order[pos];if(mode==='train'&&ans[k]!==undefined)return;ans[k]=i;clearFinishWarning();render();}
+$('#prevBtn').addEventListener('click',function(){if(pos>0){pos--;render();}});
+$('#nextBtn').addEventListener('click',function(){if(pos<order.length-1){pos++;render();}});
+$('#flagBtn').addEventListener('click',function(){var k=order[pos];flag[k]=!flag[k];render();});
+$('#jumpBtn').addEventListener('click',function(){for(var i=0;i<order.length;i++){var j=(pos+1+i)%order.length;if(ans[order[j]]===undefined){pos=j;render();return;}}$('#answeredTag').textContent='Усі питання мають відповідь ✓';});
+document.addEventListener('keydown',function(e){
+ if($('#actionDialog').open||!$('#t-test').classList.contains('active')||!order.length||/INPUT|SELECT|TEXTAREA/.test(e.target.tagName))return;
+ if(e.key>='1'&&e.key<='4'){choose(perm[order[pos]][+e.key-1]);}
+ else if(e.key==='ArrowRight'&&pos<order.length-1){pos++;render();}
+ else if(e.key==='ArrowLeft'&&pos>0){pos--;render();}
+ else if((e.key==='f'||e.key==='F'||e.key==='а'||e.key==='А')&&!finished){var k=order[pos];flag[k]=!flag[k];render();}});
+function clearFinishWarning(){$('#finishWarning').hidden=true;$('#finBtn').classList.remove('shake');}
+function showExamWarning(left){var warning=$('#finishWarning');
+ warning.textContent='Ви відповіли не на всі запитання. Без відповіді залишилося: '+left+'. Щоб завершити екзамен, дайте відповідь на кожне запитання.';
+ warning.hidden=false;$('#finBtn').classList.remove('shake');void $('#finBtn').offsetWidth;$('#finBtn').classList.add('shake');
+ warning.scrollIntoView({block:'nearest',behavior:'smooth'});}
+function openActionDialog(action,message){pendingAction=action;
+ $('#actionDialogTitle').textContent=action==='restart'?'Почати новий тест?':'Завершити тест?';
+ $('#actionDialogText').textContent=message;
+ $('#confirmAction').textContent=action==='restart'?'Почати новий тест':'Завершити тест';
+ if(!$('#actionDialog').open)$('#actionDialog').showModal();$('#cancelAction').focus();}
+$('#cancelAction').addEventListener('click',function(){pendingAction=null;pendingStart=null;$('#actionDialog').close();});
+$('#actionDialog').addEventListener('cancel',function(){pendingAction=null;pendingStart=null;});
+$('#confirmAction').addEventListener('click',function(){var action=pendingAction;pendingAction=null;$('#actionDialog').close();
+ if(action==='finish')finish(false);
+ else if(action==='restart'&&pendingStart){var next=pendingStart;pendingStart=null;begin(next.list,next.mode,true);}});
+$('#finBtn').addEventListener('animationend',function(){this.classList.remove('shake');});
+$('#finBtn').addEventListener('click',function(){var left=order.length-Object.keys(ans).length,fl=order.filter(function(k){return flag[k]}).length;
+ if(mode==='timed'&&left>0){showExamWarning(left);return;}
+ if(mode==='timed'){finish(false);return;}
+ var msg=(left?'Без відповіді: '+left+'. ':'')+(fl?'Позначених питань: '+fl+'. ':'');
+ if(msg){openActionDialog('finish',msg+'Завершити тест зараз?');return;}
+ finish(false);});
+window.addEventListener('beforeunload',saveProgress);
+
+/* результат */
+function grade(p){return p>=90?['A','відмінно']:p>=82?['B','дуже добре']:p>=74?['C','добре']:p>=64?['D','задовільно']:p>=60?['E','достатньо']:['FX / F','незадовільно'];}
+function finish(auto){if(finished)return;finished=true;running=false;pendingAction=null;pendingStart=null;clearProgress();clearFinishWarning();if($('#actionDialog').open)$('#actionDialog').close();clearInterval(tId);tEnd=Math.floor((Date.now()-t0)/1000);if(limit)tEnd=Math.min(tEnd,limit);
+ var ok=0,bad=0,skip=0,top=T.map(function(){return [0,0]});
+ order.forEach(function(k){var a=ans[k];top[Q[k].t][1]++;if(a===undefined)skip++;else if(a===Q[k].a){ok++;top[Q[k].t][0]++;}else bad++;});
+ var pct=Math.round(ok/order.length*100),g=grade(pct);
+ lastRes={ok:ok,bad:bad,skip:skip,pct:pct,top:top,auto:auto,grade:g};
+ $('#rScore').textContent=ok+'/'+order.length;$('#rBar').style.width=pct+'%';
+ $('#rStats').innerHTML='<div>Правильних<b>'+ok+'</b></div><div>Помилок<b>'+bad+'</b></div><div>Без відповіді<b>'+skip+'</b></div><div>Відсоток<b>'+pct+'%</b></div><div>Час<b>'+mmss(tEnd)+'</b></div>';
+ $('#rMsg').textContent=(auto?'Час вийшов — тест завершено автоматично. ':'')+(pct>=90?'Відмінний результат! Матеріал курсу засвоєно впевнено.':pct>=74?'Добрий результат. Перегляньте розбір помилок, щоб закріпити матеріал.':pct>=60?'Є прогалини. Повторіть слабкі теми й пройдіть тест ще раз.':'Потрібно повторити матеріал курсу. Почніть з найслабшої теми.');
+ var scaled=Math.round(ok/order.length*100);$('#rGrade').textContent=scaled+' / 100 · '+g[0]+' («'+g[1]+'»)';
+ $('#rGradeNote').textContent='Пропорційний перерахунок відсотка правильних відповідей на 100-бальну шкалу та ECTS. '+(mode==='train'?'Це тренування — для підсумкової самоперевірки оберіть режим «Підсумковий». ':'')+'Остаточну оцінку визначає викладач.';
+ var weak=-1,wp=101;
+ $('#topicBars').innerHTML=top.map(function(s,i){if(!s[1])return '';var p=Math.round(s[0]/s[1]*100);if(p<wp){wp=p;weak=i;}
+  return '<div class="qhead" style="margin-top:8px"><span><b style="color:'+T[i].c+'">'+T[i].n+'</b> · '+T[i].t+'</span><span>'+s[0]+' / '+s[1]+' · '+p+'%</span></div><div class="progress"><i style="width:'+p+'%;background:'+(p>=74?'linear-gradient(90deg,var(--cyan),var(--ok))':p>=60?'var(--amber)':'var(--magenta)')+'"></i></div>';}).join('');
+ lastRes.weak=weak;
+ $('#weakBox').innerHTML=weak>=0?(wp===100?'<b class="lbl">Без слабких місць</b>Усі теми пройдено без помилок.':'<b class="lbl">Найслабша тема</b>'+T[weak].n+'. '+T[weak].t+' — '+wp+'%. Рекомендуємо повторити лекцію та потренувати цю тему.'):'';
+ $('#weakBtn').style.display=weak>=0&&wp<100?'':'none';
+ var miss=order.filter(function(k){return !isOk(k)});$('#errBtn').style.display=miss.length?'':'none';
+ $('#resEmpty').style.display='none';$('#resBox').style.display='';$('#revEmpty').style.display='none';$('#revBox').style.display='';
+ revFilter='bad';buildReview();
+ var h=hist();h.unshift({d:new Date().toLocaleString('uk-UA'),m:mode,ok:ok,n:order.length,pct:pct,time:tEnd,top:top});store.hist=h.slice(0,10);persist();
+ render();showTab('t-result');}
+$('#againBtn').addEventListener('click',function(){showTab('t-setup');});
+$('#errBtn').addEventListener('click',function(){var miss=order.filter(function(k){return !isOk(k)});if(miss.length)begin(shuffle(miss),'train');});
+$('#weakBtn').addEventListener('click',function(){if(lastRes&&lastRes.weak>=0)begin(pickTopics([lastRes.weak],10),'train');});
+
+/* розбір */
+var revFilter='bad';
+function buildReview(){var opts=[['bad','Лише помилки'],['all','Усі питання']].concat(T.map(function(t,i){return ['t'+i,t.n]}));
+ $('#revFilter').innerHTML=opts.map(function(o){return '<button type="button" data-f="'+o[0]+'" class="'+(revFilter===o[0]?'active':'')+'">'+o[1]+'</button>'}).join('');
+ $$('#revFilter button').forEach(function(b){b.addEventListener('click',function(){revFilter=b.dataset.f;buildReview();});});
+ var list=order.map(function(k,i){return [k,i]}).filter(function(x){var k=x[0];if(revFilter==='bad')return !isOk(k);if(revFilter==='all')return true;return Q[k].t===+revFilter.slice(1);});
+ $('#mistakes').innerHTML=list.length?list.map(function(x){var k=x[0],q=Q[k],a=ans[k],p=perm[k],good=isOk(k);
+  return '<div class="mist" style="border-left-color:'+(good?'var(--ok)':'var(--magenta)')+'"><h4>'+(x[1]+1)+'. '+q.q+' <span class="mono" style="font-size:11px;color:var(--ink-soft)">['+T[q.t].n+']</span></h4>'+
+  (good?'<p class="r">✔ '+L[p.indexOf(a)]+') '+q.o[a]+'</p>':'<p class="y">Ваша відповідь: '+(a===undefined?'— без відповіді —':L[p.indexOf(a)]+') '+q.o[a])+'</p><p class="r">Правильно: '+L[p.indexOf(q.a)]+') '+q.o[q.a]+'</p>')+'</div>';}).join(''):'<div class="callout advice"><b class="lbl">Порожньо</b>'+(revFilter==='bad'?'Помилок немає — усі відповіді правильні.':'У цьому фільтрі немає питань.')+'</div>';}
+
+/* історія */
+function drawHist(){var h=hist().slice().reverse(),W=700,H=220,L0=50,R0=20,T0=20,B0=40,s='';
+ s+='<g font-family="Share Tech Mono" font-size="11" fill="#4a5568">';[0,25,50,75,100].forEach(function(v){var y=T0+(H-T0-B0)*(1-v/100);s+='<line x1="'+L0+'" x2="'+(W-R0)+'" y1="'+y+'" y2="'+y+'" stroke="#dde5ee"/><text x="'+(L0-8)+'" y="'+(y+4)+'" text-anchor="end">'+v+'%</text>';});
+ var y60=T0+(H-T0-B0)*0.4;s+='<line x1="'+L0+'" x2="'+(W-R0)+'" y1="'+y60+'" y2="'+y60+'" stroke="#c97a00" stroke-dasharray="5 4"/><text x="'+(W-R0)+'" y="'+(y60-5)+'" text-anchor="end" fill="#c97a00">поріг 60%</text>';
+ if(!h.length){s+='<text x="'+(W/2)+'" y="'+(H/2)+'" text-anchor="middle">Ще немає завершених спроб</text></g>';$('#histSvg').innerHTML=s;$('#histTable').innerHTML='';return;}
+ var step=h.length>1?(W-L0-R0-40)/(h.length-1):0,pts=h.map(function(r,i){return [L0+20+i*step,T0+(H-T0-B0)*(1-r.pct/100)]});
+ s+='<polyline fill="none" stroke="#00b8c4" stroke-width="3" points="'+pts.map(function(p){return p.join(',')}).join(' ')+'"/>';
+ pts.forEach(function(p,i){var r=h[i];s+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="6" fill="'+(r.m==='train'?'#c97a00':'#d6006e')+'"><title>'+r.d+': '+r.pct+'%</title></circle><text x="'+p[0]+'" y="'+(p[1]-10)+'" text-anchor="middle" fill="#101826">'+r.pct+'</text><text x="'+p[0]+'" y="'+(H-B0+18)+'" text-anchor="middle">#'+(i+1)+'</text>';});
+ s+='<circle cx="'+(L0+8)+'" cy="'+(H-8)+'" r="5" fill="#d6006e"/><text x="'+(L0+18)+'" y="'+(H-4)+'">підсумковий / на час</text><circle cx="'+(L0+200)+'" cy="'+(H-8)+'" r="5" fill="#c97a00"/><text x="'+(L0+210)+'" y="'+(H-4)+'">тренування</text></g>';
+ $('#histSvg').innerHTML=s;
+ var MN={final:'підсумковий',timed:'на час',train:'тренування'};
+ $('#histTable').innerHTML='<table><tr><th>#</th><th>Дата</th><th>Режим</th><th>Бал</th><th>%</th><th>Час</th></tr>'+hist().map(function(r,i){return '<tr><td>'+(hist().length-i)+'</td><td>'+r.d+'</td><td>'+(MN[r.m]||r.m)+'</td><td>'+r.ok+' / '+r.n+'</td><td>'+r.pct+'%</td><td>'+mmss(r.time)+'</td></tr>'}).join('')+'</table>';}
+$('#histClear').addEventListener('click',function(){if(!confirm('Очистити історію спроб?'))return;store.hist=[];persist();drawHist();});
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws,colors,cc){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){var hd=ri===0||ci===0;var col=(!hd&&ci===cc&&colors)?colors[ri-1]:undefined;return cell(ws[ci],para(c,{b:hd||ci===cc,s:20,sa:40,c:col}),hd)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function buildDoc(){var r=lastRes,n=$('#rep_name').value.trim(),g=$('#rep_group').value.trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var MN={final:'підсумковий (40 питань з усіх тем)',timed:'екзамен на час ('+(limit/60)+' хв)',train:'тренування'};
+ x+=para('РЕЗУЛЬТАТИ ПІДСУМКОВОГО ТЕСТУВАННЯ',{b:1,s:34,al:'center',sa:60})+para('Тестові завдання з усіх шести тем курсу (40 випадкових питань)',{b:1,s:26,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d)+para('Режим: '+MN[mode])+para('Час проходження: '+mmss(tEnd)+(r.auto?' (час вийшов, тест завершено автоматично)':''));
+ x+=para('Результат: '+r.ok+' з '+order.length+' ('+r.pct+'%). Помилок: '+r.bad+', без відповіді: '+r.skip,{b:1});
+ x+=para('Орієнтовна оцінка (самоперевірка): '+r.pct+' / 100, ECTS '+r.grade[0]+' («'+r.grade[1]+'»). Остаточну оцінку визначає викладач.',{i:1,sa:200});
+ x+=para('Результат за темами',{b:1,s:28,c:'007A84',k:1,sb:120});
+ var tr=[['Тема','Назва','Правильно','%']];r.top.forEach(function(s,i){if(s[1])tr.push([T[i].n,T[i].t,s[0]+' / '+s[1],Math.round(s[0]/s[1]*100)+'%']);});
+ x+=table(tr,[1300,5838,1300,1200]);
+ x+=para('Відповіді на питання',{b:1,s:28,c:'007A84',k:1,sb:120});
+ var rows=[['№','Тема','Питання','Відповідь студента','Правильна відповідь','Результат']],colors=[];
+ order.forEach(function(k,i){var q=Q[k],a=ans[k],good=a===q.a;
+  rows.push([String(i+1),String(q.t+1),q.q,a===undefined?'— без відповіді —':q.o[a],q.o[q.a],good?'правильно':(a===undefined?'пропущено':'неправильно')]);colors.push(good?'0A9B5C':'D6006E');});
+ x+=table(rows,[500,700,3000,2069,2069,1300],colors,5);
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=enc.encode(f.d),c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){if(!lastRes)return;if(!requireStudent()){$('#repMsg').textContent='Введіть ПІБ та групу на вкладці «Старт», щоб завантажити звіт.';return;}
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+ var blob=zip([
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc()}]);
+ var nm=$('#rep_name').value.trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Підсумковий_тест_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent='Файл сформовано. Перевірте папку «Завантаження».';});
+drawHist();
+restoreProgress();
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label',dark?'Увімкнути світлу тему':'Увімкнути темну тему');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update();}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+</body>
+</html>

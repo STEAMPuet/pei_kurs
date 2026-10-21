@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ПСИХОЛОГІЯ.LAB — Самостійна робота 6. Емоційний інтелект та психологічне здоров'я</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+(function(){
+  var theme='light';
+  try{if(localStorage.getItem('pei-theme')==='dark')theme='dark'}catch(e){}
+  document.documentElement.dataset.theme=theme;
+})();
+</script>
+<style>
+:root{
+  --bg:#eef2f6; --bg-panel:#ffffff; --bg-soft:#f4f7fb; --grid:#dde5ee;
+  --ink:#101826; --ink-soft:#4a5568;
+  --cyan:#00b8c4; --cyan-deep:#007a84; --magenta:#d6006e; --amber:#c97a00; --ok:#0a9b5c;
+  --line:#c7d2e0; --shadow:0 6px 20px rgba(16,24,38,.08); --radius:14px;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
+  linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
+  color:var(--ink); font-family:'Rajdhani','Segoe UI',Arial,sans-serif; font-size:16px; line-height:1.5; min-height:100vh;}
+::selection{background:var(--cyan); color:#fff;}
+h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0 0 .5em; letter-spacing:.02em;}
+code,.mono{font-family:'Share Tech Mono',monospace;}
+p{margin:0 0 12px;}
+.frame{max-width:1180px; margin:0 auto; padding:18px 18px 80px;}
+.hud-bar{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:10px 18px; background:var(--bg-panel);
+  border:1px solid var(--line); border-radius:10px; margin-bottom:16px; box-shadow:var(--shadow);
+  font-family:'Share Tech Mono',monospace; font-size:12px; color:var(--ink-soft);}
+.hud-bar .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:6px;box-shadow:0 0 6px var(--ok);}
+header.hero{position:relative; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:38px 34px; margin-bottom:22px; overflow:hidden; box-shadow:var(--shadow);}
+header.hero::before{content:""; position:absolute; inset:0;
+  background:repeating-linear-gradient(115deg, rgba(0,184,196,.05) 0 2px, transparent 2px 26px),
+             repeating-linear-gradient(25deg, rgba(214,0,110,.04) 0 2px, transparent 2px 30px); pointer-events:none;}
+.hero-tag{display:inline-block; font-family:'Share Tech Mono',monospace; font-size:12px; letter-spacing:.15em;
+  color:var(--cyan-deep); background:rgba(0,184,196,.1); border:1px solid rgba(0,184,196,.4); padding:4px 10px; border-radius:20px; margin-bottom:14px;}
+header.hero h1{font-size:clamp(22px,4vw,38px); background:linear-gradient(90deg,var(--ink) 30%, var(--cyan-deep));
+  -webkit-background-clip:text; background-clip:text; color:transparent; max-width:880px;}
+header.hero p.sub{color:var(--ink-soft); max-width:760px; font-size:18px; margin:6px 0 18px;}
+.hero-meta{display:flex; flex-wrap:wrap; gap:10px;}
+.chip{background:var(--bg-soft); border:1px solid var(--line); border-radius:8px; padding:6px 12px; font-size:13px; font-family:'Share Tech Mono',monospace;}
+nav.tabs{position:sticky; top:8px; z-index:50; display:flex; flex-wrap:wrap; gap:8px; background:var(--tabs-bg);
+  backdrop-filter:blur(6px); border:1px solid var(--line); border-radius:12px; padding:8px; margin-bottom:22px; box-shadow:var(--shadow);}
+nav.tabs button{font-family:'Share Tech Mono',monospace; font-size:12px; background:var(--bg-soft); color:var(--ink-soft);
+  border:1px solid var(--line); padding:8px 11px; border-radius:8px; cursor:pointer; transition:.15s;}
+nav.tabs button:hover{border-color:var(--cyan); color:var(--cyan-deep);}
+nav.tabs button.active{background:var(--solid); color:#fff; border-color:var(--ink); box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+section.panel{display:none; background:var(--bg-panel); border:1px solid var(--line); border-radius:var(--radius);
+  padding:26px 28px; margin-bottom:22px; box-shadow:var(--shadow);}
+section.panel.active{display:block; animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+section.panel h2{font-size:21px; border-bottom:2px solid var(--cyan); padding-bottom:10px; margin-bottom:18px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;}
+section.panel h2 .idx{font-family:'Share Tech Mono',monospace; font-size:13px; color:#fff; background:var(--magenta); padding:2px 9px; border-radius:6px;}
+section.panel h3{font-size:16px; color:var(--cyan-deep); margin-top:22px;}
+.lede{color:var(--ink-soft); font-size:17px; margin-bottom:14px;}
+.acc-item{border:1px solid var(--line); border-radius:10px; margin-bottom:10px; overflow:hidden;}
+.acc-head{cursor:pointer; padding:12px 16px; background:var(--bg-soft); display:flex; justify-content:space-between; align-items:center; gap:10px;
+  font-family:'Orbitron','Segoe UI',sans-serif; font-size:13px; font-weight:600; width:100%; border:0; text-align:left; color:var(--ink);}
+.acc-head:hover{color:var(--cyan-deep);}
+.acc-head .arrow{transition:transform .25s; color:var(--magenta);}
+.acc-item.open .arrow{transform:rotate(90deg);}
+.acc-body{max-height:0; overflow:hidden; transition:max-height .3s ease; padding:0 16px;}
+.acc-item.open .acc-body{padding:14px 16px 6px;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
+.grid4{display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
+@media(max-width:900px){.grid4{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:800px){.grid2,.grid3{grid-template-columns:1fr;} section.panel{padding:20px 16px;} header.hero{padding:26px 18px;}}
+@media(max-width:480px){.grid4{grid-template-columns:1fr;}}
+.card{background:var(--bg-soft); border:1px solid var(--line); border-radius:12px; padding:16px;}
+.card h4{color:var(--magenta); font-size:14px; margin-bottom:6px;}
+.flip{perspective:900px; height:210px; cursor:pointer; outline:none;}
+.flip.sm{height:190px;}
+.flip-in{position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d;}
+.flip.on .flip-in{transform:rotateY(180deg);}
+.flip:focus-visible .flip-in{box-shadow:0 0 0 3px rgba(0,184,196,.5); border-radius:12px;}
+.face{position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden; border-radius:12px; border:1px solid var(--line);
+  padding:14px; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; overflow:auto;}
+.face.front{background:var(--bg-soft);}
+.face.front h4{font-size:14px; color:var(--ink); margin:0 0 6px;}
+.face.front .em{font-size:26px; margin-bottom:4px;}
+.face.front small{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep);}
+.face.back{background:rgba(0,184,196,.08); border-color:var(--cyan); transform:rotateY(180deg); font-size:14px; justify-content:flex-start;}
+.tip{border-bottom:2px dotted var(--magenta); cursor:help; position:relative; font-weight:600; outline:none;}
+.tooltip-popup{position:fixed; box-sizing:border-box; width:max-content; max-width:min(282px,calc(100vw - 24px));
+  background:var(--solid); color:#fff; padding:8px 11px; border-radius:8px; font-size:13px; font-weight:500; line-height:1.35;
+  overflow-wrap:anywhere; white-space:normal; overflow:auto; z-index:1000; box-shadow:var(--shadow);}
+.tooltip-popup[hidden]{display:none;}
+.callout{border-radius:10px; padding:12px 16px; margin:14px 0; border:1px solid; border-left-width:5px;}
+.callout b.lbl{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; letter-spacing:.08em; text-transform:uppercase; margin-bottom:4px;}
+.callout.important{background:rgba(214,0,110,.06); border-color:var(--magenta);} .callout.important .lbl{color:var(--magenta);}
+.callout.attention{background:rgba(201,122,0,.08); border-color:var(--amber);} .callout.attention .lbl{color:var(--amber);}
+.callout.advice{background:rgba(10,155,92,.08); border-color:var(--ok);} .callout.advice .lbl{color:var(--ok);}
+.bignum{text-align:center;} .bignum .n{font-family:'Orbitron','Segoe UI',sans-serif; font-size:38px; font-weight:900; color:var(--magenta); line-height:1.1;}
+.bignum small{display:block; font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--cyan-deep); margin-bottom:8px;}
+.bignum p{font-size:14px; text-align:left; margin:0;}
+.check{display:flex; gap:12px; align-items:flex-start; padding:11px 14px; border:1px solid var(--line); border-radius:10px; margin-bottom:8px; background:var(--bg-soft); cursor:pointer; transition:.15s;}
+.check:hover{border-color:var(--cyan);}
+.check input{width:20px; height:20px; margin-top:2px; accent-color:var(--cyan-deep); flex:none; cursor:pointer;}
+.check.done{background:rgba(10,155,92,.1); border-color:var(--ok);}
+.check.done span{text-decoration:line-through; color:var(--ink-soft);}
+.progress{height:10px; background:var(--grid); border-radius:6px; overflow:hidden; margin:6px 0 10px;}
+.progress i{display:block; height:100%; width:0; background:linear-gradient(90deg,var(--cyan),var(--ok)); transition:width .3s;}
+.btn{font-family:'Share Tech Mono',monospace; font-size:13px; cursor:pointer; border:1px solid var(--ink); background:var(--solid); color:#fff; padding:9px 16px; border-radius:8px; transition:.15s;}
+.btn:hover{background:var(--cyan-deep); border-color:var(--cyan-deep);}
+.btn.ghost{background:transparent; color:var(--ink); border-color:var(--line);}
+.btn.ghost:hover{border-color:var(--cyan-deep); color:var(--cyan-deep); background:transparent;}
+.btn.big{font-size:15px; padding:13px 22px;}
+.btn.small{padding:5px 10px; font-size:11px;}
+.btnrow{display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; align-items:center;}
+.codebox{position:relative; background:var(--solid); color:#d8e6f2; border-radius:10px; padding:16px; margin:12px 0;}
+.codebox pre{margin:0; white-space:pre-wrap; font-family:'Share Tech Mono',monospace; font-size:13px; line-height:1.55; padding-right:90px;}
+.codebox .btn{position:absolute; top:10px; right:10px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.3);}
+.codebox .btn:hover{background:var(--cyan-deep);}
+.fld{margin-bottom:16px;}
+.fld label{display:block; font-family:'Orbitron','Segoe UI',sans-serif; font-size:12px; color:var(--cyan-deep); margin-bottom:5px; line-height:1.4;}
+textarea,input.txt{width:100%; border:1px solid var(--line); border-radius:8px; padding:9px 11px; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; background:var(--bg-panel); color:var(--ink); resize:vertical; line-height:1.4;}
+textarea{min-height:70px;}
+textarea:focus,input.txt:focus{outline:none; border-color:var(--cyan); box-shadow:0 0 0 3px rgba(0,184,196,.18);}
+.wc{font-family:'Share Tech Mono',monospace; font-size:11px; color:var(--ink-soft); text-align:right; margin-top:2px;}
+.crit{border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; background:var(--bg-soft);}
+.crit h4{font-size:13.5px; color:var(--magenta);}
+.crit .fld{margin-bottom:6px;} .crit .fld label{color:var(--ink-soft);}
+.qbox{border-top:2px dashed var(--line); margin-top:22px; padding-top:16px;}
+.qbox .tag{font-family:'Share Tech Mono',monospace; font-size:12px; color:#fff; background:var(--cyan-deep); padding:2px 9px; border-radius:6px; display:inline-block; margin-bottom:8px;}
+.result-box{background:var(--bg-soft); border:1px solid var(--cyan); border-radius:10px; padding:14px 18px; margin:10px 0; font-size:15.5px;}
+.stat{display:grid; grid-template-columns:minmax(120px,1.2fr) 3fr auto; gap:12px; align-items:center; margin-bottom:6px; font-family:'Share Tech Mono',monospace; font-size:12.5px;}
+.stat .progress{margin:0;}
+@media(max-width:600px){.stat{grid-template-columns:1fr; gap:2px;}}
+.quiz-q{border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:14px; background:var(--bg-soft);}
+.quiz-q h4{font-size:14px; margin-bottom:10px; line-height:1.4;}
+.quiz-opt{display:block; width:100%; text-align:left; margin-bottom:7px; padding:9px 12px; border-radius:8px; border:1px solid var(--line); background:var(--bg-panel); cursor:pointer; font-family:'Rajdhani','Segoe UI',sans-serif; font-size:15px; color:var(--ink);}
+.quiz-opt:hover{border-color:var(--cyan);}
+.quiz-opt.correct{background:rgba(10,155,92,.14); border-color:var(--ok); font-weight:700;}
+.quiz-opt.wrong{background:rgba(214,0,110,.12); border-color:var(--magenta);}
+.quiz-q.locked .quiz-opt{cursor:default;}
+.quiz-fb{font-size:14px; margin-top:8px; color:var(--ink-soft); display:none;} .quiz-fb.show{display:block;}
+#quizScoreBar{position:sticky; bottom:10px; background:var(--solid); color:#fff; padding:10px 16px; border-radius:10px; font-family:'Share Tech Mono',monospace; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; box-shadow:var(--shadow);}
+footer{text-align:center; color:var(--ink-soft); font-family:'Share Tech Mono',monospace; font-size:12px; padding:20px 0 0;}
+
+/* Theme controls and palette */
+:root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#101722;--bg-panel:#182332;--bg-soft:#202e40;--grid:#1c293a;
+  --ink:#edf3fa;--ink-soft:#b9c7d8;--line:#41536a;
+  --cyan:#00b8c4;--cyan-deep:#65dce5;--magenta:#f065ad;--amber:#efb65a;--ok:#42cc95;
+  --surface:#182332;--muted:#b9c7d8;--accent:#00b8c4;--bad:#f065ad;
+  --okbg:rgba(66,204,149,.15);--badbg:rgba(240,101,173,.15);
+  --solid:#293e56;--tabs-bg:rgba(24,35,50,.94);--shadow:0 6px 20px rgba(0,0,0,.25);
+}
+.theme-toggle{position:relative;z-index:70;margin-left:auto;flex:none;
+  display:inline-flex;align-items:center;gap:7px;padding:8px 12px;
+  border:1px solid var(--line);border-radius:8px;background:var(--bg-soft);color:var(--ink);
+  font:600 12px 'Share Tech Mono','Segoe UI',sans-serif;cursor:pointer;min-height:36px;}
+.theme-toggle:hover{border-color:var(--cyan);}
+.theme-toggle:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;}
+:root[data-theme="dark"] .codebox{background:#0d1420;}
+@media print{.theme-toggle{display:none;}}
+</style>
+</head>
+<body>
+<style>
+.chain{display:flex;align-items:stretch;gap:6px;flex-wrap:wrap;margin:10px 0;}
+.chain button{flex:1 1 170px;font-family:'Orbitron','Segoe UI',sans-serif;font-size:12px;font-weight:600;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px 10px;cursor:pointer;transition:.15s;text-align:center;}
+.chain button small{display:block;font-family:'Share Tech Mono',monospace;font-weight:400;font-size:10.5px;color:var(--cyan-deep);margin-bottom:4px;}
+.chain button:hover{border-color:var(--cyan);}
+.chain button.active{background:var(--solid);color:#fff;border-color:var(--ink);box-shadow:0 0 0 2px rgba(0,184,196,.35);}
+.chain button.active small{color:#9fe8ee;}
+.chain .ar{align-self:center;color:var(--magenta);font-weight:700;}
+@media(max-width:800px){.chain .ar{display:none;}}
+.lik{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 4px;}
+.lik button{font-family:'Share Tech Mono',monospace;font-size:13px;min-width:40px;height:36px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg-panel);cursor:pointer;color:var(--ink);}
+.lik button:hover{border-color:var(--cyan);}
+.lik button.on{background:var(--cyan);border-color:var(--cyan);color:#101826;}
+.likl{display:flex;justify-content:space-between;font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--ink-soft);max-width:380px;}
+</style>
+<div class="frame">
+  <div class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / SELF-STUDY — ОНЛАЙН</span><span>САМОСТІЙНА РОБОТА: 06</span></div>
+
+  <header class="hero">
+    <span class="hero-tag">// SELF_STUDY_06 · BURNOUT.WELLBEING + REPORT.DOCX</span>
+    <h1>Емоційний інтелект та психологічне здоров'я: від вигорання до успіху</h1>
+    <p class="sub">Сучасне робоче середовище висуває до фахівців дедалі вищі емоційні, когнітивні та соціальні вимоги. Концепція вигорання К. Маслач, модель благополуччя К. Ріфф, методики MSCEIT та ЕмІн і програми розвитку ЕІ персоналу. Вивчайте матеріал, відповідайте на питання й завдання, а потім завантажте звіт у форматі Word.</p>
+    <div class="hero-meta">
+      <span class="chip">📚 4 частини</span>
+      <span class="chip">✍️ питання й 4 завдання</span>
+      <span class="chip">❓ 6 питань тесту</span>
+      <span class="chip">📄 звіт у форматі .docx</span>
+    </div>
+  </header>
+
+  <nav class="tabs" id="tabsNav">
+    <button data-t="t-intro" class="active">🗺 Огляд</button>
+    <button data-t="t-1">01 · Вигорання</button>
+    <button data-t="t-2">02 · Благополуччя</button>
+    <button data-t="t-3">03 · Вимірювання</button>
+    <button data-t="t-4">04 · Розвиток персоналу</button>
+    <button data-t="t-work">✍ Завдання</button>
+    <button data-t="t-quiz">❓ Тест</button>
+    <button data-t="t-rep">📄 Звіт</button>
+  </nav>
+
+  <!-- ОГЛЯД -->
+  <section class="panel active" id="t-intro">
+    <h2><span class="idx">MAP</span> Карта самостійної роботи</h2>
+    <p class="lede">Здатність розуміти власні та чужі емоції, зберігати психологічну стійкість і протистояти професійному вигоранню стає не просто перевагою, а необхідною компетентністю. Матеріал розглядає ключові наукові концепції та практичні інструменти формування психологічно здорових та ефективних команд.</p>
+    <div class="callout important"><b class="lbl">Важливо</b>Відповіді автоматично зберігаються в цьому браузері (якщо він дозволяє) і потраплять у звіт. На іншому пристрої поля будуть порожні — завантажте звіт до завершення роботи.</div>
+    <h3>Чотири опорні точки (натисніть на картку)</h3>
+    <div class="grid4">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>1. Концепція вигорання</h4><small>натисни, щоб перевернути</small></div><div class="face back">Модель К. Маслач і С. Джексон: три компоненти синдрому та їх наслідки.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>2. Психологічне благополуччя</h4><small>натисни, щоб перевернути</small></div><div class="face back">Шестивимірна модель К. Ріфф як антипод вигоранню.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>3. Інструменти вимірювання</h4><small>натисни, щоб перевернути</small></div><div class="face back">MSCEIT та ЕмІн — наукові методики оцінки емоційного інтелекту.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><h4>4. Розвиток персоналу</h4><small>натисни, щоб перевернути</small></div><div class="face back">Програми формування емоційної компетентності в організації.</div></div></div>
+    </div>
+    <h3>Чек-лист вивчення</h3>
+    <div class="cl" data-id="cl0"></div>
+    <div class="callout advice"><b class="lbl">Порада</b>У кінці кожної частини є питання для відповіді. Пишіть своїми словами, а не переписуйте тези: звіт має показувати ваше розуміння.</div>
+    <h3>Форми звітності</h3>
+    <div class="acc-item"><button class="acc-head">Що саме потрібно здати <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>Питання до частин 1–4:</b> короткі письмові відповіді.</p><p><b>Завдання 1:</b> профіль благополуччя за моделлю Ріфф (з діаграмою).</p><p><b>Завдання 2:</b> навчальний скринінг ознак вигорання та рефлексія.</p><p><b>Завдання 3:</b> тренажер вибору методики діагностики ЕІ.</p><p><b>Завдання 4:</b> проєкт програми розвитку ЕІ персоналу.</p><p><b>Додатково:</b> результат тесту самоперевірки.</p></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 1 -->
+  <section class="panel" id="t-1">
+    <h2><span class="idx">01</span> Концепція професійного вигорання: К. Маслач та С. Джексон</h2>
+    <p class="lede">Крістіна Маслач і Сьюзан Джексон довели, що вигорання — не метафора, а значуще психологічне явище з чіткими вимірюваними характеристиками. Робота, розпочата в 1970-х, була формалізована в 1981 році разом з інструментом <span class="tip" tabindex="0" data-tip="MBI (Maslach Burnout Inventory) — опитувальник вигорання Маслач, який вимірює три компоненти синдрому.">MBI</span>, що досі залишається «золотим стандартом» діагностики вигорання.</p>
+    <h3>Три компоненти синдрому (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🪫</div><h4>Емоційне виснаження</h4><small>натисни</small></div><div class="face back">Спустошеність і вичерпаність ресурсів: людина більше не здатна «давати». Хронічна втома, «порожнеча», неможливість відновитися навіть після відпочинку; головний біль, розлади сну. Центральний симптом.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🧊</div><h4>Деперсоналізація</h4><small>натисни</small></div><div class="face back">Цинічне, відсторонене, знецінювальне ставлення до клієнтів, колег, підлеглих. Захисний механізм, що зменшує біль від виснаження: байдужість, дратівливість, «робота на автопілоті».</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">📉</div><h4>Редукція досягнень</h4><small>натисни</small></div><div class="face back">Відчуття некомпетентності, втрата сенсу роботи, сумніви у виборі професії; знижуються ініціатива й бажання вдосконалюватися. Найнебезпечніший компонент для довгострокової кар'єри.</div></div></div>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div class="card"><h4>Групи ризику</h4>Найуразливіші — «допомагаючі» професії: лікарі, педагоги, соціальні працівники, психологи, менеджери з роботи з клієнтами. Але вигорання може охопити будь-яку сферу з тривалим емоційним навантаженням, нечіткими очікуваннями чи дефіцитом ресурсів.</div>
+      <div class="card"><h4>Організаційний контекст</h4>Вигорання — не слабкість особистості, а реакція на несприятливі умови праці: надмірне навантаження, відсутність контролю, несправедливість, розмитість цінностей, дефіцит визнання. Зміна цих умов — головна стратегія профілактики.</div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Маслач наголошувала: вигорання — проблема не лише людини, а й робочого середовища. Тому профілактика має включати і розвиток ресурсів фахівця, і зміну організаційних умов.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 1</span><div id="q1"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 2 -->
+  <section class="panel" id="t-2">
+    <h2><span class="idx">02</span> Модель психологічного благополуччя К. Ріфф</h2>
+    <p class="lede">Керол Ріфф (1989) розширила вузьке гедоністичне розуміння щастя як задоволення. Її <span class="tip" tabindex="0" data-tip="Евдемонізм — підхід, за яким благополуччя полягає в реалізації потенціалу та сенсу, а не лише в задоволенні.">евдемоністична</span> модель стверджує: справжнє благополуччя — не відсутність страждань і не лише позитивні емоції, а повноцінне функціонування особистості в усіх ключових вимірах. Це дорожня карта для середовища, що захищає від вигорання.</p>
+    <h3>Шість вимірів благополуччя (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🧭</div><h4>Автономія</h4><small>натисни</small></div><div class="face back">Діяти відповідно до власних стандартів і цінностей, а не під тиском очікувань; стійкість до соціального тиску, незалежні рішення навіть в організаційній ієрархії.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🛠</div><h4>Управління середовищем</h4><small>натисни</small></div><div class="face back">Компетентність в організації власного оточення: ефективно використовувати можливості й формувати сприятливі умови для розвитку.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🌱</div><h4>Особистісне зростання</h4><small>натисни</small></div><div class="face back">Відчуття безперервного розвитку, відкритість до нового досвіду. Не досягнутий стан, а процес: готовність змінюватися й розширювати межі.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🤝</div><h4>Позитивні стосунки</h4><small>натисни</small></div><div class="face back">Теплі, довірливі, емпатичні стосунки; здатність до близькості, взаємності й турботи. Пов'язано із задоволеністю командною роботою та належністю.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🎯</div><h4>Мета в житті</h4><small>натисни</small></div><div class="face back">Чіткі цілі, переконання й смисли; минуле й теперішнє сприймаються як осмислений шлях. Потужний захисний фактор проти вигорання.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🪞</div><h4>Самоприйняття</h4><small>натисни</small></div><div class="face back">Позитивне ставлення до себе, прийняття сильних і слабких сторін і помилок минулого. Фундамент стійкості: лише той, хто приймає себе, здатен відновлюватися після невдач.</div></div></div>
+    </div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Презентація стверджує, що низькі показники «мети в житті» та «особистісного зростання» — найточніші предиктори вигорання, надійніші за стрес чи навантаження. Це сильне твердження: перш ніж посилатися на нього, знайдіть конкретне дослідження. Загальновизнаним є інше — що ці виміри благополуччя пов'язані з нижчим ризиком вигорання.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 2</span><div id="q2"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 3 -->
+  <section class="panel" id="t-3">
+    <h2><span class="idx">03</span> Інструменти вимірювання: MSCEIT та методика ЕмІн</h2>
+    <p class="lede">Точна діагностика — відправна точка будь-якої програми розвитку. Існують два принципово різні класи методик: <b>тести здібностей</b>, що вимірюють реальні вміння, та <b>опитувальники самозвіту</b>, що фіксують суб'єктивне сприйняття власних здібностей.</p>
+    <div class="grid2">
+      <div class="card"><h4>MSCEIT — тест здібностей</h4><p class="mono" style="font-size:12px;color:var(--cyan-deep)">Дж. Маєр, П. Саловей, Д. Карузо (2002)</p>Базується на чотиригілковій моделі ЕІ. Не питає «наскільки ви добрі в розпізнаванні емоцій», а перевіряє здібність конкретними завданнями. Відповіді оцінюються за нормами <b>консенсусу</b> та <b>експертною</b>. Найбільш науковий інструмент у галузі.</div>
+      <div class="card"><h4>ЕмІн — опитувальник самозвіту</h4><p class="mono" style="font-size:12px;color:var(--cyan-deep)">Д. Люсін (2006, 2009)</p>ЕІ — здатність розуміти та управляти емоціями у двох напрямках: <b>міжособистісний ЕІ (МЕІ)</b> — емоції інших; <b>внутрішньоособистісний ЕІ (ВЕІ)</b> — власні емоції. 46 тверджень, 5 шкал: розуміння й управління чужими емоціями, розуміння й управління власними, контроль експресії.</div>
+    </div>
+    <h3>Чотири гілки MSCEIT (натисніть на гілку)</h3>
+    <div class="chain" id="chain"></div>
+    <div class="result-box" id="chainBox"></div>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>У презентації для першої гілки згадано «музичні описи». У MSCEIT сприйняття емоцій перевіряється на обличчях і зображеннях (пейзажі, абстрактні малюнки); музичних завдань у тесті немає.</div>
+    <div class="acc-item"><button class="acc-head">Порівняння та вибір методики <span class="arrow">▶</span></button>
+      <div class="acc-body"><p><b>MSCEIT</b> доцільний для дослідницьких цілей, відбору на позиції, що вимагають об'єктивно підтвердженого рівня ЕІ, та наукових проєктів.</p><p><b>ЕмІн</b> — для швидкого скринінгу, командної діагностики, коучингових програм і ситуацій, де важлива власна рефлексія учасника.</p><p>У багатьох програмах ефективно <b>поєднують</b> обидва підходи.</p></div></div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 3</span><div id="q3"></div></div>
+  </section>
+
+  <!-- ЧАСТИНА 4 -->
+  <section class="panel" id="t-4">
+    <h2><span class="idx">04</span> Розроблення програм розвитку емоційного інтелекту персоналу</h2>
+    <p class="lede">ЕІ піддається розвитку — тож організації можуть системно інвестувати в психологічні компетенції команд. Ефективна програма — не одноразовий тренінг, а комплексна багаторівнева стратегія, що впроваджується поетапно на всіх рівнях структури.</p>
+    <h3>Ключові блоки програми (натисніть на картку)</h3>
+    <div class="grid3">
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">👥</div><h4>Тренінги та воркшопи</h4><small>натисни</small></div><div class="face back">Психоедукація, рольові ігри, кейси, зворотний зв'язок у безпечному середовищі; когнітивний, поведінковий та емоційний компоненти. Тривалість — не менше 3–6 місяців.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🎯</div><h4>Індивідуальний коучинг</h4><small>натисни</small></div><div class="face back">Адресна робота із зонами розвитку з діагностики (MSCEIT чи ЕмІн), з вимірюваними цілями. Особливо ефективний для керівників.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🎨</div><h4>Арттерапія та тілесні практики</h4><small>натисни</small></div><div class="face back">Малюнкові техніки, музикотерапія, психодрама, тілесно-орієнтовані методи — для емоцій, які важко вербалізувати; ефективні для профілактики вигорання.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">🛡</div><h4>Психологічно безпечне середовище</h4><small>натисни</small></div><div class="face back">У токсичній культурі програми не працюють. Помилки — можливість навчання, зворотний зв'язок — норма. Безпека — передумова, а не наслідок розвитку ЕІ.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">📏</div><h4>Вимірювання результатів</h4><small>натисни</small></div><div class="face back">Повторна діагностика через 6 і 12 місяців; додатково — MBI, плинність, задоволеність, залученість, ефективність команд.</div></div></div>
+      <div class="flip" tabindex="0" role="button"><div class="flip-in"><div class="face front"><div class="em">♻️</div><h4>Сталий розвиток</h4><small>натисни</small></div><div class="face back">Від разових інтервенцій — до культури навчання: регулярні check-in, ЕІ в оцінці персоналу й кар'єрному плануванні, внутрішні фасилітатори.</div></div></div>
+    </div>
+    <div class="callout important"><b class="lbl">Важливо</b>Інвестиція в емоційну компетентність персоналу — не витрата, а стратегічний актив. Емоційно інтелектуальна організація — організація майбутнього.</div>
+    <div class="qbox"><span class="tag">ПИТАННЯ ДО ЧАСТИНИ 4</span><div id="q4"></div></div>
+  </section>
+
+  <!-- ЗАВДАННЯ -->
+  <section class="panel" id="t-work">
+    <h2><span class="idx">TASK</span> Завдання для самостійної роботи</h2>
+    <p class="lede">Завдання 1–4 спираються на матеріал частин 1–4. Виконуйте їх у відкритих полях: усе потрапить у звіт.</p>
+    <h3>Чек-лист виконання</h3>
+    <div class="cl" data-id="cl1"></div>
+
+    <h3>Завдання 1. Мій профіль благополуччя за моделлю К. Ріфф</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Оцініть кожен вимір від 1 до 10 і наведіть приклад. Профіль побудується автоматично та потрапить у звіт Word як діаграма.</div>
+    <div id="t1fields"></div>
+
+    <h3>Завдання 2. Навчальний скринінг ознак вигорання</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Оцініть, як часто за останній місяць з вами траплялося описане (навчання, робота, волонтерство): 0 — ніколи, 6 — щодня. Твердження складено за моделлю Маслач для навчальної мети — це <b>не методика MBI</b> і не діагноз.</div>
+    <div class="callout important"><b class="lbl">Важливо</b>Якщо ви помічаєте в себе тривалі виражені ознаки виснаження, порушення сну чи апатію, варто звернутися до психолога (наприклад, психологічної служби закладу освіти) або лікаря.</div>
+    <div id="t2fields"></div>
+
+    <h3>Завдання 3. Тренажер вибору методики діагностики</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для кожної організаційної ситуації оберіть доцільніший інструмент: MSCEIT, ЕмІн чи поєднання обох. Результат автоматично потрапить у звіт.</div>
+    <div id="trainBox"></div>
+    <div class="result-box mono" id="trainScore" style="font-size:13px;"></div>
+
+    <h3>Завдання 4. Проєкт програми розвитку ЕІ персоналу</h3>
+    <div class="callout attention"><b class="lbl">Зверніть увагу</b>Для умовної організації розробіть програму на 6–12 місяців за шістьма блоками з частини 4. У звіті Word блоки буде оформлено таблицею.</div>
+    <div class="callout advice"><b class="lbl">Порада</b>Шаблон опису організації можна скопіювати нижче.</div>
+    <div class="codebox"><button class="btn small copy">Копіювати</button>
+<pre>Організація: сфера, кількість працівників, структура.
+Проблема: які ознаки вигорання / низького ЕІ спостерігаються.
+Мета програми: ... (вимірювано: що і на скільки зміниться за 12 місяців).
+Цільові групи: керівники / лінійний персонал / нові працівники.
+Терміни: місяці 1–2 — діагностика; 3–8 — тренінги й коучинг; 9–12 — закріплення й повторна оцінка.</pre></div>
+    <div id="t4fields"></div>
+  </section>
+
+  <!-- ТЕСТ -->
+  <section class="panel" id="t-quiz">
+    <h2><span class="idx">QZ</span> Тест для самоперевірки</h2>
+    <p class="lede">Оберіть відповідь — одразу з'явиться «правильно/неправильно» та пояснення. Результат потрапить у звіт.</p>
+    <div id="quizBox"></div>
+    <div id="quizScoreBar"><span id="quizScore">Результат: 0 / 6</span><button class="btn small" id="quizReset">Пройти знову</button></div>
+  </section>
+
+  <!-- ЗВІТ -->
+  <section class="panel" id="t-rep">
+    <h2><span class="idx">DOC</span> Звіт для завантаження</h2>
+    <p class="lede">Перевірте заповненість, вкажіть дані студента та завантажте звіт у форматі Word (.docx).</p>
+    <div class="grid2">
+      <div class="fld"><label for="rep_name">ПІБ студента</label><input class="txt" id="rep_name" required data-save placeholder="Прізвище Ім'я По батькові"></div>
+      <div class="fld"><label for="rep_group">Група</label><input class="txt" id="rep_group" required data-save placeholder="Наприклад, ПС-31"></div>
+    </div>
+    <h3>Заповненість</h3>
+    <div id="stats"></div>
+    <div class="callout important"><b class="lbl">Важливо</b>Порожні поля у звіті позначаються як «не заповнено». Файл формується у вашому браузері й нікуди не надсилається.</div>
+    <div class="btnrow">
+      <button class="btn big" id="dlBtn">⬇ Завантажити звіт (.docx)</button>
+      <button class="btn ghost" id="clearBtn">Очистити всі відповіді</button>
+    </div>
+    <div id="repMsg" class="mono" style="font-size:12.5px;color:var(--ink-soft)"></div>
+  </section>
+
+  <footer>ПСИХОЛОГІЯ.LAB · Самостійна робота 6 · Емоційний інтелект та психологічне здоров'я: від вигорання до успіху</footer>
+</div>
+
+<script>
+(function(){
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var BR=[
+ {n:'Гілка 1 — Сприйняття емоцій',d:'Розпізнавання емоцій на обличчях і зображеннях (пейзажі, абстрактні малюнки).'},
+ {n:'Гілка 2 — Використання емоцій',d:'Здатність залучати емоції для вирішення когнітивних задач і стимулювання мислення.'},
+ {n:'Гілка 3 — Розуміння емоцій',d:'Знання про те, як емоції виникають, розвиваються та поєднуються.'},
+ {n:'Гілка 4 — Управління емоціями',d:'Здатність регулювати власні та чужі емоційні стани.'}];
+var RY=['Автономія','Управління середовищем','Особистісне зростання','Позитивні стосунки','Мета в житті','Самоприйняття'];
+var RYS=['Автономія','Упр. середовищем','Зростання','Стосунки','Мета в житті','Самоприйняття'];
+var BO=[
+ {c:0,s:'Наприкінці дня я почуваюся емоційно спустошеним(-ою).'},
+ {c:0,s:'Зранку мені важко змусити себе братися до навчання чи роботи.'},
+ {c:0,s:'Навіть після відпочинку я не відчуваю, що відновився(-лася).'},
+ {c:1,s:'Я ловлю себе на байдужості до проблем людей, з якими працюю чи навчаюся.'},
+ {c:1,s:'Мене дратують прохання та запитання інших.'},
+ {c:1,s:'Я спілкуюся з людьми формально, «на автопілоті».'},
+ {c:2,s:'Я відчуваю, що роблю щось справді корисне й цінне.',r:1},
+ {c:2,s:'Я впевнений(-а), що добре справляюся зі своїми завданнями.',r:1},
+ {c:2,s:'Мені цікаво вдосконалюватися у своїй справі.',r:1}];
+var BOC=['Емоційне виснаження','Деперсоналізація','Редукція досягнень'];
+var ORG=['Надмірне навантаження','Відсутність контролю над ситуацією','Несправедливість','Розмитість цінностей','Дефіцит визнання'];
+var OPT=['MSCEIT','ЕмІн','Поєднання обох'];
+var TR=[
+ {s:'Науковий проєкт університету досліджує, чи пов\'язаний рівень ЕІ медсестер з об\'єктивними показниками якості догляду.',ok:0,e:'Для дослідження з об\'єктивними показниками потрібен тест здібностей — MSCEIT.'},
+ {s:'HR-відділ хоче за тиждень провести швидкий скринінг ЕІ 300 працівників кол-центру, щоб спланувати тренінги.',ok:1,e:'Швидкий масовий скринінг — завдання для опитувальника самозвіту ЕмІн.'},
+ {s:'Компанія відбирає кандидатів на посаду керівника служби кризових переговорів, де потрібен об\'єктивно підтверджений рівень ЕІ.',ok:0,e:'Відбір на позицію з вимогою об\'єктивно підтвердженого ЕІ — MSCEIT.'},
+ {s:'Коуч готує програму для команди, де важливо, щоб кожен учасник порефлексував власне сприйняття своїх емоційних навичок.',ok:1,e:'Коли важлива власна рефлексія учасника — ЕмІн.'},
+ {s:'Організація запускає річну програму розвитку керівників і хоче порівняти, як самооцінка ЕІ співвідноситься з реальними здібностями.',ok:2,e:'Порівняння самооцінки з об\'єктивними здібностями вимагає поєднання ЕмІн і MSCEIT.'}];
+var PB=[{k:'tr',l:'Тренінги та воркшопи'},{k:'co',l:'Індивідуальний коучинг'},{k:'art',l:'Арттерапія та тілесні практики'},{k:'safe',l:'Психологічно безпечне середовище'},{k:'meas',l:'Вимірювання результатів'},{k:'sus',l:'Сталий розвиток'}];
+var PQ=[
+ {id:'q1',l:'Чому Маслач наголошувала, що вигорання — не слабкість особистості? Які організаційні чинники його спричиняють?',r:5},
+ {id:'q2',l:'Чим евдемоністичний підхід Ріфф відрізняється від гедоністичного? Чому її модель може слугувати «антиподом» вигоранню?',r:5},
+ {id:'q3',l:'У чому принципова різниця між тестом здібностей (MSCEIT) та опитувальником самозвіту (ЕмІн)? Наведіть переваги й обмеження кожного.',r:5},
+ {id:'q4',l:'Чому психологічна безпека — передумова, а не наслідок програм розвитку ЕІ?',r:5}];
+var T1=[],T2=[],T4=[{id:'t4_org',l:'Опис умовної організації та проблеми',r:4},{id:'t4_goal',l:'Мета програми та цільові групи',r:3}];
+var CL={cl0:['Опрацьовано частину 1 (вигорання).','Опрацьовано частину 2 (модель Ріфф).','Опрацьовано частину 3 (MSCEIT та ЕмІн).','Опрацьовано частину 4 (програми розвитку).'],
+ cl1:['Дайте відповіді на питання до частин 1–4.','Заповніть профіль благополуччя за Ріфф (завдання 1).','Пройдіть навчальний скринінг вигорання (завдання 2).','Пройдіть тренажер вибору методики (завдання 3).','Розробіть проєкт програми розвитку ЕІ (завдання 4).','Пройдіть тест і завантажте звіт.']};
+var QZ=[
+ {q:'Які три компоненти вигорання виділили К. Маслач і С. Джексон?',o:['Тривога, депресія, агресія','Емоційне виснаження, деперсоналізація, редукція досягнень','Стрес, втома, конфлікт'],ok:1,e:'Ці компоненти вимірює опитувальник MBI — «золотий стандарт» діагностики вигорання.'},
+ {q:'Що таке деперсоналізація у структурі вигорання?',o:['Цинічне, відсторонене ставлення до людей, з якими доводиться працювати','Втрата пам\'яті через перевтому','Зміна професії'],ok:0,e:'Це захисний механізм: знецінення контакту зменшує біль від виснаження.'},
+ {q:'Скільки вимірів має модель психологічного благополуччя К. Ріфф?',o:['Три','Шість','Вісім'],ok:1,e:'Автономія, управління середовищем, особистісне зростання, позитивні стосунки, мета в житті, самоприйняття.'},
+ {q:'Чим MSCEIT принципово відрізняється від ЕмІн?',o:['MSCEIT — тест здібностей із завданнями, ЕмІн — опитувальник самозвіту','MSCEIT вимірює лише IQ','Це однакові методики різних авторів'],ok:0,e:'MSCEIT перевіряє здібності завданнями, ЕмІн фіксує суб\'єктивне сприйняття власних здібностей.'},
+ {q:'Які два напрямки ЕІ розрізняє Д. Люсін у методиці ЕмІн?',o:['Когнітивний і поведінковий','Міжособистісний і внутрішньоособистісний','Вербальний і невербальний'],ok:1,e:'МЕІ — розуміння й управління емоціями інших, ВЕІ — власними емоціями.'},
+ {q:'Через який час презентація радить проводити повторну діагностику для оцінки програми розвитку ЕІ?',o:['Через тиждень','Через 6 і 12 місяців','Лише один раз на початку'],ok:1,e:'Повторна діагностика через 6 і 12 місяців дає змогу відстежити динаміку; додатково — MBI, плинність, залученість.'}];
+
+function mk(id,l,r,ph){return '<div class="fld"><label for="'+id+'">'+l+'</label><textarea id="'+id+'" data-save data-wc rows="'+r+'" placeholder="'+(ph||'Введіть відповідь…')+'"></textarea><div class="wc"></div></div>';}
+function mkIn(id,l,ph,t){return '<div class="fld"><label for="'+id+'">'+l+'</label><input class="txt" id="'+id+'" data-save placeholder="'+ph+'"'+(t?' type="'+t+'" min="1" max="10"':'')+'></div>';}
+PQ.forEach(function(f){$('#'+f.id).innerHTML=mk('f_'+f.id,f.l,f.r);f.id='f_'+f.id;});
+
+/* гілки MSCEIT */
+$('#chain').innerHTML=BR.map(function(g,i){return (i?'<span class="ar">→</span>':'')+'<button data-g="'+i+'"><small>гілка '+(i+1)+'</small>'+g.n.split('— ')[1]+'</button>'}).join('');
+function showG(i){$$('#chain button').forEach(function(b){b.classList.toggle('active',+b.dataset.g===i)});$('#chainBox').innerHTML='<b>'+BR[i].n+'</b><br>'+BR[i].d;}
+$$('#chain button').forEach(function(b){b.addEventListener('click',function(){showG(+b.dataset.g)})});showG(0);
+
+/* завдання 1 — Ріфф */
+var h='';RY.forEach(function(r,i){h+='<div class="crit"><h4>'+(i+1)+'. '+r+'</h4><div class="grid2">'+mkIn('t1_'+i+'_s','Оцінка (1–10)','Від 1 до 10','number')+mkIn('t1_'+i+'_c','Приклад / пояснення','Коротко: як це проявляється у вашому житті')+'</div></div>';T1.push({id:'t1_'+i+'_s'},{id:'t1_'+i+'_c'});});
+h+='<h3>Профіль благополуччя</h3><div class="result-box" style="text-align:center;"><canvas id="radar" width="600" height="420" style="max-width:100%;height:auto;"></canvas><div id="radarTxt" style="margin-top:6px;"></div></div>';
+T1.push({id:'t1_con'});h+=mk('t1_con','Висновок: які виміри є моїми ресурсами, а які — зонами розвитку; що я можу зробити вже цього місяця',6);
+$('#t1fields').innerHTML=h;
+
+/* завдання 2 — скринінг */
+h='';BO.forEach(function(b,i){h+='<div class="crit"><h4>'+(i+1)+'. '+b.s+' <span class="mono" style="font-size:11px;color:var(--ink-soft)">['+BOC[b.c]+']</span></h4><div class="lik" data-bo="'+i+'">'+[0,1,2,3,4,5,6].map(function(n){return '<button type="button" data-v="'+n+'">'+n+'</button>'}).join('')+'</div><div class="likl"><span>0 — ніколи</span><span>3 — кілька разів на місяць</span><span>6 — щодня</span></div><input type="hidden" id="t2_b'+i+'" data-save></div>';});
+h+='<div class="result-box" id="boOut"></div><h3>Організаційні чинники, які я помічаю у своєму середовищі</h3><div class="cl" data-id="cl2"></div>';
+T2.push({id:'t2_con'});h+=mk('t2_con','Рефлексія: що найбільше виснажує мене і які кроки профілактики (особисті та організаційні) я можу зробити',6);
+$('#t2fields').innerHTML=h;
+
+/* завдання 3 — тренажер */
+var tr=[];
+$('#trainBox').innerHTML=TR.map(function(x,i){return '<div class="quiz-q" data-t="'+i+'"><h4>Ситуація '+(i+1)+'. '+x.s+'</h4>'+OPT.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('')+'<div class="btnrow"><button class="btn ghost small" id="trReset">Пройти тренажер знову</button></div>';
+function trScore(){var n=tr.filter(Boolean).length,c=tr.filter(function(x){return x&&x.ok}).length;$('#trainScore').textContent='Тренажер: '+c+' правильних із '+TR.length+' (відповідей: '+n+')'+(n===TR.length?' — завершено':'');}
+$$('#trainBox .quiz-q').forEach(function(q){var i=+q.dataset.t,x=TR[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;tr[i]={ch:OPT[j],ok:good};o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+OPT[j];
+  if(!good)opts[x.ok].classList.add('correct');var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');trScore();});});});
+trScore();
+$('#trReset').addEventListener('click',function(){tr=[];$$('#trainBox .quiz-q').forEach(function(q){q.classList.remove('locked');$$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=OPT[j]});$('.quiz-fb',q).classList.remove('show');});trScore();});
+
+/* завдання 4 — програма */
+h=T4.map(function(f){return mk(f.id,f.l,f.r)}).join('');
+PB.forEach(function(b,i){h+='<div class="crit"><h4>'+(i+1)+'. '+b.l+'</h4><div class="grid2">'+mk('t4_'+b.k+'_w','Що саме робимо (зміст, формат, учасники)',3)+mk('t4_'+b.k+'_t','Терміни та очікуваний результат',3)+'</div></div>';T4.push({id:'t4_'+b.k+'_w'},{id:'t4_'+b.k+'_t'});});
+$('#t4fields').innerHTML=h;
+
+CL.cl2=ORG;
+$$('.cl').forEach(function(c){var id=c.dataset.id;
+ c.innerHTML='<div class="progress"><i></i></div><div class="mono pt" style="font-size:12px;margin-bottom:8px"></div>'+CL[id].map(function(t,i){return '<label class="check"><input type="checkbox" data-save id="'+id+'_'+i+'"><span>'+t+'</span></label>'}).join('');});
+$('#quizBox').innerHTML=QZ.map(function(x,i){return '<div class="quiz-q" data-i="'+i+'"><h4>'+(i+1)+'. '+x.q+'</h4>'+x.o.map(function(o){return '<button class="quiz-opt">'+o+'</button>'}).join('')+'<div class="quiz-fb"></div></div>';}).join('');
+
+/* радар Ріфф */
+function scores(){return RY.map(function(r,i){var n=parseFloat($('#t1_'+i+'_s').value);return isNaN(n)?null:Math.max(0,Math.min(10,n));});}
+function drawRadar(cv,k){var c=cv.getContext('2d'),W=cv.width,H=cv.height,cx=W/2,cy=H/2+4*k,R=Math.min(W,H)/2-70*k,N=RY.length,s=scores();
+ var pageChart=cv.id==='radar',styles=getComputedStyle(document.documentElement);
+ function color(name,printColor){return pageChart?styles.getPropertyValue(name).trim():printColor;}
+ c.clearRect(0,0,W,H);c.fillStyle=color('--bg-soft','#ffffff');c.fillRect(0,0,W,H);
+ function pt(i,v){var a=-Math.PI/2+i*2*Math.PI/N;return [cx+Math.cos(a)*R*v/10,cy+Math.sin(a)*R*v/10];}
+ c.lineWidth=1*k;
+ for(var g=2;g<=10;g+=2){c.beginPath();for(var i=0;i<N;i++){var p=pt(i,g);i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]);}c.closePath();c.strokeStyle=color('--line','#c7d2e0');c.stroke();
+  c.fillStyle=color('--ink-soft','#4a5568');c.font=(10*k)+'px sans-serif';c.textAlign='left';var q=pt(0,g);c.fillText(g,q[0]+4*k,q[1]+3*k);}
+ for(var i=0;i<N;i++){var p=pt(i,10);c.beginPath();c.moveTo(cx,cy);c.lineTo(p[0],p[1]);c.strokeStyle=color('--line','#c7d2e0');c.stroke();
+  var l=pt(i,12.3);c.fillStyle=color('--ink','#101826');c.font='600 '+(13*k)+'px sans-serif';c.textAlign=Math.abs(l[0]-cx)<5?'center':(l[0]>cx?'left':'right');c.fillText(RYS[i]+(s[i]!=null?' ('+s[i]+')':''),l[0],l[1]+4*k);}
+ if(s.some(function(x){return x!=null})){c.beginPath();for(var i=0;i<N;i++){var p=pt(i,s[i]||0);i?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]);}c.closePath();
+  c.fillStyle='rgba(0,184,196,.25)';c.fill();c.strokeStyle=color('--cyan-deep','#007a84');c.lineWidth=2.5*k;c.stroke();
+  for(var i=0;i<N;i++){if(s[i]==null)continue;var p=pt(i,s[i]);c.beginPath();c.arc(p[0],p[1],4*k,0,7);c.fillStyle=color('--magenta','#d6006e');c.fill();}}}
+function extremes(){var s=scores(),f=[];s.forEach(function(v,i){if(v!=null)f.push({n:RY[i],v:v,i:i})});if(!f.length)return null;
+ var mx=Math.max.apply(null,f.map(function(x){return x.v})),mn=Math.min.apply(null,f.map(function(x){return x.v}));
+ var warn=[2,4].filter(function(i){return s[i]!=null&&s[i]<=4}).map(function(i){return RY[i]});
+ return {hi:f.filter(function(x){return x.v===mx}).map(function(x){return x.n}).join(', ')+' ('+mx+')',lo:f.filter(function(x){return x.v===mn}).map(function(x){return x.n}).join(', ')+' ('+mn+')',n:f.length,warn:warn};}
+function radar(){drawRadar($('#radar'),1);var e=extremes();
+ $('#radarTxt').innerHTML=e?'<span style="color:var(--ok)">▲ Ресурси: '+e.hi+'</span><br><span style="color:var(--magenta)">▼ Зони розвитку: '+e.lo+'</span>'+(e.warn.length?'<br><span style="color:var(--amber)">⚠ Низькі оцінки за вимірами «'+e.warn.join('», «')+'» — за презентацією, саме вони пов\'язані з ризиком вигорання.</span>':'')+(e.n<RY.length?'<br><span style="color:var(--ink-soft)">Оцінено: '+e.n+' / '+RY.length+'</span>':''):'<span style="color:var(--ink-soft)">Введіть оцінки 1–10 — профіль з\'явиться тут.</span>';}
+
+/* скринінг вигорання */
+function boRes(){var sums=[0,0,0],cnt=[0,0,0];BO.forEach(function(b,i){var n=parseInt($('#t2_b'+i).value,10);if(isNaN(n))return;sums[b.c]+=b.r?6-n:n;cnt[b.c]++;});
+ return BOC.map(function(nm,c){if(!cnt[c])return {n:nm,avg:null};var a=Math.round(sums[c]/cnt[c]*10)/10;return {n:nm,avg:a,cnt:cnt[c],lvl:a>=4?['виражені ознаки','var(--magenta)','D6006E']:(a>=2.5?['помірні ознаки','var(--amber)','C97A00']:['слабкі ознаки','var(--ok)','0A9B5C'])};});}
+function boShow(){$$('.lik').forEach(function(l){var i=+l.dataset.bo,val=$('#t2_b'+i).value;$$('button',l).forEach(function(b){b.classList.toggle('on',b.dataset.v===val)});});
+ var r=boRes(),any=r.some(function(x){return x.avg!=null});
+ $('#boOut').innerHTML=any?'<b>Середні показники за компонентами (0–6; для «редукції досягнень» пункти перераховано у зворотному ключі):</b><br>'+r.map(function(x){return x.avg==null?'<span style="color:var(--ink-soft)">'+x.n+': не оцінено</span>':'<span style="color:'+x.lvl[1]+'">'+x.n+': '+x.avg+' — '+x.lvl[0]+(x.cnt<3?' (оцінено '+x.cnt+' з 3)':'')+'</span>'}).join('<br>')+'<br><span class="mono" style="font-size:12px;color:var(--ink-soft)">Межі рівнів орієнтовні (навчальна мета).</span>':'<span style="color:var(--ink-soft)">Оцініть твердження — тут з\'явиться підсумок.</span>';}
+$$('.lik').forEach(function(l){var i=+l.dataset.bo;$$('button',l).forEach(function(b){b.addEventListener('click',function(){var el=$('#t2_b'+i);el.value=b.dataset.v;el.dispatchEvent(new Event('input'));});});});
+
+$$('#tabsNav button').forEach(function(b){b.addEventListener('click',function(){
+ $$('#tabsNav button').forEach(function(x){x.classList.remove('active')});$$('section.panel').forEach(function(p){p.classList.remove('active')});
+ b.classList.add('active');var p=$('#'+b.dataset.t);p.classList.add('active');
+ $$('.acc-item.open .acc-body',p).forEach(function(x){x.style.maxHeight=x.scrollHeight+'px'});
+ if(b.dataset.t==='t-rep')stats();window.scrollTo({top:0,behavior:'smooth'});});});
+function setAcc(i,o){var b=$('.acc-body',i);i.classList.toggle('open',o);b.style.maxHeight=o?b.scrollHeight+'px':'0px';}
+$$('.acc-item').forEach(function(i){$('.acc-head',i).addEventListener('click',function(){setAcc(i,!i.classList.contains('open'))});});
+$$('.flip').forEach(function(f){f.addEventListener('click',function(){f.classList.toggle('on')});f.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f.classList.toggle('on')}});});
+$$('.tip').forEach(function(t){t.addEventListener('click',function(e){e.stopPropagation();t.focus()});});
+
+var KEY='sr6_ei',store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){store={}}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+function words(s){var m=s.trim().match(/\S+/g);return m?m.length:0}
+function wc(el){var w=el.parentNode.querySelector('.wc');if(w)w.textContent='слів: '+words(el.value)}
+function clProg(){$$('.cl').forEach(function(c){var b=$$('input',c),n=b.filter(function(x){return x.checked}).length;
+ b.forEach(function(x){x.parentNode.classList.toggle('done',x.checked)});$('.progress i',c).style.width=(n/b.length*100)+'%';$('.pt',c).textContent=(c.dataset.id==='cl2'?'Позначено чинників: ':'Виконано кроків: ')+n+' / '+b.length;});}
+$$('[data-save]').forEach(function(el){var k=el.id;
+ if(store[k]!==undefined){if(el.type==='checkbox')el.checked=!!store[k];else el.value=store[k];}
+ if(el.hasAttribute('data-wc'))wc(el);
+ el.addEventListener(el.type==='checkbox'?'change':'input',function(){store[k]=el.type==='checkbox'?el.checked:el.value;persist();if(el.hasAttribute('data-wc'))wc(el);if(el.type==='checkbox')clProg();if(/^t1_\d_s$/.test(k))radar();if(/^t2_b\d$/.test(k))boShow();});});
+clProg();radar();boShow();
+new MutationObserver(radar).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+$$('.copy').forEach(function(btn){btn.addEventListener('click',function(){var t=$('pre',btn.parentNode).textContent;
+ function ok(){btn.textContent='Скопійовано ✓';setTimeout(function(){btn.textContent='Копіювати'},1600)}
+ function fb(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}document.body.removeChild(a)}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(ok,fb);else fb();});});
+
+var ans=[],score=0;
+$$('#quizBox .quiz-q').forEach(function(q){var i=+q.dataset.i,x=QZ[i],opts=$$('.quiz-opt',q);
+ opts.forEach(function(o,j){o.addEventListener('click',function(){
+  if(q.classList.contains('locked'))return;q.classList.add('locked');
+  var good=j===x.ok;ans[i]={ch:x.o[j],ok:good};if(good)score++;
+  o.classList.add(good?'correct':'wrong');o.textContent=(good?'✔ Правильно! ':'✘ Неправильно. ')+x.o[j];
+  if(!good)opts[x.ok].classList.add('correct');
+  var f=$('.quiz-fb',q);f.textContent=x.e;f.classList.add('show');
+  var n=ans.filter(Boolean).length;$('#quizScore').textContent='Результат: '+score+' / '+QZ.length+(n===QZ.length?' — тест завершено':'');});});});
+$('#quizReset').addEventListener('click',function(){ans=[];score=0;
+ $$('#quizBox .quiz-q').forEach(function(q){var x=QZ[+q.dataset.i];q.classList.remove('locked');
+  $$('.quiz-opt',q).forEach(function(o,j){o.classList.remove('correct','wrong');o.textContent=x.o[j]});$('.quiz-fb',q).classList.remove('show');});
+ $('#quizScore').textContent='Результат: 0 / '+QZ.length;});
+
+function filled(a){return a.filter(function(f){return $('#'+f.id).value.trim()}).length}
+function stats(){var bn=BO.filter(function(b,i){return $('#t2_b'+i).value!==''}).length;
+ var rows=[['Питання до частин',filled(PQ),PQ.length],['Завдання 1',filled(T1),T1.length],['Завдання 2',bn+filled(T2),BO.length+T2.length],['Завдання 3',tr.filter(Boolean).length,TR.length],['Завдання 4',filled(T4),T4.length],['Тест',ans.filter(Boolean).length,QZ.length]];
+ $('#stats').innerHTML=rows.map(function(r){return '<div class="stat"><span>'+r[0]+'</span><div class="progress"><i style="width:'+(r[1]/r[2]*100)+'%"></i></div><span>'+r[1]+' / '+r[2]+'</span></div>'}).join('');}
+stats();
+
+/* DOCX */
+function esc(s){return String(s).replace(/[<>&"]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]})}
+function run(t,o){o=o||{};return '<w:r><w:rPr><w:rFonts w:ascii="Calibri" w:hAnsi="Calibri" w:cs="Calibri"/>'+(o.b?'<w:b/>':'')+(o.i?'<w:i/>':'')+(o.c?'<w:color w:val="'+o.c+'"/>':'')+'<w:sz w:val="'+(o.s||24)+'"/></w:rPr><w:t xml:space="preserve">'+esc(t)+'</w:t></w:r>';}
+function para(t,o){o=o||{};return '<w:p><w:pPr>'+(o.k?'<w:keepNext/>':'')+'<w:spacing w:before="'+(o.sb||0)+'" w:after="'+(o.sa==null?120:o.sa)+'"/>'+(o.al?'<w:jc w:val="'+o.al+'"/>':'')+'</w:pPr>'+run(t,o)+'</w:p>';}
+function paras(t,o){t=(t||'').trim();if(!t)return para('— не заповнено —',{i:1,c:'888888',s:(o&&o.s)||24});return t.split(/\n+/).map(function(l){return para(l,o)}).join('');}
+function cell(w,content,hd){return '<w:tc><w:tcPr><w:tcW w:w="'+w+'" w:type="dxa"/>'+(hd?'<w:shd w:val="clear" w:color="auto" w:fill="DDF1F3"/>':'')+'</w:tcPr>'+content+'</w:tc>';}
+function table(rows,ws){var b=['top','left','bottom','right','insideH','insideV'].map(function(n){return '<w:'+n+' w:val="single" w:sz="4" w:space="0" w:color="8A99AB"/>'}).join('');
+ return '<w:tbl><w:tblPr><w:tblW w:w="9638" w:type="dxa"/><w:tblBorders>'+b+'</w:tblBorders><w:tblLayout w:type="fixed"/></w:tblPr><w:tblGrid>'+ws.map(function(w){return '<w:gridCol w:w="'+w+'"/>'}).join('')+'</w:tblGrid>'+
+ rows.map(function(r,ri){return '<w:tr>'+r.map(function(c,ci){return cell(ws[ci],ri===0||ci===0?paras(c,{b:1,s:20}):paras(c,{s:20}),ri===0||ci===0)}).join('')+'</w:tr>'}).join('')+'</w:tbl>'+para('',{sa:60});}
+function img(rid,cx,cy){return '<w:p><w:pPr><w:keepNext/><w:jc w:val="center"/></w:pPr><w:r><w:drawing><wp:inline distT="0" distB="0" distL="0" distR="0"><wp:extent cx="'+cx+'" cy="'+cy+'"/><wp:docPr id="1" name="Профіль благополуччя"/><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture"><pic:pic><pic:nvPicPr><pic:cNvPr id="1" name="radar.png"/><pic:cNvPicPr/></pic:nvPicPr><pic:blipFill><a:blip r:embed="'+rid+'"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill><pic:spPr><a:xfrm><a:off x="0" y="0"/><a:ext cx="'+cx+'" cy="'+cy+'"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr></pic:pic></a:graphicData></a:graphic></wp:inline></w:drawing></w:r></w:p>';}
+function v(id){return $('#'+id).value;}
+function buildDoc(withImg){
+ var n=v('rep_name').trim(),g=v('rep_group').trim(),d=new Date().toLocaleDateString('uk-UA'),x='';
+ var H=function(t){return para(t,{b:1,s:28,k:1,sb:240,c:'007A84'})},S=function(t){return para(t,{b:1,k:1,sb:120})};
+ x+=para('ЗВІТ',{b:1,s:36,al:'center',sa:60})+para('із самостійної роботи 6. Емоційний інтелект та психологічне здоров\'я: від вигорання до успіху',{b:1,s:28,al:'center',sa:240});
+ x+=para('Студент: '+(n||'—'))+para('Група: '+(g||'—'))+para('Дата: '+d,{sa:240});
+ x+=H('Питання до частин 1–4');
+ PQ.forEach(function(f,i){x+=S((i+1)+'. '+f.l)+paras(v(f.id));});
+ x+=H('Завдання 1. Мій профіль благополуччя за моделлю К. Ріфф');
+ var r1=[['Вимір','Оцінка (1–10)','Приклад / пояснення']];RY.forEach(function(r,i){r1.push([r,v('t1_'+i+'_s'),v('t1_'+i+'_c')])});x+=table(r1,[2638,1500,5500]);
+ if(withImg)x+=para('Профіль благополуччя',{b:1,k:1,sb:120,al:'center'})+img('rIdImg1',5486400,3840480);
+ var e=extremes();x+=para('Ресурси: '+(e?e.hi:'— не визначено —'),{b:1,c:'0A9B5C',sb:120})+para('Зони розвитку: '+(e?e.lo:'— не визначено —'),{b:1,c:'D6006E'});
+ if(e&&e.warn.length)x+=para('Увага: низькі оцінки за вимірами «'+e.warn.join('», «')+'».',{i:1,c:'C97A00'});
+ x+=S('Висновок')+paras(v('t1_con'));
+ x+=H('Завдання 2. Навчальний скринінг ознак вигорання');
+ var r2=[['Твердження','Компонент','Частота (0–6)']];BO.forEach(function(b,i){r2.push([(i+1)+'. '+b.s+(b.r?' (зворотне)':''),BOC[b.c],v('t2_b'+i)])});x+=table(r2,[5238,2600,1800]);
+ x+=S('Середні показники за компонентами');boRes().forEach(function(r){x+=r.avg==null?para(r.n+': не оцінено',{i:1,c:'888888'}):para(r.n+': '+r.avg+' — '+r.lvl[0],{c:r.lvl[2],b:1});});
+ x+=para('Примітка: навчальний скринінг за моделлю Маслач, не методика MBI і не діагноз; межі рівнів орієнтовні.',{i:1,s:20});
+ var og=ORG.filter(function(t,i){return $('#cl2_'+i).checked});x+=S('Організаційні чинники, які я помічаю')+(og.length?og.map(function(t){return para('• '+t)}).join(''):para('— не позначено —',{i:1,c:'888888'}));
+ x+=S('Рефлексія')+paras(v('t2_con'));
+ x+=H('Завдання 3. Тренажер вибору методики діагностики');
+ var c=tr.filter(function(t){return t&&t.ok}).length;x+=para('Результат: '+c+' правильних із '+TR.length+' (відповідей: '+tr.filter(Boolean).length+')',{b:1});
+ var r3=[['Ситуація','Відповідь студента','Правильно']];TR.forEach(function(t,i){var a=tr[i];r3.push([(i+1)+'. '+t.s,a?a.ch+(a.ok?' ✔':' ✘'):'— без відповіді —',OPT[t.ok]])});x+=table(r3,[5638,2000,2000]);
+ x+=H('Завдання 4. Проєкт програми розвитку ЕІ персоналу');
+ x+=S('Організація та проблема')+paras(v('t4_org'))+S('Мета програми та цільові групи')+paras(v('t4_goal'));
+ var r4=[['Блок програми','Що саме робимо','Терміни та результат']];PB.forEach(function(b){r4.push([b.l,v('t4_'+b.k+'_w'),v('t4_'+b.k+'_t')])});x+=table(r4,[2438,3600,3600]);
+ x+=H('Тест для самоперевірки')+para('Результат: '+score+' з '+QZ.length,{b:1});
+ QZ.forEach(function(q,i){var a=ans[i];x+=para((i+1)+'. '+q.q,{b:1,k:1,sb:80,sa:40});
+  x+=a?para('Відповідь студента: '+a.ch+' — '+(a.ok?'правильно':'неправильно'),{c:a.ok?'0A9B5C':'D6006E'})+(a.ok?'':para('Правильна відповідь: '+q.o[q.ok])):para('— без відповіді —',{i:1,c:'888888'});});
+ return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture"><w:body>'+x+'<w:sectPr><w:pgSz w:w="11906" w:h="16838"/><w:pgMar w:top="1134" w:right="1134" w:bottom="1134" w:left="1134" w:header="708" w:footer="708" w:gutter="0"/></w:sectPr></w:body></w:document>';}
+function radarPng(){var cv=document.createElement('canvas');cv.width=1200;cv.height=840;drawRadar(cv,2);
+ var b64=cv.toDataURL('image/png').split(',')[1],bin=atob(b64),arr=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)arr[i]=bin.charCodeAt(i);return arr;}
+function crc32(b){var crc=-1;for(var i=0;i<b.length;i++){crc^=b[i];for(var k=0;k<8;k++)crc=(crc>>>1)^(0xEDB88320&-(crc&1));}return (crc^-1)>>>0;}
+function u(n,val){var a=[];for(var i=0;i<n;i++){a.push(val&255);val=val>>>8;}return a;}
+function zip(files){var enc=new TextEncoder(),parts=[],cd=[],off=0;
+ files.forEach(function(f){var nm=enc.encode(f.n),d=typeof f.d==='string'?enc.encode(f.d):f.d,c=crc32(d);
+  var lh=new Uint8Array([].concat(u(4,0x04034b50),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0)));
+  parts.push(lh,nm,d);
+  cd.push(new Uint8Array([].concat(u(4,0x02014b50),u(2,20),u(2,20),u(2,0x800),u(2,0),u(2,0),u(2,33),u(4,c),u(4,d.length),u(4,d.length),u(2,nm.length),u(2,0),u(2,0),u(2,0),u(2,0),u(4,0),u(4,off))),nm);
+  off+=lh.length+nm.length+d.length;});
+ var cs=0;cd.forEach(function(p){cs+=p.length});
+ var end=new Uint8Array([].concat(u(4,0x06054b50),u(2,0),u(2,0),u(2,files.length),u(2,files.length),u(4,cs),u(4,off),u(2,0)));
+ return new Blob(parts.concat(cd,[end]),{type:'application/vnd.openxmlformats-officedocument.wordprocessingml.document'});}
+$('#dlBtn').addEventListener('click',function(){
+ var reportName=$('#rep_name').value.trim(),reportGroup=$('#rep_group').value.trim();
+ if(!reportName||!reportGroup){
+  $('#repMsg').textContent=!reportName&&!reportGroup?'Вкажіть ПІБ і групу, щоб завантажити документ.':!reportName?'Вкажіть ПІБ, щоб завантажити документ.':'Вкажіть групу, щоб завантажити документ.';
+  (!reportName?$('#rep_name'):$('#rep_group')).focus();
+  return;
+ }
+
+ var X='<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',p=null;
+ if(extremes()){try{p=radarPng()}catch(e){p=null}}
+ var files=[
+  {n:'[Content_Types].xml',d:X+'<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Default Extension="png" ContentType="image/png"/><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/></Types>'},
+  {n:'_rels/.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>'},
+  {n:'word/document.xml',d:buildDoc(!!p)}];
+ if(p){files.push({n:'word/_rels/document.xml.rels',d:X+'<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rIdImg1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/radar.png"/></Relationships>'},{n:'word/media/radar.png',d:p});}
+ var blob=zip(files);
+ var nm=v('rep_name').trim().replace(/[\\\/:*?"<>|]+/g,'').replace(/\s+/g,'_')||'студент';
+ var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Звіт_СР6_'+nm+'.docx';document.body.appendChild(a);a.click();document.body.removeChild(a);
+ setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+ $('#repMsg').textContent=v('rep_name').trim()?'Звіт сформовано. Перевірте папку «Завантаження».':'Звіт сформовано, але ПІБ не вказано — додайте його у файлі або повторіть завантаження.';});
+$('#clearBtn').addEventListener('click',function(){
+ if(!confirm('Очистити всі відповіді, чек-листи та дані студента?'))return;
+ store={};persist();$$('[data-save]').forEach(function(el){if(el.type==='checkbox')el.checked=false;else el.value='';if(el.hasAttribute('data-wc'))wc(el)});
+ clProg();radar();boShow();stats();$('#repMsg').textContent='Усі відповіді очищено.';});
+})();
+</script>
+<script>
+// Render outside accordion containers so overflow:hidden cannot clip tooltips.
+(function(){
+  var popup=document.createElement('div'), active=null;
+  popup.className='tooltip-popup'; popup.id='term-tooltip';
+  popup.setAttribute('role','tooltip'); popup.hidden=true;
+  document.body.appendChild(popup);
+  function hide(){
+    if(active) active.removeAttribute('aria-describedby');
+    active=null; popup.hidden=true;
+  }
+  function show(term){
+    hide(); active=term; popup.textContent=term.dataset.tip;
+    term.setAttribute('aria-describedby',popup.id);
+    popup.style.maxHeight=Math.max(1,window.innerHeight-24)+'px';
+    popup.hidden=false;
+    var r=term.getBoundingClientRect(), p=popup.getBoundingClientRect();
+    var top=r.top-p.height-8;
+    if(top<12) top=r.bottom+8;
+    top=Math.max(12,Math.min(top,window.innerHeight-p.height-12));
+    var left=Math.max(12,Math.min(r.left+(r.width-p.width)/2,document.documentElement.clientWidth-p.width-12));
+    popup.style.top=top+'px'; popup.style.left=left+'px';
+  }
+  document.querySelectorAll('.tip').forEach(function(term){
+    term.addEventListener('mouseenter',function(){show(term)});
+    term.addEventListener('mouseleave',function(e){
+      if(e.relatedTarget!==popup && document.activeElement!==term) hide();
+    });
+    term.addEventListener('focus',function(){show(term)});
+    term.addEventListener('blur',hide);
+    term.addEventListener('click',function(){term.focus();show(term)});
+  });
+  popup.addEventListener('mouseleave',function(){if(active && document.activeElement!==active) hide()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape') hide()});
+  document.addEventListener('click',function(e){if(active && !active.contains(e.target) && !popup.contains(e.target)) hide()});
+  window.addEventListener('resize',hide);
+  document.addEventListener('scroll',function(e){
+    if(e.target===popup || !active) return;
+    var r=active.getBoundingClientRect();
+    if(!active.getClientRects().length || r.bottom<0 || r.top>window.innerHeight) hide();
+    else show(active);
+  },true);
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var button=document.createElement('button');
+  button.type='button';button.className='theme-toggle';
+  function update(){
+    var dark=root.dataset.theme==='dark';
+    button.textContent=dark?'☀ Світла тема':'☾ Темна тема';
+    button.setAttribute('aria-label','Темна тема');
+    button.setAttribute('aria-pressed',String(dark));
+    button.title=dark?'Увімкнути світлу тему':'Увімкнути темну тему';
+  }
+  button.addEventListener('click',function(){
+    root.dataset.theme=root.dataset.theme==='dark'?'light':'dark';
+    try{localStorage.setItem('pei-theme',root.dataset.theme)}catch(e){}
+    update();
+  });
+  window.addEventListener('storage',function(e){
+    if(e.key==='pei-theme'){root.dataset.theme=e.newValue==='dark'?'dark':'light';update()}
+  });
+  (document.querySelector('.hud-bar')||document.body).appendChild(button);
+  update();
+})();
+</script>
+<script>
+(function(){
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('#tabsNav button[data-t]'));
+  var questions=Array.prototype.slice.call(document.querySelectorAll('.quiz-q'));
+  var checks=Array.prototype.slice.call(document.querySelectorAll('#checklist input'));
+  var flips=Array.prototype.slice.call(document.querySelectorAll('.flip'));
+  var accordions=Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
+  var signature=questions.map(function(q){return q.querySelector('h4').textContent.trim()});
+  var key='pei-page-progress:'+location.pathname;
+  var answers=questions.map(function(){return null}),restoring=false;
+  function save(){
+    if(restoring)return;
+    var active=document.querySelector('#tabsNav button.active');
+    try{sessionStorage.setItem(key,JSON.stringify({
+      v:1,questions:signature,tab:active?active.dataset.t:null,answers:answers,
+      checks:checks.map(function(x){return x.checked}),
+      flips:flips.map(function(x){return x.classList.contains('on')}),
+      accordions:accordions.map(function(x){return x.classList.contains('open')})
+    }))}catch(e){}
+  }
+  function valid(data){
+    if(!data||data.v!==1||JSON.stringify(data.questions)!==JSON.stringify(signature)||
+       !Array.isArray(data.answers)||data.answers.length!==questions.length||
+       !Array.isArray(data.checks)||data.checks.length!==checks.length||
+       !Array.isArray(data.flips)||data.flips.length!==flips.length||
+       !Array.isArray(data.accordions)||data.accordions.length!==accordions.length||
+       (data.tab!==null&&!tabs.some(function(t){return t.dataset.t===data.tab})))return false;
+    return data.answers.every(function(a,i){return a===null||(Number.isInteger(a)&&a>=0&&a<questions[i].querySelectorAll('.quiz-opt').length)})&&
+      data.checks.every(function(x){return typeof x==='boolean'})&&
+      data.flips.every(function(x){return typeof x==='boolean'})&&
+      data.accordions.every(function(x){return typeof x==='boolean'});
+  }
+  tabs.forEach(function(tab){tab.addEventListener('click',save)});
+  questions.forEach(function(q,i){
+    Array.prototype.slice.call(q.querySelectorAll('.quiz-opt')).forEach(function(option,j){
+      option.addEventListener('click',function(){
+        if(!restoring&&answers[i]===null&&q.classList.contains('locked')){answers[i]=j;save()}
+      });
+    });
+  });
+  function resetAnswersIn(container){
+    questions.forEach(function(q,i){if(container.contains(q))answers[i]=null});
+    save();
+  }
+  var quizReset=document.getElementById('quizReset');
+  if(quizReset)quizReset.addEventListener('click',function(){resetAnswersIn(document.getElementById('quizBox'))});
+  var trainReset=document.getElementById('trReset');
+  if(trainReset)trainReset.addEventListener('click',function(){resetAnswersIn(document.getElementById('trainBox'))});
+  checks.forEach(function(box){box.addEventListener('change',save)});
+  var resetChecks=document.getElementById('resetChecks');
+  if(resetChecks)resetChecks.addEventListener('click',save);
+  flips.forEach(function(flip){
+    flip.addEventListener('click',save);
+    flip.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' ')save()});
+  });
+  accordions.forEach(function(item){item.querySelector('.acc-head').addEventListener('click',save)});
+  var data;
+  try{data=JSON.parse(sessionStorage.getItem(key)||'null')}catch(e){data=null}
+  if(!data)return;
+  if(!valid(data)){try{sessionStorage.removeItem(key)}catch(e){}return}
+  restoring=true;
+  try{
+    data.answers.forEach(function(answer,i){
+      if(answer!==null)questions[i].querySelectorAll('.quiz-opt')[answer].click();
+    });
+    checks.forEach(function(box,i){
+      if(box.checked!==data.checks[i]){
+        box.checked=data.checks[i];
+        box.dispatchEvent(new Event('change',{bubbles:true}));
+      }
+    });
+    flips.forEach(function(flip,i){flip.classList.toggle('on',data.flips[i])});
+    accordions.forEach(function(item,i){
+      if(item.classList.contains('open')!==data.accordions[i])item.querySelector('.acc-head').click();
+    });
+    if(data.tab)tabs.filter(function(t){return t.dataset.t===data.tab})[0].click();
+    answers=data.answers.slice();
+  }finally{restoring=false}
+})();
+</script>
+</body>
+</html>
