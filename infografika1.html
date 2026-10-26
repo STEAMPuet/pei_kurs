@@ -41,7 +41,7 @@ h1,h2,h3,h4{font-family:'Orbitron','Segoe UI',Arial,sans-serif; margin:0; letter
   display:grid; grid-template-rows:auto auto 1fr auto; gap:14px; padding:22px 26px;
   background:linear-gradient(var(--grid) 1px, transparent 1px) 0 0/38px 38px,
   linear-gradient(90deg, var(--grid) 1px, transparent 1px) 0 0/38px 38px, var(--bg);
-  border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); overflow:hidden;}
+  overflow:hidden;}
 
 .hud-bar{display:flex; align-items:center; gap:14px; padding:8px 16px; background:var(--bg-panel);
   border:1px solid var(--line); border-radius:10px; box-shadow:var(--shadow);
@@ -154,7 +154,7 @@ header.hero h1{font-size:31px; line-height:1.15; background:linear-gradient(90de
   @page{size:1600px 900px; margin:0;}
   html,body{height:auto; overflow:visible; background:none;}
   body{-webkit-print-color-adjust:exact; print-color-adjust:exact;}
-  .slide{position:static; transform:none !important; border:0; border-radius:0; box-shadow:none;}
+  .slide{position:static; transform:none !important; width:1600px !important; height:900px !important;}
   .hud-btn{display:none;}
 }
 </style>
@@ -260,11 +260,16 @@ header.hero h1{font-size:31px; line-height:1.15; background:linear-gradient(90de
 
 <script>
 (function(){
-  var slide=document.getElementById('slide'), W=1600, H=900;
+  // Слайд заповнює все вікно: базовий розмір 1600×900 розтягується під пропорції екрана
+  // (від 16:10 до 21:9), а за межами цього діапазону лишаються поля.
+  var slide=document.getElementById('slide');
+  function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
   function fit(){
-    var pad=window.innerWidth<700?8:24;
-    var s=Math.min((window.innerWidth-pad)/W,(window.innerHeight-pad)/H);
-    slide.style.transform='translate('+((window.innerWidth-W*s)/2)+'px,'+((window.innerHeight-H*s)/2)+'px) scale('+s+')';
+    var iw=window.innerWidth, ih=window.innerHeight, ratio=iw/ih;
+    var W=clamp(900*ratio,1600,2100), H=clamp(W/ratio,900,1000);
+    var s=Math.min(iw/W,ih/H);
+    slide.style.width=W+'px'; slide.style.height=H+'px';
+    slide.style.transform='translate('+((iw-W*s)/2)+'px,'+((ih-H*s)/2)+'px) scale('+s+')';
   }
   fit(); window.addEventListener('resize',fit);
 
