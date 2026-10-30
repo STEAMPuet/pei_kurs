@@ -47,6 +47,7 @@ section.panel::before{content:"";position:absolute;inset:0;pointer-events:none;
 section.panel > *{position:relative}
 .hero-tag{display:inline-block;font-family:'Share Tech Mono',monospace;font-size:12px;letter-spacing:.15em;
   color:var(--cyan-deep);background:rgba(0,184,196,.1);border:1px solid rgba(0,184,196,.4);padding:4px 10px;border-radius:20px;margin-bottom:14px}
+.hero-tag.run-topics{display:block;max-width:100%;line-height:1.45;letter-spacing:.03em;border-radius:8px}
 .controls{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 16px;
   font-family:'Share Tech Mono',monospace;font-size:12.5px;color:var(--ink-soft)}
 .controls b{color:var(--ink)}
@@ -66,8 +67,9 @@ h1{font-size:clamp(17px,3.4vw,24px);line-height:1.35;border-bottom:2px solid var
 .stage{position:relative;height:288px;overflow:hidden;border-radius:12px;background:var(--bg-soft);border:1px solid var(--line)}
 .lane{position:absolute;left:0;right:0;height:72px;border-top:1px dashed var(--line)}
 .lane:first-child{border-top:0}
-.ans{position:absolute;top:0;left:0;margin:0;height:46px;line-height:44px;padding:0 20px;border:1.5px solid var(--ink);
-  border-radius:10px;background:var(--bg-panel);color:var(--ink);font:600 17px 'Rajdhani','Segoe UI',Arial,sans-serif;white-space:nowrap;
+.ans{position:absolute;top:0;left:0;margin:0;min-height:46px;max-width:calc(100% - 12px);padding:6px 14px;border:1.5px solid var(--ink);
+  border-radius:10px;background:var(--bg-panel);color:var(--ink);font:600 17px/1.16 'Rajdhani','Segoe UI',Arial,sans-serif;white-space:normal;
+  display:flex;align-items:center;justify-content:center;text-align:center;
   cursor:pointer;will-change:transform;touch-action:manipulation;box-shadow:0 2px 8px rgba(16,24,38,.08)}
 .ans:hover{background:var(--solid);color:#fff}
 .ans:focus-visible{outline:3px solid rgba(0,184,196,.55);outline-offset:2px}
@@ -107,9 +109,44 @@ main.shake{animation:screen-shake .28s ease-in-out}
 .setup-options{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 18px;color:var(--ink-soft);font-family:'Share Tech Mono',monospace;font-size:13px}
 .setup-options label{display:flex;align-items:center;gap:7px;cursor:pointer}
 .setup-options input{accent-color:var(--cyan-deep);width:18px;height:18px}
+.setup-theme{margin-left:auto;padding:5px 10px;border:1px solid var(--line);border-radius:7px;background:var(--bg-soft);color:var(--ink);
+  font:12px 'Share Tech Mono',monospace;cursor:pointer;min-height:36px}
+.setup-theme:hover{border-color:var(--cyan)}
+.setup-theme:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+body.dialog-open .hud-bar .theme-toggle{z-index:0;pointer-events:none}
+.card.setup-card{max-width:760px}
+.lecture-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 0 12px}
+.lecture-card{position:relative;min-height:124px;padding:0;border:0;border-radius:12px;background:transparent;color:var(--ink);
+  cursor:pointer;perspective:900px;font-family:'Rajdhani','Segoe UI',sans-serif;transition:transform .16s ease}
+.lecture-card:hover:not(:disabled){transform:translateY(-2px)}
+.lecture-card:focus-visible{outline:3px solid var(--cyan);outline-offset:2px}
+.lecture-card:disabled{cursor:default}
+.lecture-card:disabled:not(.selected){opacity:.55}
+.lecture-grid.shuffling .lecture-card{transition:none;opacity:1;cursor:wait}
+.lecture-card-inner{position:absolute;inset:0;display:block;transform-style:preserve-3d;transition:transform .48s cubic-bezier(.2,.7,.2,1)}
+.lecture-card.selected .lecture-card-inner{transform:rotateY(180deg)}
+.lecture-card-face{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  padding:14px;text-align:center;border:1.5px solid var(--line);border-radius:12px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.lecture-card-back{background:repeating-linear-gradient(135deg,rgba(0,184,196,.055) 0 2px,transparent 2px 14px),
+  radial-gradient(circle at center,rgba(0,184,196,.09),transparent 65%),var(--bg-soft)}
+.lecture-card-back::before{content:"";position:absolute;inset:8px;border:1px solid var(--line);border-radius:7px;pointer-events:none}
+.lecture-card:hover:not(:disabled) .lecture-card-back{border-color:var(--cyan)}
+.lecture-card-front{transform:rotateY(180deg);border-color:var(--cyan-deep);background:var(--bg-panel);
+  box-shadow:inset 0 0 0 1px var(--cyan-deep)}
+.lecture-card .back-emblem{display:grid;place-items:center;width:52px;height:52px;border:2px solid var(--cyan-deep);border-radius:50%;
+  background:var(--bg-panel);color:var(--cyan-deep);font:700 18px 'Orbitron','Segoe UI',sans-serif;letter-spacing:.04em}
+.lecture-card .back-label{font:700 11px 'Share Tech Mono',monospace;letter-spacing:.1em;color:var(--ink-soft)}
+.lecture-card .front-number{font:700 11px 'Share Tech Mono',monospace;letter-spacing:.12em;color:var(--cyan-deep)}
+.lecture-card .front-title{font:700 clamp(14px,1.5vw,17px)/1.15 'Rajdhani','Segoe UI',sans-serif;color:var(--ink)}
+.lecture-card .mark{position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;
+  background:var(--cyan-deep);color:var(--bg-panel);font:700 13px 'Share Tech Mono',monospace}
+.lecture-selection-status{min-height:22px;margin:0 0 14px!important;font:12px 'Share Tech Mono',monospace!important;color:var(--ink-soft)}
+@media(max-width:650px){.lecture-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.lecture-card{min-height:100px;padding:12px}}
+@media(max-width:380px){.lecture-grid{grid-template-columns:1fr}.lecture-card{min-height:90px}}
+@media(prefers-reduced-motion:reduce){.lecture-card,.lecture-card-inner{transition:none}.lecture-card:hover:not(:disabled){transform:none}}
 footer{text-align:center;color:var(--ink-soft);font-family:'Share Tech Mono',monospace;font-size:12px;padding:20px 0 0}
 @media (max-width:600px){section.panel{padding:20px 16px}}
-@media (max-width:520px){.stage{height:264px}.lane{height:66px}.ans{font-size:16px;padding:0 16px}}
+@media (max-width:520px){.stage{height:264px}.lane{height:66px}.ans{font-size:16px;padding:6px 10px}}
 
 /* Theme controls and palette */
 :root{color-scheme:light;--solid:#101826;--tabs-bg:rgba(255,255,255,.9);}
@@ -135,7 +172,7 @@ footer{text-align:center;color:var(--ink-soft);font-family:'Share Tech Mono',mon
 <main>
   <header class="hud-bar"><span><span class="dot"></span>SYSTEM: ПСИХОЛОГІЯ.LAB / QUIZ-CORE — ОНЛАЙН</span><span class="stats"><span>БАЛИ: <b id="score">0</b></span><span>·</span><span>СЕРІЯ: <b id="streak">0</b></span><span>·</span><span>ТОЧНІСТЬ: <b id="accuracy">0%</b></span></span></header>
   <section class="panel">
-    <span class="hero-tag">// PSYCH_QUIZ · REACTION.TEST</span>
+    <span class="hero-tag" id="runTopics">// PSYCH_QUIZ · REACTION.TEST</span>
     <div class="controls"><span class="difficulty-current">СКЛАДНІСТЬ: <b id="modeLabel">Звичайна</b></span><button class="control-btn" id="pause" type="button" disabled>Пауза (Esc)</button></div>
     <div class="dots" id="dots"></div>
     <h1 id="q"></h1>
@@ -149,31 +186,63 @@ footer{text-align:center;color:var(--ink-soft);font-family:'Share Tech Mono',mon
 <div class="overlay" id="ov"><div class="card" id="card" role="dialog" aria-modal="true"></div></div>
 
 <script>
+const LECTURES=[
+ {id:1,title:'Теоретичні засади емоційного інтелекту',short:'Теорія ЕІ'},
+ {id:2,title:'Емоції як ресурс і самоусвідомлення',short:'Емоції та усвідомлення'},
+ {id:3,title:'Саморегуляція та емоційна стійкість',short:'Саморегуляція'},
+ {id:4,title:'Емпатія та ЕІ у комунікації',short:'Емпатія й комунікація'},
+ {id:5,title:'Емоційний інтелект лідера і команда',short:'Лідерство й команда'},
+ {id:6,title:'ЕІ та психологічне благополуччя персоналу',short:'Благополуччя персоналу'}
+];
 const QS=[
- {q:"Хто вважається засновником психоаналізу?",a:"Зигмунд Фрейд",w:["Карл Роджерс","Іван Павлов","Б. Ф. Скіннер"],t:"Психоаналіз",e:"Зигмунд Фрейд на межі XIX–XX століть запропонував, що поведінкою керують і несвідомі мотиви, витіснені бажання та дитячий досвід. Роджерс розвивав гуманістичний напрям, Павлов вивчав рефлекси, Скіннер — підкріплення."},
- {q:"Хто описав класичне обумовлення на прикладі собак і дзвінка?",a:"Іван Павлов",w:["Зигмунд Фрейд","Абрахам Маслоу","Жан Піаже"],t:"Класичне обумовлення",e:"Павлов помітив, що нейтральний сигнал (дзвінок), який повторно збігається з їжею, починає сам викликати слиновиділення. Так формується умовний рефлекс — основа багатьох звичок і страхів."},
- {q:"Що таке когнітивний дисонанс?",a:"Дискомфорт від суперечливих думок і вчинків",w:["Втрата пам'яті","Страх відкритих просторів","Швидке мислення"],t:"Когнітивний дисонанс",e:"Леон Фестінгер показав: коли наші вчинки розходяться з переконаннями, виникає напруга. Щоб її зняти, ми змінюємо поведінку, переконання або вигадуємо виправдання («усі так роблять»)."},
- {q:"Що лежить в основі піраміди потреб Маслоу?",a:"Фізіологічні потреби",w:["Самореалізація","Повага оточення","Дружба"],t:"Піраміда потреб",e:"За Маслоу, спершу людина задовольняє базове: сон, їжа, вода. Далі йдуть безпека, приналежність, повага і на вершині — самореалізація. Верхні рівні важко досягти, коли базові не закриті."},
- {q:"Що описує ефект Даннінга–Крюгера?",a:"Новачки переоцінюють свою компетентність",w:["Експерти завжди впевнені","Групи ухвалюють кращі рішення","Страх публічних виступів"],t:"Ефект Даннінга–Крюгера",e:"Люди з малим досвідом часто не бачать власних помилок, бо їм бракує знань, щоб оцінити якість роботи. З досвідом оцінка стає реалістичнішою, а іноді експерти навіть себе недооцінюють."},
- {q:"Що таке упередження підтвердження?",a:"Шукати докази своєї правоти",w:["Довіряти експертам","Вірити першому враженню","Забувати погане"],t:"Упередження підтвердження",e:"Ми помічаємо й запам'ятовуємо інформацію, що збігається з нашими переконаннями, а суперечливу ігноруємо. Щоб протидіяти, варто свідомо шукати аргументи проти власної думки."},
- {q:"Чому в натовпі людині допомагають рідше?",a:"Розмивання відповідальності",w:["Через поспіх","Через слабку емпатію","Через страх темряви"],t:"Ефект свідка",e:"Що більше людей поруч, то сильніше кожен вважає, що допоможе хтось інший. Тому в екстреній ситуації корисно звернутися до конкретної людини: «Ви, у жовтій куртці, викличте швидку!»"},
- {q:"Яка структура мозку головно пов'язана зі страхом?",a:"Мигдалеподібне тіло",w:["Мозочок","Гіпокамп","Потилична частка"],t:"Мигдалеподібне тіло",e:"Амігдала швидко оцінює загрозу ще до того, як ми її усвідомимо, і запускає реакцію «бий або тікай». Гіпокамп відповідає за пам'ять, мозочок — за координацію рухів."}
+ {l:1,q:'Хто запропонував поняття соціального інтелекту?',a:'Е. Торндайк',w:['Д. Гоулман','Р. Бар-Он','Г. Гарднер'],t:'Соціальний інтелект',e:'Е. Торндайк описав соціальний інтелект як здатність розуміти людей і мудро діяти у взаємодії.'},
+ {l:1,q:'Хто створив теорію множинного інтелекту?',a:'Г. Гарднер',w:['П. Саловей','Дж. Маєр','Р. Бар-Он'],t:'Множинний інтелект',e:'Г. Гарднер виокремив, зокрема, внутрішньоособистісний і міжособистісний інтелект.'},
+ {l:1,q:'Що таке ЕІ у моделі здібностей?',a:'Обробка емоційної інформації',w:['Риса темпераменту','Стиль керівництва','Рівень загального IQ'],t:'Модель здібностей',e:'Модель здібностей розглядає ЕІ як уміння сприймати, використовувати, розуміти й регулювати емоції.'},
+ {l:1,q:'Яка здатність є основою моделі чотирьох гілок?',a:'Розпізнавання емоцій',w:['Пригнічення емоцій','Управління командою','Математичне мислення'],t:'Чотири гілки ЕІ',e:'Сприймання й розпізнавання емоцій є першим рівнем: без нього складно перейти до решти гілок.'},
+ {l:1,q:'З чим Д. Гоулман пов’язував високий ЕІ?',a:'З успіхом у роботі та стосунках',w:['Лише з оцінками в школі','Лише з рівнем IQ','З фізичною силою'],t:'Змішана модель ЕІ',e:'У підході Гоулмана емоційні компетентності важливі для роботи, лідерства та взаємодії.'},
+ {l:2,q:'Хто пов’язав емоцію з усвідомленням тілесних змін?',a:'В. Джемс і К. Ланге',w:['П. Саловей і Дж. Маєр','С. Шехтер','Д. Гоулман'],t:'Теорія Джемса–Ланге',e:'За периферичною теорією емоція виникає через усвідомлення фізіологічної реакції.'},
+ {l:2,q:'Яка основна функція емоцій?',a:'Регуляція поведінки',w:['Заміна пам’яті','Контроль рівня IQ','Зупинення мислення'],t:'Функції емоцій',e:'Емоції сигналізують про значущість подій і допомагають спрямовувати поведінку.'},
+ {l:2,q:'Хто розробила концепцію емоційної компетентності?',a:'К. Саарні',w:['К. Роджерс','А. Маслоу','Р. Бар-Он'],t:'Емоційна компетентність',e:'К. Саарні описувала емоційну компетентність у контексті соціального розвитку людини.'},
+ {l:2,q:'Що дає краще самоусвідомлення?',a:'Розуміння своїх реакцій і потреб',w:['Відмову від усіх емоцій','Здатність читати чужі думки','Уникнення будь-яких помилок'],t:'Самоусвідомлення',e:'Помічаючи й називаючи власні стани, легше зрозуміти потреби та обрати відповідну дію.'},
+ {l:2,q:'Яка емоція найчастіше спонукає уникати ризику?',a:'Страх',w:['Радість','Інтерес','Натхнення'],t:'Емоції як сигнал',e:'Страх сигналізує про можливу загрозу й може спонукати до обережності.'},
+ {l:3,q:'Що означає саморегуляція?',a:'Керування своїм станом і діями',w:['Контроль інших людей','Уникнення всіх труднощів','Пригнічення будь-яких емоцій'],t:'Саморегуляція',e:'Саморегуляція допомагає усвідомлено змінювати реакцію відповідно до ситуації та мети.'},
+ {l:3,q:'Для чого застосовують дихальні техніки?',a:'Зменшити фізичне напруження',w:['Підвищити тривогу','Стерти неприємні спогади','Замінити відпочинок'],t:'Дихальні техніки',e:'Повільне кероване дихання може допомогти знизити фізіологічне збудження.'},
+ {l:3,q:'Що є конструктивним способом долати стрес?',a:'Планувати дії й шукати підтримку',w:['Ігнорувати проблему','Відмовлятися від відповідальності','Зриватися на інших'],t:'Подолання стресу',e:'План дій і соціальна підтримка допомагають працювати зі стресором та власним станом.'},
+ {l:3,q:'Що має містити план розвитку резильєнтності?',a:'Цілі, ресурси й конкретні кроки',w:['Лише перелік проблем','Тільки оцінку ризиків','Тільки бажаний результат'],t:'Резильєнтність',e:'Конкретні цілі, доступні ресурси та дії роблять план відновлення практичним.'},
+ {l:3,q:'Яка ознака емоційної стійкості?',a:'Відновлення після труднощів',w:['Відсутність усіх емоцій','Відмова від рішень','Постійне уникнення людей'],t:'Емоційна стійкість',e:'Стійкість не означає відсутність стресу: важлива здатність адаптуватися й відновлюватися.'},
+ {l:4,q:'Що таке емпатія?',a:'Розуміння й співпереживання',w:['Уміння переконувати','Керування іншими','Уникнення конфліктів'],t:'Емпатія',e:'Емпатія поєднує розуміння стану іншої людини та співпереживання без втрати власних меж.'},
+ {l:4,q:'Що означає активне слухання?',a:'Уважне слухання й уточнення',w:['Мовчазне ігнорування','Постійне перебивання','Нав’язування своєї думки'],t:'Активне слухання',e:'Уточнення, перефразування та відображення почуттів показують співрозмовнику, що його чують.'},
+ {l:4,q:'Яка складова належить до емоційної компетентності?',a:'Саморегуляція',w:['Швидкість читання','Фізична сила','Технічна грамотність'],t:'Емоційна компетентність',e:'Саморегуляція допомагає обирати доречну реакцію під час спілкування.'},
+ {l:4,q:'Що розвиває вправа на зміну перспективи?',a:'Емпатію',w:['Механічну пам’ять','Швидкість письма','Силу волі'],t:'Зміна перспективи',e:'Погляд на ситуацію з позиції іншої людини допомагає краще зрозуміти її переживання.'},
+ {l:4,q:'Яка поведінка свідчить про високий ЕІ у розмові?',a:'Врахування своїх і чужих емоцій',w:['Ігнорування переживань','Агресивне відстоювання позиції','Уникнення контакту'],t:'ЕІ у комунікації',e:'Усвідомлення власного стану й увага до емоцій співрозмовника підтримують конструктивний діалог.'},
+ {l:5,q:'На чому ґрунтується емоційне лідерство?',a:'На розумінні й регуляції емоцій',w:['Лише на посадовій владі','На системі покарань','На жорсткому контролі'],t:'Емоційне лідерство',e:'Лідер помічає емоційний стан команди й допомагає спрямувати його на спільну роботу.'},
+ {l:5,q:'Що таке емоційний клімат організації?',a:'Настрої та взаємини в колективі',w:['Схема посад','Розмір зарплат','Стиль документації'],t:'Емоційний клімат',e:'Клімат відображає переважні емоції, довіру та характер взаємин між працівниками.'},
+ {l:5,q:'Що допомагає лідеру розуміти потреби працівників?',a:'Емпатія',w:['Конкурентність','Формальний контроль','Дистанціювання'],t:'Емпатія лідера',e:'Емпатія дає змогу помічати переживання й потреби членів команди.'},
+ {l:5,q:'Як ЕІ допомагає керівнику під час конфлікту?',a:'Конструктивно владнати конфлікт',w:['Ігнорувати сторони','Посилювати напруження','Уникати відповідальності'],t:'Конфлікт у команді',e:'Усвідомлення емоцій сторін допомагає зменшити ескалацію та знайти рішення.'},
+ {l:5,q:'Що посилює згуртованість команди?',a:'Взаємна підтримка й довіра',w:['Прихована конкуренція','Ігнорування проблем','Несправедливі правила'],t:'Командна взаємодія',e:'Довіра й підтримка допомагають команді співпрацювати та долати труднощі.'},
+ {l:6,q:'Що таке професійне вигорання?',a:'Виснаження через тривалий стрес',w:['Звичайна втома після дня','Брак професійних знань','Короткочасна нудьга'],t:'Професійне вигорання',e:'Вигорання пов’язане з хронічним робочим стресом і проявляється, зокрема, виснаженням.'},
+ {l:6,q:'Чому важливе емоційне здоров’я працівників?',a:'Воно підтримує продуктивність',w:['Воно усуває всі конфлікти','Воно замінює відпочинок','Воно не впливає на роботу'],t:'Емоційне здоров’я',e:'Емоційне здоров’я допомагає працівникам ефективніше діяти й відновлювати ресурси.'},
+ {l:6,q:'Що підтримує психологічну безпеку команди?',a:'Повага до думки працівників',w:['Публічне приниження','Ігнорування проблем','Покарання за запитання'],t:'Психологічна безпека',e:'Повага й можливість висловлюватися без страху покарання зміцнюють психологічну безпеку.'},
+ {l:6,q:'Що оцінюють під час діагностики ЕІ?',a:'Уміння керувати емоціями',w:['Фізичну силу','Швидкість читання','Механічну пам’ять'],t:'Діагностика ЕІ',e:'Управління емоціями є однією зі складових ЕІ, яку враховують під час оцінювання.'},
+ {l:6,q:'Як оцінити ефективність тренінгу ЕІ?',a:'За зростанням емоційних навичок',w:['За кількістю сторінок','Лише за тривалістю','За розміром аудиторії'],t:'Розвиток ЕІ',e:'Результат тренінгу варто оцінювати за змінами навичок учасників, а не за формальними параметрами.'}
 ];
 
 const $=id=>document.getElementById(id);
 const stage=$('stage'),bar=$('bar'),hint=$('hint');
 const pauseButton=$('pause');
 let i=0,score=0,correctCount=0,answeredCount=0,streak=0,bestStreak=0,locked=true,raf=0,timer=0,items=[];
-let runQuestions=QS,missedQuestions=[],isReview=false,mainResult=null;
+let runQuestions=[],mainOrder=[],selectedLectures=[],missedQuestions=[],isReview=false,mainResult=null;
 let phase='setup',isPaused=false,waitDuration=0,waitRemaining=0,waitStartedAt=0,currentDuration=4200,runClock=0,lastFrame=0,difficulty='normal';
 let soundEnabled=true,vibrationEnabled=true,audioContext=null;
 const progressKey='pei-quiz-progress:'+location.pathname;
 const questionSignature=QS.map(q=>q.q);
+const validLectureSelection=ids=>Array.isArray(ids)&&ids.length===3&&ids.every(id=>Number.isInteger(id)&&id>=1&&id<=LECTURES.length)&&new Set(ids).size===3;
 function saveGameProgress(savedPhase,savedIndex){
   try{
     sessionStorage.setItem(progressKey,JSON.stringify({
-      version:1,questions:questionSignature,phase:savedPhase,
+      version:2,questions:questionSignature,phase:savedPhase,
       order:runQuestions.map(q=>QS.indexOf(q)),index:savedIndex===undefined?i:savedIndex,
+      mainOrder:mainOrder.map(q=>QS.indexOf(q)),selectedLectures,
       score,correctCount,answeredCount,streak,bestStreak,
       missed:missedQuestions.map(q=>QS.indexOf(q)),isReview,mainResult,
       difficulty,soundEnabled,vibrationEnabled
@@ -185,19 +254,25 @@ function restoreGameProgress(){
   try{data=JSON.parse(sessionStorage.getItem(progressKey)||'null')}catch(_){return false}
   const validIds=ids=>Array.isArray(ids)&&ids.every(id=>Number.isInteger(id)&&id>=0&&id<QS.length)&&new Set(ids).size===ids.length;
   const validStats=value=>value&&['score','correctCount','answeredCount','streak','bestStreak'].every(name=>Number.isInteger(value[name])&&value[name]>=0);
-  if(!data||data.version!==1||JSON.stringify(data.questions)!==JSON.stringify(questionSignature)||
+  if(!data||data.version!==2||JSON.stringify(data.questions)!==JSON.stringify(questionSignature)||
      !['round','between','result','review-result'].includes(data.phase)||!validIds(data.order)||!data.order.length||
+     !validIds(data.mainOrder)||data.mainOrder.length!==15||!validLectureSelection(data.selectedLectures)||
+     data.selectedLectures.some(id=>data.mainOrder.filter(q=>QS[q].l===id).length!==5)||
+     data.mainOrder.some(q=>!data.selectedLectures.includes(QS[q].l))||
+     (!data.isReview&&(data.order.length!==15||data.order.some((q,k)=>q!==data.mainOrder[k])))||
      !validIds(data.missed)||!Number.isInteger(data.index)||data.index<0||
      (data.phase==='round'?data.index>=data.order.length:data.phase==='between'?(data.index===0||data.index>data.order.length):data.phase==='review-result'&&data.index!==data.order.length)||
      !validStats(data)||data.correctCount>data.answeredCount||data.answeredCount>data.order.length||
-     typeof data.isReview!=='boolean'||(data.isReview&&!data.missed.length)||
+     typeof data.isReview!=='boolean'||(data.isReview&&(!data.missed.length||data.order.length!==data.missed.length||data.order.some(q=>!data.missed.includes(q))))||
      !['normal','hard'].includes(data.difficulty)||typeof data.soundEnabled!=='boolean'||
      typeof data.vibrationEnabled!=='boolean'||(data.mainResult!==null&&!validStats(data.mainResult))||
-     (data.phase==='result'&&!data.mainResult)){
+     (data.phase==='result'&&!data.mainResult)||(data.isReview&&!data.mainResult)||
+     (data.phase==='review-result'&&!data.isReview)){
     try{sessionStorage.removeItem(progressKey)}catch(_){}
     return false;
   }
-  runQuestions=data.order.map(id=>QS[id]);missedQuestions=data.missed.map(id=>QS[id]);
+  runQuestions=data.order.map(id=>QS[id]);mainOrder=data.mainOrder.map(id=>QS[id]);selectedLectures=data.selectedLectures.slice();missedQuestions=data.missed.map(id=>QS[id]);
+  updateRunTopics();
   i=data.index;score=data.score;correctCount=data.correctCount;answeredCount=data.answeredCount;
   streak=data.streak;bestStreak=data.bestStreak;isReview=data.isReview;mainResult=data.mainResult;
   difficulty=data.difficulty;soundEnabled=data.soundEnabled;vibrationEnabled=data.vibrationEnabled;
@@ -284,12 +359,13 @@ function launch(){
   const tricks=new Map(trickLanes.map(l=>[l,trickTypes[Math.floor(Math.random()*trickTypes.length)]]));
   items=order.map((o,l)=>{
     const b=document.createElement('button');b.className='ans';b.textContent=o.t;
-    b.style.top=(l*laneH+(laneH-46)/2)+'px';
     b.style.transform='translateX(-9999px)';
     b.addEventListener('pointerdown',e=>{e.preventDefault();pick(o.c,b)});
     stage.appendChild(b);
+    const baseY=l*laneH+(laneH-b.offsetHeight)/2;
+    b.style.top=baseY+'px';
     const laneDirection=l===0?1:l===3?-1:Math.random()<.5?-1:1;
-    const item={el:b,c:o.c,delay:delays[l],dir:l%2?1:-1,w:b.offsetWidth,progress:0,trick:tricks.get(l)||null,laneH,laneDirection,baseY:l*laneH+(laneH-46)/2,dodgeStart:null,dodgeX:0,dodgeY:0,dodgeAttempted:false,done:false};
+    const item={el:b,c:o.c,delay:delays[l],dir:l%2?1:-1,w:b.offsetWidth,progress:0,trick:tricks.get(l)||null,laneH,laneDirection,baseY,dodgeStart:null,dodgeX:0,dodgeY:0,dodgeAttempted:false,done:false};
     b.addEventListener('pointerenter',e=>dodgeAnswer(item,e));
     return item;
   });
@@ -455,16 +531,16 @@ function finish(){
 
 function showMainResult(){
   setPhase('result');
-  runQuestions=QS;i=QS.length;
+  isReview=false;runQuestions=mainOrder;i=runQuestions.length;
   score=mainResult.score;correctCount=mainResult.correctCount;answeredCount=mainResult.answeredCount;
   streak=mainResult.streak;bestStreak=mainResult.bestStreak;
   updateStats();dots();
-  const pct=mainResult.correctCount/QS.length;
+  const pct=mainResult.correctCount/mainOrder.length;
   const accuracy=mainResult.answeredCount?Math.round(mainResult.correctCount/mainResult.answeredCount*100):0;
   const msg=pct===1?'&#1030;&#1076;&#1077;&#1072;&#1083;&#1100;&#1085;&#1086;. &#1056;&#1077;&#1072;&#1082;&#1094;&#1110;&#1103; &#1110; &#1079;&#1085;&#1072;&#1085;&#1085;&#1103; &#1085;&#1072; &#1074;&#1080;&#1089;&#1086;&#1090;&#1110;.':pct>=.6?'&#1044;&#1086;&#1073;&#1088;&#1080;&#1081; &#1088;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;. &#1065;&#1077; &#1088;&#1072;&#1091;&#1085;&#1076; &mdash; &#1110; &#1073;&#1091;&#1076;&#1077; &#1082;&#1088;&#1072;&#1097;&#1077;.':'&#1028; &#1097;&#1086; &#1087;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1080;. &#1057;&#1087;&#1088;&#1086;&#1073;&#1091;&#1081; &#1097;&#1077; &#1088;&#1072;&#1079;.';
   const reviewButton=missedQuestions.length?'<button class="btn" id="review">&#1055;&#1086;&#1074;&#1090;&#1086;&#1088;&#1080;&#1090;&#1080; &#1087;&#1086;&#1084;&#1080;&#1083;&#1082;&#1080; ('+missedQuestions.length+')</button>':'';
-  show(`<div class="end"><h2>&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;</h2><div class="big">${mainResult.score}</div><p>&#1041;&#1072;&#1083;&#1110;&#1074;</p><p>&#1058;&#1086;&#1095;&#1085;&#1110;&#1089;&#1090;&#1100;: ${accuracy}% &middot; &#1053;&#1072;&#1081;&#1082;&#1088;&#1072;&#1097;&#1072; &#1089;&#1077;&#1088;&#1110;&#1103;: ${mainResult.bestStreak}</p><p style="margin-top:14px">${msg}</p>${reviewButton}<button class="btn" id="go">&#1047;&#1110;&#1075;&#1088;&#1072;&#1090;&#1080; &#1097;&#1077; &#1088;&#1072;&#1079;</button></div>`,()=>showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()}),()=>showSetup(()=>{isReview=true;runQuestions=shuffle(missedQuestions);i=0;resetRound();start()}));
-  if(!isReview&&mainResult.correctCount===QS.length)celebratePerfectRun();
+  show(`<div class="end"><h2>&#1056;&#1077;&#1079;&#1091;&#1083;&#1100;&#1090;&#1072;&#1090;</h2><div class="big">${mainResult.score}</div><p>&#1041;&#1072;&#1083;&#1110;&#1074;</p><p>&#1058;&#1086;&#1095;&#1085;&#1110;&#1089;&#1090;&#1100;: ${accuracy}% &middot; &#1053;&#1072;&#1081;&#1082;&#1088;&#1072;&#1097;&#1072; &#1089;&#1077;&#1088;&#1110;&#1103;: ${mainResult.bestStreak}</p><p>&#1051;&#1077;&#1082;&#1094;&#1110;&#1111;: ${selectedLectures.join(', ')} &middot; 15 &#1079;&#1072;&#1087;&#1080;&#1090;&#1072;&#1085;&#1100;</p><p style="margin-top:14px">${msg}</p>${reviewButton}<button class="btn" id="go">&#1047;&#1110;&#1075;&#1088;&#1072;&#1090;&#1080; &#1097;&#1077; &#1088;&#1072;&#1079;</button></div>`,()=>showSetup(beginMainRun),()=>showSetup(()=>{isReview=true;runQuestions=shuffle(missedQuestions);i=0;resetRound();start()},true));
+  if(mainResult.correctCount===mainOrder.length)celebratePerfectRun();
   saveGameProgress('result');
 }
 
@@ -504,26 +580,100 @@ function playAnswerFeedback(correct){
   }
 }
 
-function showSetup(onStart){
+function beginMainRun(){
+  isReview=false;runQuestions=shuffle(selectedLectures.flatMap(id=>QS.filter(q=>q.l===id)));
+  mainOrder=runQuestions.slice();missedQuestions=[];mainResult=null;i=0;updateRunTopics();resetRound();start();
+}
+function updateRunTopics(){
+  const tag=$('runTopics'),revealed=selectedLectures.length===3;
+  tag.textContent=revealed?'ЛЕКЦІЇ: '+selectedLectures.map(id=>LECTURES[id-1].short).join(' · '):'// PSYCH_QUIZ · REACTION.TEST';
+  tag.classList.toggle('run-topics',revealed);
+}
+async function shuffleLectureCards(grid){
+  const cards=Array.from(grid.children);
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches||!cards[0]?.animate)return;
+  for(let round=0;round<3;round++){
+    const pairs=shuffle(Array.from(grid.children));
+    const next=Array.from(grid.children);
+    const animations=[];
+    for(let k=0;k<pairs.length;k+=2){
+      const a=pairs[k],b=pairs[k+1],ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect();
+      const dx=rb.left-ra.left,dy=rb.top-ra.top;
+      const options={duration:330,easing:'cubic-bezier(.32,.02,.2,1)',fill:'forwards'};
+      animations.push(a.animate([
+        {transform:'translate(0,0) rotate(0deg)'},
+        {transform:`translate(${dx*.52}px,${dy*.52}px) rotate(7deg)`,offset:.52},
+        {transform:`translate(${dx}px,${dy}px) rotate(0deg)`}
+      ],options));
+      animations.push(b.animate([
+        {transform:'translate(0,0) rotate(0deg)'},
+        {transform:`translate(${-dx*.52}px,${-dy*.52}px) rotate(-7deg)`,offset:.52},
+        {transform:`translate(${-dx}px,${-dy}px) rotate(0deg)`}
+      ],options));
+      const ai=next.indexOf(a),bi=next.indexOf(b);
+      [next[ai],next[bi]]=[next[bi],next[ai]];
+    }
+    await Promise.all(animations.map(animation=>animation.finished));
+    grid.replaceChildren(...next);
+    animations.forEach(animation=>animation.cancel());
+  }
+}
+function showSetup(onStart,reviewSetup=false){
   setPhase('setup');isPaused=false;
-  show('<div class="end"><h2>&#1053;&#1086;&#1074;&#1080;&#1081; &#1079;&#1072;&#1073;&#1110;&#1075;</h2><p>&#1054;&#1073;&#1077;&#1088;&#1080; &#1089;&#1082;&#1083;&#1072;&#1076;&#1085;&#1110;&#1089;&#1090;&#1100; &#1087;&#1077;&#1088;&#1077;&#1076; &#1087;&#1086;&#1095;&#1072;&#1090;&#1082;&#1086;&#1084;.</p><label class="setup-mode" for="setupDifficulty">&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1110;&#1089;&#1090;&#1100;<select id="setupDifficulty"><option value="normal">&#1047;&#1074;&#1080;&#1095;&#1072;&#1081;&#1085;&#1072;</option><option value="hard">&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1072;</option></select></label><div class="setup-options"><label><input id="soundToggle" type="checkbox" checked>&#1047;&#1074;&#1091;&#1082;</label><label><input id="vibrationToggle" type="checkbox" checked>&#1042;&#1110;&#1073;&#1088;&#1072;&#1094;&#1110;&#1103;</label></div><button class="btn" id="go">&#1055;&#1086;&#1095;&#1072;&#1090;&#1080; &#1079;&#1072;&#1073;&#1110;&#1075;</button></div>',()=>{
+  if(!reviewSetup){selectedLectures=[];updateRunTopics();}
+  const cards=reviewSetup?'':`<div class="lecture-grid shuffling" role="group" aria-label="Вибір трьох прихованих лекцій" aria-busy="true">${shuffle(LECTURES).map((lecture,index)=>
+      `<button class="lecture-card" type="button" data-lecture="${lecture.id}" aria-pressed="false" aria-label="Прихована карта ${index+1}"><span class="lecture-card-inner" aria-hidden="true"><span class="lecture-card-face lecture-card-back"><span class="back-emblem">ЕІ</span><span class="back-label">ПСИХОЛОГІЯ.LAB</span></span><span class="lecture-card-face lecture-card-front"><span class="front-number">ЛЕКЦІЯ ${lecture.id}</span><span class="front-title">${lecture.short}</span><span class="mark">✓</span></span></span></button>`).join('')}</div>
+    <p class="lecture-selection-status" id="selectionStatus" role="status" aria-live="polite"></p>`;
+  show(`<div class="end"><h2 tabindex="-1">${reviewSetup?'Повторення помилок':'Новий забіг'}</h2><p>${reviewSetup?'Повтори запитання, у яких помилився.':'Обери 3 карти без можливості скасування. Кожна відкриє лекцію з 5 запитаннями; запитання йтимуть у випадковому порядку.'}</p>${cards}
+    <label class="setup-mode" for="setupDifficulty">Складність<select id="setupDifficulty"><option value="normal">Звичайна</option><option value="hard">Складна</option></select></label>
+    <div class="setup-options"><label><input id="soundToggle" type="checkbox">Звук</label><label><input id="vibrationToggle" type="checkbox">Вібрація</label><button class="setup-theme" id="setupTheme" type="button" aria-label="Змінити тему">Тема</button></div>
+    <button class="btn" id="go">Почати забіг</button></div>`,()=>{
+    if(!reviewSetup&&!validLectureSelection(selectedLectures))return;
     difficulty=$('setupDifficulty').value;
     soundEnabled=$('soundToggle').checked;vibrationEnabled=$('vibrationToggle').checked;
     if(soundEnabled)initAudio();
-    $('modeLabel').innerHTML=difficulty==='hard'?'&#1057;&#1082;&#1083;&#1072;&#1076;&#1085;&#1072;':'&#1047;&#1074;&#1080;&#1095;&#1072;&#1081;&#1085;&#1072;';
+    $('modeLabel').textContent=difficulty==='hard'?'Складна':'Звичайна';
     hide();onStart();
   });
-  const choice=$('setupDifficulty');choice.value=difficulty;
+  $('setupDifficulty').value=difficulty;
   $('soundToggle').checked=soundEnabled;$('vibrationToggle').checked=vibrationEnabled;
-  choice.focus();
+  $('setupTheme').addEventListener('click',()=>document.querySelector('.hud-bar .theme-toggle').click());
+  if(reviewSetup){$('setupDifficulty').focus();return;}
+  let isShuffling=true;
+  const grid=document.querySelector('.lecture-grid');
+  const syncSelection=()=>{
+    document.querySelectorAll('.lecture-card').forEach(card=>{
+      const active=selectedLectures.includes(+card.dataset.lecture);
+      card.classList.toggle('selected',active);card.setAttribute('aria-pressed',String(active));
+      card.disabled=isShuffling||active||selectedLectures.length===3;
+    });
+    $('selectionStatus').textContent=isShuffling?'Картки тасуються…':`Обрано ${selectedLectures.length} / 3 · вибір остаточний`;
+    $('go').disabled=selectedLectures.length!==3;
+  };
+  document.querySelectorAll('.lecture-card').forEach(card=>card.addEventListener('click',()=>{
+    const id=+card.dataset.lecture;
+    if(isShuffling||selectedLectures.includes(id)||selectedLectures.length===3)return;
+    selectedLectures.push(id);
+    card.setAttribute('aria-label',`Відкрита карта: лекція ${id}. ${LECTURES[id-1].title}`);
+    syncSelection();
+    const next=document.querySelector('.lecture-card:not(:disabled)');
+    (next||$('go')).focus();
+  }));
+  syncSelection();$('card').querySelector('h2').focus();
+  const finishShuffle=()=>{
+    if(!grid.isConnected)return;
+    Array.from(grid.children).forEach((card,index)=>card.setAttribute('aria-label',`Прихована карта ${index+1}`));
+    isShuffling=false;grid.classList.remove('shuffling');grid.setAttribute('aria-busy','false');syncSelection();
+  };
+  shuffleLectureCards(grid).then(finishShuffle,finishShuffle);
 }
 
 function show(html,cb,reviewCb){
-  $('card').innerHTML=html;$('ov').classList.add('show');
+  $('card').innerHTML=html;$('card').classList.toggle('setup-card',phase==='setup');$('ov').classList.add('show');document.body.classList.add('dialog-open');
   const g=$('go');g.onclick=cb;g.focus();
   const review=$('review');if(review&&reviewCb)review.onclick=reviewCb;
 }
-function hide(){$('ov').classList.remove('show')}
+function hide(){$('ov').classList.remove('show');document.body.classList.remove('dialog-open')}
 
 pauseButton.addEventListener('click',pauseGame);
 document.addEventListener('keydown',e=>{
@@ -531,7 +681,7 @@ document.addEventListener('keydown',e=>{
   if(isPaused){e.preventDefault();resumeGame();return}
   if(phase==='prep'||phase==='answers'){e.preventDefault();pauseGame()}
 });
-if(!restoreGameProgress())showSetup(()=>{isReview=false;runQuestions=shuffle(QS);missedQuestions=[];mainResult=null;i=0;resetRound();start()});
+if(!restoreGameProgress())showSetup(beginMainRun);
 </script>
 <script>
 (function(){
